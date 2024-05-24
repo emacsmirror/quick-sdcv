@@ -89,25 +89,27 @@
 ;;
 ;; Example, setup like this:
 ;;
-;; (setq sdcv-dictionary-simple-list (list "懒虫简明英汉词典"
-;;                                         "懒虫简明汉英词典"
-;;                                         "KDic11万英汉词典")
-;;       sdcv-dictionary-complete-list (list "KDic11万英汉词典"
-;;                                           "懒虫简明英汉词典"
-;;                                           "朗道英汉字典5.0"
-;;                                           "XDICT英汉辞典"
-;;                                           "朗道汉英字典5.0"
-;;                                           "XDICT汉英辞典"
-;;                                           "懒虫简明汉英词典"
-;;                                           "牛津英汉双解美化版"
-;;                                           "stardict1.3英汉辞典"
-;;                                           "英汉汉英专业词典"
-;;                                           "CDICT5英汉辞典"
-;;                                           "Jargon"
-;;                                           "FOLDOC"
-;;                                           "WordNet")
-;;       sdcv-dictionary-data-dir "your_sdcv_dict_dir") ; set local sdcv dict dir
-
+;; (setq sdcv-dictionary-simple-list
+;;       (list "Simple English-Chinese Dictionary"
+;;             "Simple Chinese-English Dictionary"
+;;             "KDic 110,000 English-Chinese Dictionary")
+;;       sdcv-dictionary-complete-list
+;;       (list "KDic 110,000 English-Chinese Dictionary"
+;;             "Simple English-Chinese Dictionary"
+;;             "English-Chinese Dictionary 5.0"
+;;             "XDICT English-Chinese Dictionary"
+;;             "Chinese-English Dictionary 5.0"
+;;             "XDICT Chinese-English Dictionary"
+;;             "Simple Chinese-English Dictionary"
+;;             "Oxford English-Chinese Double Explanation Beautified Version"
+;;             "stardict 1.3 English-Chinese Dictionary"
+;;             "English-Chinese and Chinese-English Professional Dictionary"
+;;             "CDICT5 English-Chinese Dictionary"
+;;             "Jargon"
+;;             "FOLDOC"
+;;             "WordNet")
+;;       sdcv-dictionary-data-dir "your_sdcv_dict_dir") ; local sdcv dict dir
+;;
 ;;; Customize:
 ;;
 ;; `sdcv-buffer-name'
@@ -298,7 +300,8 @@ coding if your system is not zh_CN.UTF-8."
 (defvar sdcv-current-translate-object nil
   "The search object.")
 
-(defvar sdcv-fail-notify-string "没有发现解释也... \n用更多的词典查询一下吧! ^_^"
+(defvar sdcv-fail-notify-string
+  "No explanation available. Consider searching with additional dictionaries."
   "User notification message on failed search.")
 
 (defvar sdcv-mode-font-lock-keywords
