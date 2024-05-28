@@ -1,5 +1,3 @@
-<img src="sdcv.png">
-
 # What is sdcv?
 
 Interface for sdcv (StartDict console version).
@@ -81,3 +79,7 @@ region string, otherwise translate word around point.
 
 ## Dictionary
 You can download sdcv dictionary from http://download.huzheng.org/dict.org/
+
+## Screenshot
+
+<img src="sdcv.png">
