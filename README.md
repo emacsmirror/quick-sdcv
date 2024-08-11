@@ -1,5 +1,7 @@
 # What is sdcv?
 
+(Note: This is a fork of sdcv.el version 3.4. The primary difference is that it does not require posframe.)
+
 Interface for sdcv (StartDict console version).
 
 Translate word by sdcv (console version of Stardict), and display

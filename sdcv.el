@@ -2,7 +2,8 @@
 
 ;; Filename: sdcv.el
 ;; Description: Interface for sdcv (StartDict console version).
-;; Package-Requires: ((emacs "25.1") (posframe "1.1.2"))
+;; Package-Requires: ((emacs "25.1"))
+;; Optional-Requirements: ((posframe "1.1.2"))
 ;; Author: Andy Stewart <lazycat.manatee@gmail.com>
 ;; Maintainer: Andy Stewart <lazycat.manatee@gmail.com>
 ;; Copyright (C) 2009, Andy Stewart, all rights reserved.
