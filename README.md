@@ -85,3 +85,7 @@ You can download sdcv dictionary from http://download.huzheng.org/dict.org/
 ## Screenshot
 
 <img src="sdcv.png">
+
+## Links
+
+- https://github.com/jamescherti/easysdcv.el
