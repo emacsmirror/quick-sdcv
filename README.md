@@ -23,7 +23,7 @@ sudo aptitude install stardict sdcv -y
 brew install stardict sdcv
 ```
 
-#### 2. Install posframe extension
+#### 2. Install posframe extension (optional)
 
 You can install get it from:
 https://raw.githubusercontent.com/tumashu/posframe/master/posframe.el
