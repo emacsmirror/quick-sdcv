@@ -96,15 +96,6 @@ installation."
   :type 'boolean
   :group 'easysdcv)
 
-(defcustom easysdcv-env-lang nil
-  "Default LANG environment for the sdcv program.
-
-The default is nil. If you want to set a specific locale,
-you can use a string such as en_US.UTF-8."
-  :type '(choice (string :tag "String")
-                 (const :tag "Nil" nil))
-  :group 'easysdcv)
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Variable ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defvar easysdcv-current-translate-object nil
@@ -195,19 +186,16 @@ Result is parsed as json."
            easysdcv-program))
   (with-temp-buffer
     (save-excursion
-      (let* ((lang-env (when easysdcv-env-lang
-                         (concat "LANG=" easysdcv-env-lang)))
-             (process-environment (cons lang-env process-environment)))
-        (let ((exit-code (apply #'call-process easysdcv-program nil t nil
-                                (append (list "--non-interactive" "--json-output")
-                                        (when easysdcv-only-data-dir
-                                          (list "--only-data-dir"))
-                                        (when easysdcv-dictionary-data-dir
-                                          (list "--data-dir" easysdcv-dictionary-data-dir))
-                                        arguments))))
-          (if (not (zerop exit-code))
-              (error "Failed to call %s: exit code %d" easysdcv-program
-                     exit-code)))))
+      (let ((exit-code (apply #'call-process easysdcv-program nil t nil
+                              (append (list "--non-interactive" "--json-output")
+                                      (when easysdcv-only-data-dir
+                                        (list "--only-data-dir"))
+                                      (when easysdcv-dictionary-data-dir
+                                        (list "--data-dir" easysdcv-dictionary-data-dir))
+                                      arguments))))
+        (if (not (zerop exit-code))
+            (error "Failed to call %s: exit code %d" easysdcv-program
+                   exit-code))))
     (ignore-errors (json-read))))
 
 (defun easysdcv--get-list-dicts ()
