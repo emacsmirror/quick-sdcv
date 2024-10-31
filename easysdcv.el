@@ -182,6 +182,11 @@ And show information in other buffer."
 (defun easysdcv--call-process (&rest arguments)
   "Call `easysdcv-program' with ARGUMENTS.
 Result is parsed as json."
+  (unless (executable-find easysdcv-program)
+    (error (concat "The program '%s' is not found. Please ensure it is "
+                   "installed and the path is correctly set "
+                   "in `easysdcv-program`.")
+           easysdcv-program))
   (with-temp-buffer
     (save-excursion
       (let* ((lang-env (when easysdcv-env-lang
