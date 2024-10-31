@@ -1,24 +1,17 @@
 ;;; easysdcv.el --- Interface for sdcv (StartDict console version) -*- lexical-binding: t -*-
 
+;; Copyright (C) 2024 James Cherti | https://www.jamescherti.com/contact/
+;; Copyright (C) 2009 Andy Stewart <lazycat.manatee@gmail.com>
+
 ;; Filename: easysdcv.el
 ;; Description: Interface for sdcv (StartDict console version).
 ;; Package-Requires: ((emacs "25.1"))
-;; Optional-Requirements: ((posframe "1.1.2"))
-;; Author: Andy Stewart <lazycat.manatee@gmail.com>
-;; Maintainer: Andy Stewart <lazycat.manatee@gmail.com>
-;; Copyright (C) 2009, Andy Stewart, all rights reserved.
+;; Maintainer: James Cherti
+;; Original Author: Andy Stewart
 ;; Created: 2009-02-05 22:04:02
-;; Version: 3.4
-;; Last-Updated: 2020-06-12 19:32:08
-;;           By: Andy Stewart
-;; URL: http://www.emacswiki.org/emacs/download/easysdcv.el
+;; Version: 3.5
+;; URL: https://github.com/jamescherti/easysdcv.el
 ;; Keywords: docs, startdict, sdcv
-;; Compatibility: GNU Emacs 25.1
-;;
-;; Features that might be required by this library:
-;;
-;; `posframe' `outline'
-;;
 
 ;;; This file is NOT part of GNU Emacs
 
@@ -168,13 +161,15 @@
   :group 'easysdcv)
 
 (defcustom easysdcv-dictionary-complete-list nil
-  "The complete dictionary list for translation."
-  :type 'list
+  "A list of dictionaries used for translation in easysdcv.
+Each entry should specify a dictionary source, allowing for
+multiple dictionaries to be utilized in translation processes."
+  :type '(repeat string)
   :group 'easysdcv)
 
 (defcustom easysdcv-dictionary-simple-list nil
   "The simple dictionary list for translation."
-  :type 'list
+  :type '(repeat string)
   :group 'easysdcv)
 
 (defcustom easysdcv-dictionary-data-dir nil
@@ -241,36 +236,38 @@ coding if your system is not zh_CN.UTF-8."
     ("^\\[\\([^]]*\\)\\]$" . (1 font-lock-string-face)))
   "Expressions to highlight in `easysdcv-mode'.")
 
-(easy-mmode-defmap easysdcv-mode-map
-  '(;; Sdcv command.
-    ("q" . easysdcv-quit)
-    ("j" . easysdcv-next-line)
-    ("k" . easysdcv-prev-line)
-    ("J" . easysdcv-scroll-up-one-line)
-    ("K" . easysdcv-scroll-down-one-line)
-    ("d" . easysdcv-next-dictionary)
-    ("f" . easysdcv-previous-dictionary)
-    ("i" . easysdcv-search-input)
-    (";" . easysdcv-search-input+)
-    ("p" . easysdcv-search-pointer)
-    ("y" . easysdcv-search-pointer+)
+;; Optionally, you might want to define the mode itself here.
+(defvar easysdcv-mode-map
+  (let ((map (make-sparse-keymap)))
+    ;; Sdcv command.
+    (define-key map (kbd "q") 'easysdcv-quit)
+    (define-key map (kbd "j") 'easysdcv-next-line)
+    (define-key map (kbd "k") 'easysdcv-prev-line)
+    (define-key map (kbd "J") 'easysdcv-scroll-up-one-line)
+    (define-key map (kbd "K") 'easysdcv-scroll-down-one-line)
+    (define-key map (kbd "d") 'easysdcv-next-dictionary)
+    (define-key map (kbd "f") 'easysdcv-previous-dictionary)
+    (define-key map (kbd "i") 'easysdcv-search-input)
+    (define-key map (kbd ";") 'easysdcv-search-input+)
+    (define-key map (kbd "p") 'easysdcv-search-pointer)
+    (define-key map (kbd "y") 'easysdcv-search-pointer+)
     ;; Isearch.
-    ("S" . isearch-forward-regexp)
-    ("R" . isearch-backward-regexp)
-    ("s" . isearch-forward)
-    ("r" . isearch-backward)
-    ;; Hideshow.
-    ("a" . outline-show-all)
-    ("A" . outline-hide-body)
-    ("v" . outline-show-entry)
-    ("V" . outline-hide-entry)
+    (define-key map (kbd "S") 'isearch-forward-regexp)
+    (define-key map (kbd "R") 'isearch-backward-regexp)
+    (define-key map (kbd "s") 'isearch-forward)
+    (define-key map (kbd "r") 'isearch-backward)
+    ;; Outline.
+    (define-key map (kbd "a") 'outline-show-all)
+    (define-key map (kbd "A") 'outline-hide-body)
+    (define-key map (kbd "v") 'outline-show-entry)
+    (define-key map (kbd "V") 'outline-hide-entry)
     ;; Misc.
-    ("e" . scroll-down)
-    (" " . scroll-up)
-    ("l" . forward-char)
-    ("h" . backward-char)
-    ("?" . describe-mode))
-  "Keymap for `easysdcv-mode'.")
+    (define-key map (kbd "e") 'scroll-down)
+    (define-key map (kbd " ") 'scroll-up)
+    (define-key map (kbd "l") 'forward-char)
+    (define-key map (kbd "h") 'backward-char)
+    (define-key map (kbd "?") 'describe-mode)
+    map))
 
 (define-derived-mode easysdcv-mode nil "sdcv"
   "Major mode to look up word through sdcv.
@@ -558,6 +555,3 @@ Otherwise return word around point."
 (provide 'easysdcv)
 
 ;;; easysdcv.el ends here
-
-;;; LocalWords:  sdcv StartDict startdict posframe stardict KDic XDICT CDICT
-;;; LocalWords:  FOLDOC WordNet ChiYuan Hideshow reinit

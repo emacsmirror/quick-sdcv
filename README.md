@@ -1,11 +1,6 @@
-# What is sdcv?
-
-(Note: This is a fork of sdcv.el version 3.4. The primary difference is that it does not require posframe.)
+# What is easysdcv?
 
 Interface for sdcv (StartDict console version).
-
-Translate word by sdcv (console version of Stardict), and display
-translation use posframe or buffer.
 
 ## Installation
 
@@ -23,14 +18,9 @@ sudo aptitude install stardict sdcv -y
 brew install stardict sdcv
 ```
 
-#### 2. Install posframe extension (optional)
-
-You can install get it from:
-https://raw.githubusercontent.com/tumashu/posframe/master/posframe.el
-
 #### 3. Require sdcv.el
 
-Put sdcv.el and posframe.el to your load-path.
+Put sdcv.el to your load-path.
 
 And add the following to your .emacs startup file.
 
