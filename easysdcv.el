@@ -172,8 +172,6 @@ you can use a string such as en_US.UTF-8."
   (let ((map (make-sparse-keymap)))
     ;; Sdcv command.
     (define-key map (kbd "q") 'easysdcv-quit)
-    (define-key map (kbd "j") 'easysdcv-next-line)
-    (define-key map (kbd "k") 'easysdcv-prev-line)
     (define-key map (kbd "J") 'easysdcv-scroll-up-one-line)
     (define-key map (kbd "K") 'easysdcv-scroll-down-one-line)
     (define-key map (kbd "d") 'easysdcv-next-dictionary)
@@ -268,22 +266,6 @@ And show information in other buffer."
   "Scroll down one line."
   (interactive)
   (scroll-down 1))
-
-(defun easysdcv-next-line (arg)
-  "Go to next ARGth line and show item."
-  (interactive "P")
-  (ignore-errors
-    (call-interactively 'next-line arg)
-    (save-excursion
-      (beginning-of-line nil)
-      (when (looking-at outline-regexp)
-        (outline-show-entry)))))
-
-(defun easysdcv-prev-line (arg)
-  "Go to previous ARGth line."
-  (interactive "P")
-  (ignore-errors
-    (call-interactively 'previous-line arg)))
 
 (defun easysdcv-check ()
   "Check for missing StarDict dictionaries."
