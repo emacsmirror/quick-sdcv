@@ -155,13 +155,6 @@ finish system installation."
   :type 'boolean
   :group 'easysdcv)
 
-(defcustom easysdcv-say-word-p nil
-  "Say word after searching if this option is non-nil.
-
-It will use system feature if you use OSX, otherwise youdao.com."
-  :type 'boolean
-  :group 'easysdcv)
-
 (defcustom easysdcv-env-lang "zh_CN.UTF-8"
   "Default LANG environment for sdcv program.
 
@@ -368,22 +361,6 @@ The result will be displayed in buffer named with
     (easysdcv-goto-sdcv)
     (easysdcv-mode-reinit)))
 
-(defun easysdcv-say-word (word)
-  "Listen to WORD pronunciation."
-  (if (featurep 'cocoa)
-      (call-process-shell-command
-       (format "say %s" word) nil 0)
-    (let ((player (or (executable-find "mpv")
-                      (executable-find "mplayer")
-                      (executable-find "mpg123"))))
-      (if player
-          (start-process
-           player
-           nil
-           player
-           (format "http://dict.youdao.com/dictvoice?type=2&audio=%s" (url-hexify-string word)))
-        (message "mpv, mplayer or mpg123 is needed to play word voice")))))
-
 (defun easysdcv-search-with-dictionary (word dictionary-list)
   "Search some WORD with DICTIONARY-LIST.
 Argument DICTIONARY-LIST the word that needs to be transformed."
@@ -393,9 +370,6 @@ Argument DICTIONARY-LIST the word that needs to be transformed."
     (when (and (string= easysdcv-fail-notify-string translate-result)
                (setq word (easysdcv-pick-word)))
       (setq translate-result (easysdcv-translate-result word dictionary-list)))
-
-    (when easysdcv-say-word-p
-      (easysdcv-say-word word))
 
     translate-result))
 
