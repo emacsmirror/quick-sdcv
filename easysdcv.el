@@ -113,7 +113,7 @@
 ;;; Require
 
 (require 'json)
-(require 'subr-x)
+(require 'cl-lib)
 (require 'outline)
 (require 'subword)
 
