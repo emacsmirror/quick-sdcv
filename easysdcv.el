@@ -1,4 +1,4 @@
-;;; easysdcv.el --- Interface for sdcv (StartDict console version) -*- lexical-binding: t -*-
+;;; easysdcv.el --- Interface for the sdcv command (StartDict cli dictionary) -*- lexical-binding: t -*-
 
 ;; Copyright (C) 2024 James Cherti | https://www.jamescherti.com/contact/
 ;; Copyright (C) 2009 Andy Stewart <lazycat.manatee@gmail.com>
@@ -9,7 +9,7 @@
 ;; Maintainer: James Cherti
 ;; Original Author: Andy Stewart
 ;; Created: 2009-02-05 22:04:02
-;; Version: 3.5
+;; Version: 3.6
 ;; URL: https://github.com/jamescherti/easysdcv.el
 ;; Keywords: docs, startdict, sdcv
 
@@ -159,7 +159,7 @@ finish system installation."
   "Default LANG environment for the sdcv program.
 
 The default is nil. If you want to set a specific locale,
-you can use a string such as 'en_US.UTF-8'."
+you can use a string such as en_US.UTF-8."
   :type '(choice (string :tag "String")
                  (const :tag "Nil" nil))
   :group 'easysdcv)
@@ -445,7 +445,6 @@ Otherwise return word around point."
   (if (use-region-p)
       (buffer-substring-no-properties (region-beginning) (region-end))
     (thing-at-point 'word t)))
-
 
 (provide 'easysdcv)
 
