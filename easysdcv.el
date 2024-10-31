@@ -203,16 +203,6 @@ And show information in other buffer."
   ;; Display details translate result.
   (easysdcv--search-detail (or word (easysdcv--prompt-input))))
 
-(defun easysdcv-quit ()
-  "Bury sdcv buffer and restore previous window configuration."
-  (interactive)
-  (if (window-configuration-p easysdcv-previous-window-configuration)
-      (progn
-        (set-window-configuration easysdcv-previous-window-configuration)
-        (setq easysdcv-previous-window-configuration nil)
-        (bury-buffer (easysdcv--get-buffer)))
-    (bury-buffer)))
-
 (defun easysdcv-next-dictionary ()
   "Jump to next dictionary."
   (interactive)
