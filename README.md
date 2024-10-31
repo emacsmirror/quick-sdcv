@@ -1,6 +1,6 @@
 # easysdcv.el - Emacs interface for the 'sdcv' command-line dictionary
 
-The `easysdcv` package serves as an Emacs interface for the `sdcv` command-line interface, which is the console version of the StartDict dictionary application.
+The `easysdcv` package serves as an Emacs interface for the `sdcv` command-line interface, which is the console version of the StarDict dictionary application.
 
 This integration allows users to access and utilize dictionary functionalities directly within the Emacs environment, leveraging the capabilities of `sdcv` to look up words and translations from various dictionary files formatted for StarDict.
 
@@ -83,7 +83,7 @@ The `easysdcv` Emacs package is a fork of `sdcv.el` version 3.4, which is availa
 - **Improved Outline Minor Mode**: The `easysdcv` package fixes the outline minor mode for dictionary folding, enabling users to collapse all definitions for quicker navigation through dictionaries.
 - **Default Language Settings**: Various issues have been addressed, including changing the default language setting from Chinese (zh) to nil, providing a more neutral starting point.
 - **Buffer Customization**: The `easysdcv` package employs `display-buffer`, allowing users to customize the display of the *SDCV* buffer and control its placement through `display-buffer-alist`.
-- **Removal of Warnings**: All Emacs warnings have been eliminated.
+- **Removal of bugs and Warnings**: All Emacs warnings have been eliminated and bugs fixed. (e.g., when `easysdcv-search-pointer` cannot locate the word under the cursor)
 - **Code Simplification**: The code has been simplified by removing unused variables and omitting features like posframe and text-to-speech using the 'say' command. This simplification makes `easysdcv` easier to understand, maintain, and use by focusing solely on dictionary lookup functionality. Features like `posframe` and text-to-speech, which are not essential to core usage, are better suited as separate packages.
 
 ## Links

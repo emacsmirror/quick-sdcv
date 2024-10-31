@@ -218,7 +218,7 @@ Turning on Text mode runs the normal hook `easysdcv-mode-hook'."
 Display complete translations in other buffer."
   (interactive)
   ;; Display details translate result
-  (easysdcv-search-detail (or word (easysdcv-region-or-word))))
+  (easysdcv-search-detail (or word (easysdcv--get-region-or-word))))
 
 
 ;;;###autoload
@@ -227,7 +227,7 @@ Display complete translations in other buffer."
 And show information in other buffer."
   (interactive)
   ;; Display details translate result.
-  (easysdcv-search-detail (or word (easysdcv-prompt-input))))
+  (easysdcv-search-detail (or word (easysdcv--prompt-input))))
 
 (defun easysdcv-quit ()
   "Bury sdcv buffer and restore previous window configuration."
@@ -331,19 +331,20 @@ If DICTS is nil, compute present dictionaries with
   "Search WORD in `easysdcv-dictionary-complete-list'.
 The result will be displayed in buffer named with
 `easysdcv-buffer-name' in `easysdcv-mode'."
-  (message "Searching...")
-  (with-current-buffer (get-buffer-create easysdcv-buffer-name)
-    (setq buffer-read-only nil)
-    (erase-buffer)
-    (setq easysdcv-current-translate-object word)
-    (insert (easysdcv-search-with-dictionary word easysdcv-dictionary-complete-list))
-    (easysdcv-goto-sdcv)
-    (easysdcv-mode-reinit)))
+  (when word
+    (message "Searching...")
+    (with-current-buffer (get-buffer-create easysdcv-buffer-name)
+      (setq buffer-read-only nil)
+      (erase-buffer)
+      (setq easysdcv-current-translate-object word)
+      (insert (easysdcv-search-with-dictionary word easysdcv-dictionary-complete-list))
+      (easysdcv-goto-sdcv)
+      (easysdcv-mode-reinit))))
 
 (defun easysdcv-search-with-dictionary (word dictionary-list)
   "Search some WORD with DICTIONARY-LIST.
 Argument DICTIONARY-LIST the word that needs to be transformed."
-  (let* ((word (or word (easysdcv-region-or-word)))
+  (let* ((word (or word (easysdcv--get-region-or-word)))
          (translate-result (easysdcv-translate-result word dictionary-list)))
 
     (when (and (string= easysdcv-fail-notify-string translate-result)
@@ -409,13 +410,13 @@ the beginning of the buffer."
     (run-hooks 'easysdcv-mode-reinit-hook)
     (message "Finished searching `%s'." easysdcv-current-translate-object)))
 
-(defun easysdcv-prompt-input ()
+(defun easysdcv--prompt-input ()
   "Prompt input for translation."
-  (let* ((word (easysdcv-region-or-word))
+  (let* ((word (easysdcv--get-region-or-word))
          (default (if word (format " (default %s)" word) "")))
     (read-string (format "Word%s: " default) nil nil word)))
 
-(defun easysdcv-region-or-word ()
+(defun easysdcv--get-region-or-word ()
   "Return region or word around point.
 If `mark-active' on, return region string.
 Otherwise return word around point."
