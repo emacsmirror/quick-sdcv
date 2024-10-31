@@ -92,7 +92,13 @@ installation."
   :group 'easysdcv)
 
 (defcustom easysdcv-only-data-dir t
-  "Search is performed using only `easysdcv-dictionary-data-dir'."
+  "Only use the dictionaries in data-dir `easysdcv-dictionary-data-dir'.
+Do not search in user and system directories"
+  :type 'boolean
+  :group 'easysdcv)
+
+(defcustom easysdcv-exact-search nil
+  "Do not fuzzy-search for similar words, only return exact matches."
   :type 'boolean
   :group 'easysdcv)
 
@@ -188,6 +194,8 @@ Result is parsed as json."
     (save-excursion
       (let ((exit-code (apply #'call-process easysdcv-program nil t nil
                               (append (list "--non-interactive" "--json-output")
+                                      (when easysdcv-exact-search
+                                        (list "--exact-search"))
                                       (when easysdcv-only-data-dir
                                         (list "--only-data-dir"))
                                       (when easysdcv-dictionary-data-dir

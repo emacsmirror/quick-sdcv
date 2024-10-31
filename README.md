@@ -88,6 +88,7 @@ The `easysdcv` Emacs package is a fork of `sdcv.el` version 3.4, which is availa
 - **Keybindings removal**: The default keybindings have been removed from `easysdcv-mode` to enhances customizability, prevents conflicts with other modes, and keeps the mode lightweight and adaptable for users’ preferences.
 - **Various improvements**: Implement error handling for cases when the sdcv program is not found.
 - **New interactive functions**: easysdcv-list-dictionaries
+- **New defcustom**: easysdcv-exact-search
 
 ## Links
 
