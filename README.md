@@ -4,6 +4,23 @@ The `easysdcv` package serves as an Emacs interface for the `sdcv` command-line 
 
 This integration allows users to access and utilize dictionary functionalities directly within the Emacs environment, leveraging the capabilities of `sdcv` to look up words and translations from various dictionary files formatted for StarDict.
 
+<!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-refresh-toc -->
+**Table of Contents**
+
+- [easysdcv.el - Emacs interface for the 'sdcv' command-line dictionary](#easysdcvel---emacs-interface-for-the-sdcv-command-line-dictionary)
+    - [Installation](#installation)
+        - [1. Install sdcv](#1-install-sdcv)
+            - [-](#-)
+            - [macOS](#macos)
+        - [2. Require easysdcv.el](#2-require-easysdcvel)
+    - [Configuration](#configuration)
+    - [Usage](#usage)
+    - [Frequently asked question](#frequently-asked-question)
+        - [What is the difference between sdcv (MELPA) and easysdcv Emacs packages?](#what-is-the-difference-between-sdcv-melpa-and-easysdcv-emacs-packages)
+    - [Links](#links)
+
+<!-- markdown-toc end -->
+
 ## Installation
 
 ### 1. Install sdcv
