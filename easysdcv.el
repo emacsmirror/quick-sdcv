@@ -163,6 +163,17 @@ The details will be shown in the `easysdcv-buffer-name' buffer."
   (interactive)
   (easysdcv--search-detail (or word (easysdcv--prompt-input))))
 
+;;;###autoload
+(defun easysdcv-list-dictionaries ()
+  "List all available dictionaries in a separate buffer."
+  (interactive)
+  (let ((dicts (easysdcv--get-list-dicts)))
+    (with-output-to-temp-buffer easysdcv-buffer-name
+      (princ "Available Dictionaries:\n")
+      (princ "------------------------\n")
+      (dolist (dict dicts)
+        (princ (format "%s\n" dict))))))
+
 (defun easysdcv-check ()
   "Check for missing StarDict dictionaries."
   (interactive)
@@ -189,13 +200,16 @@ Result is parsed as json."
       (let* ((lang-env (when easysdcv-env-lang
                          (concat "LANG=" easysdcv-env-lang)))
              (process-environment (cons lang-env process-environment)))
-        (apply #'call-process easysdcv-program nil t nil
-               (append (list "--non-interactive" "--json-output")
-                       (when easysdcv-only-data-dir
-                         (list "--only-data-dir"))
-                       (when easysdcv-dictionary-data-dir
-                         (list "--data-dir" easysdcv-dictionary-data-dir))
-                       arguments))))
+        (let ((exit-code (apply #'call-process easysdcv-program nil t nil
+                                (append (list "--non-interactive" "--json-output")
+                                        (when easysdcv-only-data-dir
+                                          (list "--only-data-dir"))
+                                        (when easysdcv-dictionary-data-dir
+                                          (list "--data-dir" easysdcv-dictionary-data-dir))
+                                        arguments))))
+          (if (not (zerop exit-code))
+              (error "Failed to call %s: exit code %d" easysdcv-program
+                     exit-code)))))
     (ignore-errors (json-read))))
 
 (defun easysdcv--get-list-dicts ()
