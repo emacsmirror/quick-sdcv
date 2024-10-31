@@ -203,26 +203,6 @@ And show information in other buffer."
   ;; Display details translate result.
   (easysdcv--search-detail (or word (easysdcv--prompt-input))))
 
-(defun easysdcv-next-dictionary ()
-  "Jump to next dictionary."
-  (interactive)
-  (outline-show-all)
-  (if (search-forward-regexp "^-->.*\n-" nil t) ;don't show error when search failed
-      (progn
-        (call-interactively 'previous-line)
-        (recenter 0))
-    (message "Reached last dictionary.")))
-
-(defun easysdcv-previous-dictionary ()
-  "Jump to previous dictionary."
-  (interactive)
-  (outline-show-all)
-  (if (search-backward-regexp "^-->.*\n-" nil t) ;don't show error when search failed
-      (progn
-        (forward-char 1)
-        (recenter 0))                   ;adjust position
-    (message "Reached first dictionary.")))
-
 (defun easysdcv-check ()
   "Check for missing StarDict dictionaries."
   (interactive)
@@ -282,7 +262,7 @@ The result will be displayed in buffer named with
       (ignore-errors
         (setq buffer-read-only t)
         (goto-char (point-min))
-        (easysdcv-next-dictionary)
+        (outline-next-heading)
         (outline-show-all)
         (message "Finished searching `%s'." easysdcv-current-translate-object)))))
 
