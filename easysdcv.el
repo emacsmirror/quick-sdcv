@@ -106,9 +106,6 @@
 ;; `easysdcv-dictionary-data-dir'
 ;; The directory where stardict dictionaries are stored.
 ;;
-;; `easysdcv-tooltip-face'
-;; The foreground/background colors of sdcv tooltip.
-;;
 ;; All of the above can customize by:
 ;;      M-x customize-group RET sdcv RET
 ;;
@@ -133,19 +130,9 @@
   :type 'string
   :group 'easysdcv)
 
-(defcustom easysdcv-tooltip-name "*sdcv*"
-  "The name of sdcv tooltip name."
-  :type 'string
-  :group 'easysdcv)
-
 (defcustom easysdcv-program "sdcv"
   "Path to sdcv."
   :type 'file
-  :group 'easysdcv)
-
-(defcustom easysdcv-tooltip-timeout 5
-  "The timeout for sdcv tooltip, in seconds."
-  :type 'integer
   :group 'easysdcv)
 
 (defcustom easysdcv-dictionary-complete-list nil
@@ -168,11 +155,6 @@ finish system installation."
   :type 'boolean
   :group 'easysdcv)
 
-(defcustom easysdcv-tooltip-border-width 10
-  "The border width of sdcv tooltip, in pixels."
-  :type 'integer
-  :group 'easysdcv)
-
 (defcustom easysdcv-say-word-p nil
   "Say word after searching if this option is non-nil.
 
@@ -186,11 +168,6 @@ It will use system feature if you use OSX, otherwise youdao.com."
 Default is zh_CN.UTF-8, maybe you need to change it to other
 coding if your system is not zh_CN.UTF-8."
   :type 'string
-  :group 'easysdcv)
-
-(defface easysdcv-tooltip-face
-  '((t (:foreground "green" :background "gray12")))
-  "Face for sdcv tooltip."
   :group 'easysdcv)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Variable ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
