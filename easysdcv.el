@@ -172,8 +172,6 @@ you can use a string such as en_US.UTF-8."
   (let ((map (make-sparse-keymap)))
     ;; Sdcv command.
     (define-key map (kbd "q") 'easysdcv-quit)
-    (define-key map (kbd "J") 'easysdcv-scroll-up-one-line)
-    (define-key map (kbd "K") 'easysdcv-scroll-down-one-line)
     (define-key map (kbd "d") 'easysdcv-next-dictionary)
     (define-key map (kbd "f") 'easysdcv-previous-dictionary)
     (define-key map (kbd "i") 'easysdcv-search-input)
@@ -257,16 +255,6 @@ And show information in other buffer."
         (recenter 0))                   ;adjust position
     (message "Reached first dictionary.")))
 
-(defun easysdcv-scroll-up-one-line ()
-  "Scroll up one line."
-  (interactive)
-  (scroll-up 1))
-
-(defun easysdcv-scroll-down-one-line ()
-  "Scroll down one line."
-  (interactive)
-  (scroll-down 1))
-
 (defun easysdcv-check ()
   "Check for missing StarDict dictionaries."
   (interactive)
@@ -321,7 +309,14 @@ The result will be displayed in buffer named with
       (setq easysdcv-current-translate-object word)
       (insert (easysdcv-search-with-dictionary word easysdcv-dictionary-complete-list))
       (easysdcv-goto-sdcv)
-      (easysdcv-mode-reinit))))
+      ;; Re-initialize buffer. Hide all entry but the first one and goto the
+      ;; beginning of the buffer.
+      (ignore-errors
+        (setq buffer-read-only t)
+        (goto-char (point-min))
+        (easysdcv-next-dictionary)
+        (outline-show-all)
+        (message "Finished searching `%s'." easysdcv-current-translate-object)))))
 
 (defun easysdcv-search-with-dictionary (word dictionary-list)
   "Search some WORD with DICTIONARY-LIST.
@@ -375,22 +370,6 @@ Return filtered string of results."
       (unless (eq major-mode 'easysdcv-mode)
         (easysdcv-mode)))
     buffer))
-
-(defvar easysdcv-mode-reinit-hook 'nil
-  "Hook for `easysdcv-mode-reinit'.
-This hook is called after `easysdcv-search-detail'.")
-
-(defun easysdcv-mode-reinit ()
-  "Re-initialize buffer.
-Hide all entry but the first one and goto
-the beginning of the buffer."
-  (ignore-errors
-    (setq buffer-read-only t)
-    (goto-char (point-min))
-    (easysdcv-next-dictionary)
-    (outline-show-all)
-    (run-hooks 'easysdcv-mode-reinit-hook)
-    (message "Finished searching `%s'." easysdcv-current-translate-object)))
 
 (defun easysdcv--prompt-input ()
   "Prompt input for translation."
