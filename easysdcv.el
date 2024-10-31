@@ -34,57 +34,20 @@
 
 ;;; Commentary:
 ;;
-;; Interface for sdcv (StartDict console version).
+;; The `easysdcv` package serves as an Emacs interface for the `sdcv`
+;; command-line interface, which is the console version of the StarDict
+;; dictionary application.
 ;;
-;; Translate word by sdcv (console version of Stardict), and display
-;; translation in buffer.
+;; This integration allows users to access and utilize dictionary
+;; functionalities directly within the Emacs environment, leveraging the
+;; capabilities of `sdcv` to look up words and translations from various
+;; dictionary files formatted for StarDict.
 ;;
-;; Below are commands you can use:
-;;
-;; - `easysdcv-search-pointer'
-;;   Search input word and display in buffer.
-;; - `easysdcv-search-input'
-;;   Search input word and display in buffer.
-;;
-;; Tips:
-;;
-;; If current mark is active, sdcv commands will translate
-;; contents in region, otherwise translate word at point.
-;;
-
-;;; Installation:
-;;
-;; To use this extension, you have to install Stardict and sdcv
-;; If you use Debian, it's simple, just:
-;;
-;;      sudo aptitude install stardict sdcv -y
-;;
-;; Put easysdcv.el to your load-path.
-;; The load-path is usually ~/elisp/.
-;; It's set in your ~/.emacs like this:
-;; (add-to-list 'load-path (expand-file-name "~/elisp"))
-;;
-;; And the following to your ~/.emacs startup file.
-;;
-;; (require 'easysdcv)
-;;
-;; And then you need to set:
-;;
-;;  easysdcv-dictionary-complete-list       (a complete dictionary list for buffer display)
-;;
-;;; Customize:
-;;
-;; `easysdcv-buffer-name'
-;; The name of sdcv buffer.
-;;
-;; `easysdcv-dictionary-complete-list'
-;; The dictionary list for complete description.
-;;
-;; `easysdcv-dictionary-data-dir'
-;; The directory where stardict dictionaries are stored.
-;;
-;; All of the above can customize by:
-;;      M-x customize-group RET easysdcv RET
+;; Below are the commands you can use:
+;; - `easysdcv-search-pointer': Searches the word around the cursor and displays
+;;   the result in a buffer.
+;; - `easysdcv-search-input': Searches the input word and displays the result in
+;;   a buffer.
 ;;
 
 ;;; Require
