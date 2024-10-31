@@ -37,18 +37,14 @@
 ;; Interface for sdcv (StartDict console version).
 ;;
 ;; Translate word by sdcv (console version of Stardict), and display
-;; translation using posframe or in buffer.
+;; translation in buffer.
 ;;
 ;; Below are commands you can use:
 ;;
-;; `easysdcv-search-pointer'
-;; Search around word and display in buffer.
-;; `easysdcv-search-pointer+'
-;; Search around word and display with `posframe'.
-;; `easysdcv-search-input'
-;; Search input word and display in buffer.
-;; `easysdcv-search-input+'
-;; Search input word and display with `posframe'.
+;; - `easysdcv-search-pointer'
+;;   Search input word and display in buffer.
+;; - `easysdcv-search-input'
+;;   Search input word and display in buffer.
 ;;
 ;; Tips:
 ;;
@@ -63,10 +59,6 @@
 ;;
 ;;      sudo aptitude install stardict sdcv -y
 ;;
-;; And make sure you have installed `posframe.el'.
-;; You can get it from:
-;; https://raw.githubusercontent.com/tumashu/posframe/master/posframe.el
-;;
 ;; Put easysdcv.el to your load-path.
 ;; The load-path is usually ~/elisp/.
 ;; It's set in your ~/.emacs like this:
@@ -76,14 +68,13 @@
 ;;
 ;; (require 'easysdcv)
 ;;
-;; And then you need to set two options.
+;; And then you need to set:
 ;;
-;;  easysdcv-dictionary-simple-list         (a simple dictionary list for posframe display)
 ;;  easysdcv-dictionary-complete-list       (a complete dictionary list for buffer display)
 ;;
 ;; Example, setup like this:
 ;;
-;; (setq easysdcv-dictionary-simple-list
+;; (setq easysdcv-dictionary-complete-list
 ;;       (list "Simple English-Chinese Dictionary"
 ;;             "Simple Chinese-English Dictionary"
 ;;             "KDic 110,000 English-Chinese Dictionary")
@@ -108,9 +99,6 @@
 ;;
 ;; `easysdcv-buffer-name'
 ;; The name of sdcv buffer.
-;;
-;; `easysdcv-dictionary-simple-list'
-;; The dictionary list for simple description.
 ;;
 ;; `easysdcv-dictionary-complete-list'
 ;; The dictionary list for complete description.
@@ -164,11 +152,6 @@
   "A list of dictionaries used for translation in easysdcv.
 Each entry should specify a dictionary source, allowing for
 multiple dictionaries to be utilized in translation processes."
-  :type '(repeat string)
-  :group 'easysdcv)
-
-(defcustom easysdcv-dictionary-simple-list nil
-  "The simple dictionary list for translation."
   :type '(repeat string)
   :group 'easysdcv)
 
@@ -248,9 +231,7 @@ coding if your system is not zh_CN.UTF-8."
     (define-key map (kbd "d") 'easysdcv-next-dictionary)
     (define-key map (kbd "f") 'easysdcv-previous-dictionary)
     (define-key map (kbd "i") 'easysdcv-search-input)
-    (define-key map (kbd ";") 'easysdcv-search-input+)
     (define-key map (kbd "p") 'easysdcv-search-pointer)
-    (define-key map (kbd "y") 'easysdcv-search-pointer+)
     ;; Isearch.
     (define-key map (kbd "S") 'isearch-forward-regexp)
     (define-key map (kbd "R") 'isearch-backward-regexp)
@@ -291,14 +272,6 @@ Display complete translations in other buffer."
   ;; Display details translate result
   (easysdcv-search-detail (or word (easysdcv-region-or-word))))
 
-;;;###autoload
-(defun easysdcv-search-pointer+ ()
-  "Translate word at point.
-Show information using tooltip.  This command uses
-`easysdcv-dictionary-simple-list'."
-  (interactive)
-  ;; Display simple translate result.
-  (easysdcv-search-simple))
 
 ;;;###autoload
 (defun easysdcv-search-input (&optional word)
@@ -307,14 +280,6 @@ And show information in other buffer."
   (interactive)
   ;; Display details translate result.
   (easysdcv-search-detail (or word (easysdcv-prompt-input))))
-
-;;;###autoload
-(defun easysdcv-search-input+ (&optional word)
-  "Translate current WORD at point.
-And show information using tooltip."
-  (interactive)
-  ;; Display simple translate result.
-  (easysdcv-search-simple (or word (easysdcv-prompt-input))))
 
 (defun easysdcv-quit ()
   "Bury sdcv buffer and restore previous window configuration."
@@ -376,13 +341,9 @@ And show information using tooltip."
   "Check for missing StarDict dictionaries."
   (interactive)
   (let* ((dicts (easysdcv-list-dicts))
-         (missing-simple-dicts (easysdcv-missing-dicts easysdcv-dictionary-simple-list dicts))
          (missing-complete-dicts (easysdcv-missing-dicts easysdcv-dictionary-complete-list dicts)))
-    (if (not (or missing-simple-dicts missing-complete-dicts))
+    (if (not missing-complete-dicts)
         (message "The dictionary's settings look correct, sdcv should work as expected.")
-      (dolist (dict missing-simple-dicts)
-        (message "easysdcv-dictionary-simple-list: dictionary '%s' does not exist, remove it or download the corresponding dictionary file to %s"
-                 dict easysdcv-dictionary-data-dir))
       (dolist (dict missing-complete-dicts)
         (message "easysdcv-dictionary-complete-list: dictionary '%s' does not exist, remove it or download the corresponding dictionary file to %s"
                  dict easysdcv-dictionary-data-dir)))))
@@ -429,25 +390,6 @@ The result will be displayed in buffer named with
     (insert (easysdcv-search-with-dictionary word easysdcv-dictionary-complete-list))
     (easysdcv-goto-sdcv)
     (easysdcv-mode-reinit)))
-
-(defun easysdcv-search-simple (&optional word)
-  "Search WORD simple translate result."
-  (when (ignore-errors (require 'posframe))
-    (let ((result (easysdcv-search-with-dictionary word easysdcv-dictionary-simple-list)))
-      ;; Show tooltip at point if word fetch from user cursor.
-      (posframe-show
-       easysdcv-tooltip-name
-       :string result
-       :position (if (derived-mode-p 'eaf-mode) (mouse-absolute-pixel-position) (point))
-       :timeout easysdcv-tooltip-timeout
-       :background-color (face-attribute 'easysdcv-tooltip-face :background)
-       :foreground-color (face-attribute 'easysdcv-tooltip-face :foreground)
-       :internal-border-width easysdcv-tooltip-border-width
-       :tab-line-height 0
-       :header-line-height 0)
-      (unwind-protect
-          (push (read-event " ") unread-command-events)
-        (posframe-delete easysdcv-tooltip-name)))))
 
 (defun easysdcv-say-word (word)
   "Listen to WORD pronunciation."
