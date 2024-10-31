@@ -273,17 +273,10 @@ Argument DICTIONARY-LIST the word that needs to be transformed."
          (translate-result (easysdcv--translate-result word dictionary-list)))
 
     (when (and (string= easysdcv-fail-notify-string translate-result)
-               (setq word (easysdcv--pick-word)))
+               (setq word (thing-at-point 'word t)))
       (setq translate-result (easysdcv--translate-result word dictionary-list)))
 
     translate-result))
-
-(defun easysdcv--pick-word (&optional _str)
-  "Pick word from camelcase string at point.
-_STR is ignored and leaved for backwards compatibility."
-  (let ((subword (make-symbol "subword")))
-    (put subword 'forward-op 'subword-forward)
-    (thing-at-point subword t)))
 
 (defun easysdcv--translate-result (word dictionary-list)
   "Call sdcv to search WORD in DICTIONARY-LIST.
