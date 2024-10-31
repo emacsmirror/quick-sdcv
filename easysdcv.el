@@ -72,29 +72,6 @@
 ;;
 ;;  easysdcv-dictionary-complete-list       (a complete dictionary list for buffer display)
 ;;
-;; Example, setup like this:
-;;
-;; (setq easysdcv-dictionary-complete-list
-;;       (list "Simple English-Chinese Dictionary"
-;;             "Simple Chinese-English Dictionary"
-;;             "KDic 110,000 English-Chinese Dictionary")
-;;       easysdcv-dictionary-complete-list
-;;       (list "KDic 110,000 English-Chinese Dictionary"
-;;             "Simple English-Chinese Dictionary"
-;;             "English-Chinese Dictionary 5.0"
-;;             "XDICT English-Chinese Dictionary"
-;;             "Chinese-English Dictionary 5.0"
-;;             "XDICT Chinese-English Dictionary"
-;;             "Simple Chinese-English Dictionary"
-;;             "Oxford English-Chinese Double Explanation Beautified Version"
-;;             "stardict 1.3 English-Chinese Dictionary"
-;;             "English-Chinese and Chinese-English Professional Dictionary"
-;;             "CDICT5 English-Chinese Dictionary"
-;;             "Jargon"
-;;             "FOLDOC"
-;;             "WordNet")
-;;       easysdcv-dictionary-data-dir "your_sdcv_dict_dir") ; local sdcv dict dir
-;;
 ;;; Customize:
 ;;
 ;; `easysdcv-buffer-name'
@@ -107,7 +84,7 @@
 ;; The directory where stardict dictionaries are stored.
 ;;
 ;; All of the above can customize by:
-;;      M-x customize-group RET sdcv RET
+;;      M-x customize-group RET easysdcv RET
 ;;
 
 ;;; Require
