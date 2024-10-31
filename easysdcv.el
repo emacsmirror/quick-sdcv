@@ -169,8 +169,6 @@ The details will be shown in the `easysdcv-buffer-name' buffer."
   (interactive)
   (let ((dicts (easysdcv--get-list-dicts)))
     (with-output-to-temp-buffer easysdcv-buffer-name
-      (princ "Available Dictionaries:\n")
-      (princ "------------------------\n")
       (dolist (dict dicts)
         (princ (format "%s\n" dict))))))
 
