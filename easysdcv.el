@@ -214,7 +214,7 @@ Turning on Text mode runs the normal hook `easysdcv-mode-hook'."
 Display complete translations in other buffer."
   (interactive)
   ;; Display details translate result
-  (easysdcv-search-detail (or word (easysdcv--get-region-or-word))))
+  (easysdcv--search-detail (or word (easysdcv--get-region-or-word))))
 
 
 ;;;###autoload
@@ -223,7 +223,7 @@ Display complete translations in other buffer."
 And show information in other buffer."
   (interactive)
   ;; Display details translate result.
-  (easysdcv-search-detail (or word (easysdcv--prompt-input))))
+  (easysdcv--search-detail (or word (easysdcv--prompt-input))))
 
 (defun easysdcv-quit ()
   "Bury sdcv buffer and restore previous window configuration."
@@ -232,7 +232,7 @@ And show information in other buffer."
       (progn
         (set-window-configuration easysdcv-previous-window-configuration)
         (setq easysdcv-previous-window-configuration nil)
-        (bury-buffer (easysdcv-get-buffer)))
+        (bury-buffer (easysdcv--get-buffer)))
     (bury-buffer)))
 
 (defun easysdcv-next-dictionary ()
@@ -258,8 +258,8 @@ And show information in other buffer."
 (defun easysdcv-check ()
   "Check for missing StarDict dictionaries."
   (interactive)
-  (let* ((dicts (easysdcv-list-dicts))
-         (missing-complete-dicts (easysdcv-missing-dicts easysdcv-dictionary-complete-list dicts)))
+  (let* ((dicts (easysdcv--get-list-dicts))
+         (missing-complete-dicts (easysdcv--get-missing-dicts easysdcv-dictionary-complete-list dicts)))
     (if (not missing-complete-dicts)
         (message "The dictionary's settings look correct, sdcv should work as expected.")
       (dolist (dict missing-complete-dicts)
@@ -268,7 +268,7 @@ And show information in other buffer."
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Utilities Functions ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defun easysdcv-call-process (&rest arguments)
+(defun easysdcv--call-process (&rest arguments)
   "Call `easysdcv-program' with ARGUMENTS.
 Result is parsed as json."
   (with-temp-buffer
@@ -285,19 +285,19 @@ Result is parsed as json."
                        arguments))))
     (ignore-errors (json-read))))
 
-(defun easysdcv-list-dicts ()
+(defun easysdcv--get-list-dicts ()
   "List dictionaries present in SDCV."
   (mapcar (lambda (dict) (cdr (assq 'name dict)))
-          (easysdcv-call-process "--list-dicts")))
+          (easysdcv--call-process "--list-dicts")))
 
-(defun easysdcv-missing-dicts (list &optional dicts)
+(defun easysdcv--get-missing-dicts (list &optional dicts)
   "List missing LIST dictionaries in DICTS.
 If DICTS is nil, compute present dictionaries with
-`easysdcv--list-dicts'."
-  (let ((dicts (or dicts (easysdcv-list-dicts))))
+`easysdcv--get-list-dicts'."
+  (let ((dicts (or dicts (easysdcv--get-list-dicts))))
     (cl-set-difference list dicts :test #'string=)))
 
-(defun easysdcv-search-detail (&optional word)
+(defun easysdcv--search-detail (&optional word)
   "Search WORD in `easysdcv-dictionary-complete-list'.
 The result will be displayed in buffer named with
 `easysdcv-buffer-name' in `easysdcv-mode'."
@@ -307,8 +307,8 @@ The result will be displayed in buffer named with
       (setq buffer-read-only nil)
       (erase-buffer)
       (setq easysdcv-current-translate-object word)
-      (insert (easysdcv-search-with-dictionary word easysdcv-dictionary-complete-list))
-      (easysdcv-goto-sdcv)
+      (insert (easysdcv--search-with-dictionary word easysdcv-dictionary-complete-list))
+      (easysdcv--goto-sdcv)
       ;; Re-initialize buffer. Hide all entry but the first one and goto the
       ;; beginning of the buffer.
       (ignore-errors
@@ -318,26 +318,26 @@ The result will be displayed in buffer named with
         (outline-show-all)
         (message "Finished searching `%s'." easysdcv-current-translate-object)))))
 
-(defun easysdcv-search-with-dictionary (word dictionary-list)
+(defun easysdcv--search-with-dictionary (word dictionary-list)
   "Search some WORD with DICTIONARY-LIST.
 Argument DICTIONARY-LIST the word that needs to be transformed."
   (let* ((word (or word (easysdcv--get-region-or-word)))
-         (translate-result (easysdcv-translate-result word dictionary-list)))
+         (translate-result (easysdcv--translate-result word dictionary-list)))
 
     (when (and (string= easysdcv-fail-notify-string translate-result)
-               (setq word (easysdcv-pick-word)))
-      (setq translate-result (easysdcv-translate-result word dictionary-list)))
+               (setq word (easysdcv--pick-word)))
+      (setq translate-result (easysdcv--translate-result word dictionary-list)))
 
     translate-result))
 
-(defun easysdcv-pick-word (&optional _str)
+(defun easysdcv--pick-word (&optional _str)
   "Pick word from camelcase string at point.
 _STR is ignored and leaved for backwards compatibility."
   (let ((subword (make-symbol "subword")))
     (put subword 'forward-op 'subword-forward)
     (thing-at-point subword t)))
 
-(defun easysdcv-translate-result (word dictionary-list)
+(defun easysdcv--translate-result (word dictionary-list)
   "Call sdcv to search WORD in DICTIONARY-LIST.
 Return filtered string of results."
   (let* ((arguments (cons word (mapcan (lambda (d) (list "-u" d)) dictionary-list)))
@@ -345,16 +345,16 @@ Return filtered string of results."
                   (lambda (result)
                     (let-alist result
                       (format "-->%s\n-->%s\n%s\n\n" .dict .word .definition)))
-                  (apply #'easysdcv-call-process arguments)
+                  (apply #'easysdcv--call-process arguments)
                   "")))
     (if (string-empty-p result)
         easysdcv-fail-notify-string
       result)))
 
-(defun easysdcv-goto-sdcv ()
+(defun easysdcv--goto-sdcv ()
   "Switch to sdcv buffer in other window."
   (setq easysdcv-previous-window-configuration (current-window-configuration))
-  (let* ((buffer (easysdcv-get-buffer))
+  (let* ((buffer (easysdcv--get-buffer))
          (window (get-buffer-window buffer)))
     (if (null window)
         ;; Use display-buffer because it follows display-buffer-alist
@@ -363,7 +363,7 @@ Return filtered string of results."
             (select-window win)))
       (select-window window))))
 
-(defun easysdcv-get-buffer ()
+(defun easysdcv--get-buffer ()
   "Get the sdcv buffer.  Create one if there's none."
   (let ((buffer (get-buffer-create easysdcv-buffer-name)))
     (with-current-buffer buffer
