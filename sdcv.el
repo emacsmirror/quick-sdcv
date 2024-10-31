@@ -235,7 +235,7 @@
   :type 'string
   :group 'sdcv)
 
-(defcustom sdcv-program (if (string-equal system-type "darwin") "/usr/local/bin/sdcv" "sdcv")
+(defcustom sdcv-program "sdcv"
   "Path to sdcv."
   :type 'file
   :group 'sdcv)
