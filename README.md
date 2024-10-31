@@ -85,6 +85,7 @@ The `easysdcv` Emacs package is a fork of `sdcv.el` version 3.4, which is availa
 - **Buffer Customization**: The `easysdcv` package employs `display-buffer`, allowing users to customize the display of the *SDCV* buffer and control its placement through `display-buffer-alist`.
 - **Removal of bugs and Warnings**: All Emacs warnings have been eliminated and bugs fixed. (e.g., when `easysdcv-search-pointer` cannot locate the word under the cursor)
 - **Code Simplification**: The code has been simplified by removing unused variables and omitting features like posframe, text-to-speech using the 'say' command, and functions such as (easysdcv-scroll-up-one-line, easysdcv-scroll-down-one-line, easysdcv-next-line and easysdcv-prev-line) which are similar Emacs features. This simplification makes `easysdcv` easier to understand, maintain, and use by focusing solely on dictionary lookup functionality. Features like `posframe` and text-to-speech, which are not essential to core usage, are better suited as separate packages.
+- **Keybindings removal**: The default keybindings have been removed from `easysdcv-mode` to enhances customizability, prevents conflicts with other modes, and keeps the mode lightweight and adaptable for users’ preferences.
 
 ## Links
 

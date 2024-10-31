@@ -170,28 +170,6 @@ you can use a string such as en_US.UTF-8."
 ;; Optionally, you might want to define the mode itself here.
 (defvar easysdcv-mode-map
   (let ((map (make-sparse-keymap)))
-    ;; Sdcv command.
-    (define-key map (kbd "q") 'easysdcv-quit)
-    (define-key map (kbd "d") 'easysdcv-next-dictionary)
-    (define-key map (kbd "f") 'easysdcv-previous-dictionary)
-    (define-key map (kbd "i") 'easysdcv-search-input)
-    (define-key map (kbd "p") 'easysdcv-search-pointer)
-    ;; Isearch.
-    (define-key map (kbd "S") 'isearch-forward-regexp)
-    (define-key map (kbd "R") 'isearch-backward-regexp)
-    (define-key map (kbd "s") 'isearch-forward)
-    (define-key map (kbd "r") 'isearch-backward)
-    ;; Outline.
-    (define-key map (kbd "a") 'outline-show-all)
-    (define-key map (kbd "A") 'outline-hide-body)
-    (define-key map (kbd "v") 'outline-show-entry)
-    (define-key map (kbd "V") 'outline-hide-entry)
-    ;; Misc.
-    (define-key map (kbd "e") 'scroll-down)
-    (define-key map (kbd " ") 'scroll-up)
-    (define-key map (kbd "l") 'forward-char)
-    (define-key map (kbd "h") 'backward-char)
-    (define-key map (kbd "?") 'describe-mode)
     map))
 
 (define-derived-mode easysdcv-mode nil "sdcv"
