@@ -1,26 +1,28 @@
-# What is easysdcv?
+# easysdcv.el - Emacs interface for the 'sdcv' command-line dictionary
 
-Interface for sdcv (StartDict console version).
+The `easysdcv` package serves as an Emacs interface for the `sdcv` command-line interface, which is the console version of the StartDict dictionary application.
+
+This integration allows users to access and utilize dictionary functionalities directly within the Emacs environment, leveraging the capabilities of `sdcv` to look up words and translations from various dictionary files formatted for StarDict.
 
 ## Installation
 
-#### 1. Install Stardict and sdcv
+### 1. Install sdcv
 
 To use this extension, you have to install Stardict and sdcv
 
-##### Linux
+##### Linux (Debian/Ubuntu based operating systems)
 ```Bash
-sudo aptitude install stardict sdcv -y
+sudo apt-get install sdcv
 ```
 
 ##### MacOS
 ```Bash
-brew install stardict sdcv
+brew install sdcv
 ```
 
-#### 3. Require sdcv.el
+### 2. Require easysdcv.el
 
-Put sdcv.el to your load-path.
+Put `easysdcv.el` to your load-path.
 
 And add the following to your .emacs startup file.
 
@@ -31,13 +33,7 @@ And add the following to your .emacs startup file.
 ## Configuration
 
 ```Elisp
-(setq sdcv-say-word-p t)               ;say word after translation
-
 (setq sdcv-dictionary-data-dir "startdict_dictionary_directory") ;setup directory of stardict dictionary
-
-(setq sdcv-dictionary-simple-list    ; setup dictionary list for simple search
-      '("Simple ENG-CHN Dictionary"
-        "Simple CHN-ENG Dictionary"))
 
 (setq sdcv-dictionary-complete-list     ; setup dictionary list for complete search
       '("Simple ENG-CHN Dictionary"
@@ -49,29 +45,20 @@ And add the following to your .emacs startup file.
         "Jargon"))
 ```
 
-After completing the above configuration, please execute the command ```sdcv-check```
-to confirm that the dictionary settings is correct,
-otherwise sdcv will not work because there is no dictionary file in sdcv-dictionary-data-dir.
+After completing the above configuration, execute the `sdcv-check` Emacs command to confirm that the dictionary settings are correct; otherwise, SDCV will not work because there is no dictionary file in `easysdcv-dictionary-data-dir`.
 
 ## Usage
 
-Below are commands you can use:
+Below are the commands you can use:
 
-| Command              | Description                                  |
-| :---                 | :---                                         |
-| sdcv-search-pointer  | Search around word and display with buffer.  |
-| sdcv-search-pointer+ | Search around word and display with tooltip. |
-| sdcv-search-input    | Search input word and display with buffer.   |
-| sdcv-search-input+   | Search input word and display with tooltip.  |
+| Command              | Description                                   |
+| :---                 | :---                                          |
+| `sdcv-search-pointer` | Searches the word around the cursor and displays the result in a buffer. |
+| `sdcv-search-input`   | Searches the input word and displays the result in a buffer. |
 
-Tips:
-
-If current mark is active, sdcv commands will translate
-region string, otherwise translate word around point.
-
-## Dictionary
-You can download sdcv dictionary from http://download.huzheng.org/dict.org/
+If the current mark is active, the SDCV commands will translate the region string; otherwise, they will translate the word around the cursor.
 
 ## Links
 
-- https://github.com/jamescherti/easysdcv.el
+- You can download sdcv dictionnaries from http://download.huzheng.org/dict.org/
+- The easysdcv.el Emacs package @GitHub: https://github.com/jamescherti/easysdcv.el
