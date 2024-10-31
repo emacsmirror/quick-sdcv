@@ -585,7 +585,10 @@ Return filtered string of results."
   (let* ((buffer (sdcv-get-buffer))
          (window (get-buffer-window buffer)))
     (if (null window)
-        (switch-to-buffer-other-window buffer)
+        ;; Use display-buffer because it follows display-buffer-alist
+        (let ((win (display-buffer buffer)))  ; Display the buffer
+          (when win
+            (select-window win)))
       (select-window window))))
 
 (defun sdcv-get-buffer ()
