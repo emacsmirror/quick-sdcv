@@ -57,6 +57,18 @@ Below are the commands you can use:
 
 If the current mark is active, the `easysdcv` will translate the region string; otherwise, they will translate the word around the cursor.
 
+## Frequently asked question
+
+### What is the difference between sdcv (MELPA) and easysdcv Emacs packages?
+
+The `easysdcv` Emacs package is a fork of `sdcv.el` version 3.4, which is available on MELPA. The primary differences between the two packages are as follows:
+
+- **Improved Outline Minor Mode**: The `easysdcv` package fixes the outline minor mode for dictionary folding, enabling users to collapse all definitions for quicker navigation through dictionaries.
+- **Default Language Settings**: Various issues have been addressed, including changing the default language setting from Chinese (zh) to nil, providing a more neutral starting point.
+- **Buffer Customization**: The `easysdcv` package employs `display-buffer`, allowing users to customize the display of the *SDCV* buffer and control its placement through `display-buffer-alist`.
+- **Removal of Warnings**: All Emacs warnings have been eliminated.
+- **Code Simplification**: The code has been simplified by removing unused variables and omitting features like posframe and text-to-speech using the 'say' command. This simplification makes `easysdcv` easier to understand, maintain, and use by focusing solely on dictionary lookup functionality. Features like `posframe` and text-to-speech, which are not essential to core usage, are better suited as separate packages.
+
 ## Links
 
 - You can download sdcv dictionnaries from http://download.huzheng.org/dict.org/
