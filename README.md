@@ -10,7 +10,7 @@ This integration allows users to access and utilize dictionary functionalities d
 - [easysdcv.el - Emacs interface for the 'sdcv' command-line dictionary](#easysdcvel---emacs-interface-for-the-sdcv-command-line-dictionary)
     - [Installation](#installation)
         - [1. Install sdcv](#1-install-sdcv)
-            - [-](#-)
+            - [Linux (Debian/Ubuntu-based operating systems)](#linux-debianubuntu-based-operating-systems)
             - [macOS](#macos)
         - [2. Require easysdcv.el](#2-require-easysdcvel)
     - [Configuration](#configuration)
@@ -27,12 +27,12 @@ This integration allows users to access and utilize dictionary functionalities d
 
 To use this extension, you must install Stardict and sdcv.
 
-##### Linux (Debian/Ubuntu-based operating systems)
+#### Linux (Debian/Ubuntu-based operating systems)
 ```bash
 sudo apt-get install sdcv
 ```
 
-##### macOS
+#### macOS
 ```bash
 brew install sdcv
 ```
