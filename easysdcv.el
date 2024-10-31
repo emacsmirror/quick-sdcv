@@ -155,12 +155,13 @@ finish system installation."
   :type 'boolean
   :group 'easysdcv)
 
-(defcustom easysdcv-env-lang "zh_CN.UTF-8"
-  "Default LANG environment for sdcv program.
+(defcustom easysdcv-env-lang nil
+  "Default LANG environment for the sdcv program.
 
-Default is zh_CN.UTF-8, maybe you need to change it to other
-coding if your system is not zh_CN.UTF-8."
-  :type 'string
+The default is nil. If you want to set a specific locale,
+you can use a string such as 'en_US.UTF-8'."
+  :type '(choice (string :tag "String")
+                 (const :tag "Nil" nil))
   :group 'easysdcv)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Variable ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -325,7 +326,8 @@ And show information in other buffer."
 Result is parsed as json."
   (with-temp-buffer
     (save-excursion
-      (let* ((lang-env (concat "LANG=" easysdcv-env-lang))
+      (let* ((lang-env (when easysdcv-env-lang
+                         (concat "LANG=" easysdcv-env-lang)))
              (process-environment (cons lang-env process-environment)))
         (apply #'call-process easysdcv-program nil t nil
                (append (list "--non-interactive" "--json-output")
