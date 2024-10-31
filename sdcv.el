@@ -357,7 +357,10 @@ coding if your system is not zh_CN.UTF-8."
 Turning on Text mode runs the normal hook `sdcv-mode-hook'."
   (setq font-lock-defaults '(sdcv-mode-font-lock-keywords t))
   (setq buffer-read-only t)
-  (set (make-local-variable 'outline-regexp) "^-->.*\n-->"))
+  (set (make-local-variable 'outline-regexp) "^-->.*\n-->")
+  (set (make-local-variable 'outline-level) #'(lambda()
+                                                1))
+  (outline-minor-mode))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Interactive Functions ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
