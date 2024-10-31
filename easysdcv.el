@@ -77,16 +77,17 @@
 
 (defcustom easysdcv-dictionary-complete-list nil
   "A list of dictionaries used for translation in easysdcv.
-Each entry should specify a dictionary source, allowing for
-multiple dictionaries to be utilized in translation processes."
+Each entry should specify a dictionary source, allowing multiple dictionaries to
+be utilized in the translation process."
   :type '(repeat string)
   :group 'easysdcv)
 
 (defcustom easysdcv-dictionary-data-dir nil
-  "Default, sdcv search word in /usr/share/startdict/dict/.
-If you customize this value with local dir, then you don't need
-to copy dict data to /usr/share directory everytime when you
-finish system installation."
+  "The sdcv data directory.
+By default, sdcv searches for words in /usr/share/startdict/dict/.
+If you customize this value with a local directory, you won't need to copy
+dictionary data to the /usr/share directory every time you finish system
+installation."
   :type '(choice (const :tag "Default" nil) directory)
   :group 'easysdcv)
 
@@ -106,15 +107,12 @@ you can use a string such as en_US.UTF-8."
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Variable ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defvar easysdcv-previous-window-configuration nil
-  "Window configuration before switching to sdcv buffer.")
-
 (defvar easysdcv-current-translate-object nil
   "The search object.")
 
 (defvar easysdcv-fail-notify-string
-  "No explanation available. Consider searching with additional dictionaries."
-  "User notification message on failed search.")
+  "If there is no explanation available, consider searching with additional
+  dictionaries. User notification message for a failed search.")
 
 (defvar easysdcv-mode-font-lock-keywords
   '(;; Dictionary name
@@ -139,7 +137,7 @@ you can use a string such as en_US.UTF-8."
   "Major mode to look up word through sdcv.
 \\{easysdcv-mode-map}
 
-Turning on Text mode runs the normal hook `easysdcv-mode-hook'."
+Enabling this mode runs the normal hook `easysdcv-mode-hook`."
   (setq font-lock-defaults '(easysdcv-mode-font-lock-keywords t))
   (setq buffer-read-only t)
   (set (make-local-variable 'outline-regexp) "^-->.*\n-->")
@@ -150,20 +148,19 @@ Turning on Text mode runs the normal hook `easysdcv-mode-hook'."
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Interactive Functions ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;;;###autoload
-(defun easysdcv-search-pointer (&optional word)
-  "Get current WORD.
-Display complete translations in other buffer."
+(defun easysdcv-search-pointer ()
+  "Retrieve the word under the cursor and display its definition.
+It displays the result in another buffer."
   (interactive)
-  ;; Display details translate result
-  (easysdcv--search-detail (or word (easysdcv--get-region-or-word))))
-
+  (easysdcv--search-detail (easysdcv--get-region-or-word)))
 
 ;;;###autoload
 (defun easysdcv-search-input (&optional word)
-  "Translate current input WORD.
-And show information in other buffer."
+  "Translate the specified input WORD and display the results in another buffer.
+
+If WORD is not provided, the function prompts the user to enter a word.
+The details will be shown in the `easysdcv-buffer-name' buffer."
   (interactive)
-  ;; Display details translate result.
   (easysdcv--search-detail (or word (easysdcv--prompt-input))))
 
 (defun easysdcv-check ()
@@ -262,7 +259,6 @@ Return filtered string of results."
 
 (defun easysdcv--goto-sdcv ()
   "Switch to sdcv buffer in other window."
-  (setq easysdcv-previous-window-configuration (current-window-configuration))
   (let* ((buffer (easysdcv--get-buffer))
          (window (get-buffer-window buffer)))
     (if (null window)
