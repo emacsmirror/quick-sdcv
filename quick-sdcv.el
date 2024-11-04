@@ -128,7 +128,7 @@ Do not search in user and system directories"
   :type 'boolean
   :group 'quick-sdcv)
 
-(defcustom quick-sdcv-dictionary-bullet "►"
+(defcustom quick-sdcv-dictionary-prefix-symbol "►"
   "Bullet character used in sdcv dictionaries.
 
 This variable specifies the single character used as a bullet in the output of
@@ -149,7 +149,7 @@ or nil will disable the bullet feature."
      (0 (let* ((heading-start (match-beginning 0))
                (heading-end (+ heading-start 3)))
           (compose-region (- heading-end 3) (- heading-end 1)
-                          quick-sdcv-dictionary-bullet)
+                          quick-sdcv-dictionary-prefix-symbol)
           (compose-region heading-end (- heading-end 1)
                           " ")
           nil)))))
@@ -261,7 +261,7 @@ and deconstructs any bullet regions marked by '-->' in the buffer.
 
 This function also calls `quick-sdcv--fontify-buffer` to apply
 fontification to the entire buffer after updating keywords."
-  (when quick-sdcv-dictionary-bullet
+  (when quick-sdcv-dictionary-prefix-symbol
     (if enabled
         (font-lock-add-keywords nil quick-sdcv--keywords)
       (save-excursion

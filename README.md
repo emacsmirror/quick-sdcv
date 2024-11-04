@@ -15,6 +15,7 @@ This integration allows users to access and utilize dictionary functionalities d
 - [quick-sdcv.el - Emacs interface for the 'sdcv' command-line dictionary](#quick-sdcvel---emacs-interface-for-the-sdcv-command-line-dictionary)
     - [Installation](#installation)
         - [Install using straight](#install-using-straight)
+    - [Customizations](#customizations)
     - [Usage](#usage)
     - [Frequently asked question](#frequently-asked-question)
         - [What is the difference between sdcv (MELPA) and quick-sdcv Emacs packages?](#what-is-the-difference-between-sdcv-melpa-and-quick-sdcv-emacs-packages)
@@ -39,6 +40,18 @@ To install `quick-sdcv` using `straight.el`:
              :type git
              :host github
              :repo "jamescherti/quick-sdcv.el"))
+```
+
+## Customizations
+
+To create a unique buffer for each word lookup:
+``` emacs-lisp
+(quick-sdcv-unique-word-buffers t)
+```
+
+To search for the exact words (not fuzzy-search):
+``` emacs-lisp
+(quick-sdcv-exact-search t)
 ```
 
 ## Usage
