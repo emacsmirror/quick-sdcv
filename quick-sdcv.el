@@ -44,10 +44,10 @@
 ;; dictionary files formatted for StarDict.
 ;;
 ;; Below are the commands you can use:
-;; - `quick-sdcv-search-pointer': Searches the word around the cursor and displays
-;;   the result in a buffer.
-;; - `quick-sdcv-search-input': Searches the input word and displays the result in
-;;   a buffer.
+;; - `quick-sdcv-search-at-point': Searches the word around the cursor and
+;;   displays the result in a buffer.
+;; - `quick-sdcv-search-input': Searches the input word and displays the result
+;;   in a buffer.
 ;;
 
 ;;; Require
@@ -197,7 +197,7 @@ Enabling this mode runs the normal hook `quick-sdcv-mode-hook`."
 ;;; Interactive Functions
 
 ;;;###autoload
-(defun quick-sdcv-search-pointer ()
+(defun quick-sdcv-search-at-point ()
   "Retrieve the word under the cursor and display its definition.
 It displays the result in another buffer."
   (interactive)
@@ -223,7 +223,6 @@ The details will be shown in the sdcv buffer."
 
 (defun quick-sdcv-check ()
   "Check for missing StarDict dictionaries."
-  (interactive)
   (let* ((dicts (quick-sdcv--get-list-dicts))
          (missing-complete-dicts
           (quick-sdcv--get-missing-dicts

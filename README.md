@@ -65,7 +65,7 @@ Below are the commands you can use:
 
 | Command                   | Description
 | :---                      | :---
-| `quick-sdcv-search-pointer` | Searches the word around the cursor and displays the result in a buffer.
+| `quick-sdcv-search-at-point` | Searches the word around the cursor and displays the result in a buffer.
 | `quick-sdcv-search-input`   | Searches the input word and displays the result in a buffer.
 
 If the current mark is active, the `quick-sdcv` will translate the region string; otherwise, they will translate the word around the cursor.
@@ -81,7 +81,7 @@ The `quick-sdcv` Emacs package is a fork of `sdcv.el` version 3.4, which is avai
 - **Improved Outline Minor Mode**: The `quick-sdcv` package fixes the outline minor mode for dictionary folding, enabling users to collapse all definitions for quicker navigation through dictionaries.
 - **Default Language Settings**: Various issues have been addressed, including changing the default language setting from Chinese (zh) to nil, providing a more neutral starting point.
 - **Buffer Customization**: The `quick-sdcv` package employs `display-buffer`, allowing users to customize the display of the *SDCV* buffer and control its placement through `display-buffer-alist`.
-- **Removal of bugs and Warnings**: All Emacs warnings have been eliminated and bugs fixed. (e.g., when `quick-sdcv-search-pointer` cannot locate the word under the cursor)
+- **Removal of bugs and Warnings**: All Emacs warnings have been eliminated and bugs fixed. (e.g., when `quick-sdcv-search-at-point` cannot locate the word under the cursor)
 - **Code Simplification**: The code has been simplified by removing unused variables and omitting features like posframe, text-to-speech using the 'say' command, the quick-sdcv-env-lang variable, and functions such as (quick-sdcv-scroll-up-one-line, quick-sdcv-scroll-down-one-line, quick-sdcv-next-line and quick-sdcv-prev-line) which are similar Emacs features. This simplification makes `quick-sdcv` easier to understand, maintain, and use by focusing solely on dictionary lookup functionality. Features like `posframe` and text-to-speech, which are not essential to core usage, are better suited as separate packages.
 - **Keybindings removal**: The default keybindings have been removed from `quick-sdcv-mode` to prevent conflicts with other modes and keeps the mode lightweight and adaptable for users’ preferences.
 - **New interactive functions**: quick-sdcv-list-dictionaries
