@@ -1,7 +1,7 @@
 ;;; quick-sdcv.el --- Interface for the sdcv command (StartDict cli dictionary) -*- lexical-binding: t -*-
 
 ;; Copyright (C) 2024 James Cherti | https://www.jamescherti.com/contact/
-;; Copyright (C) 2009 Andy Stewart <lazycat.manatee@gmail.com>
+;; Copyright (C) 2009 Andy Stewart
 
 ;; Filename: quick-sdcv.el
 ;; Description: Interface for sdcv (StartDict console version).
@@ -59,14 +59,40 @@
 
 ;;; Code:
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Customize ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; Customize
 
 (defgroup quick-sdcv nil
   "Interface for sdcv (StartDict console version)."
   :group 'edit)
 
-(defcustom quick-sdcv-buffer-name "*SDCV*"
-  "The name of the sdcv buffer."
+(defcustom quick-sdcv-unique-word-buffers nil
+  "If non-nil, create a unique buffer for each word lookup.
+This allows multiple definitions to be viewed simultaneously,
+with each word appearing in its own buffer.
+
+For instance, if the user searches for the word computer:
+- When non-nil, the buffer name will be *SDCV:computer*
+- When nil, the buffer name will be *SDCV*
+
+This can be customized with:
+- `quick-sdcv-buffer-name-prefix'
+- `quick-sdcv-buffer-name-separator'
+- `quick-sdcv-buffer-name-suffix'"
+  :type 'boolean
+  :group 'quick-sdcv)
+
+(defcustom quick-sdcv-buffer-name-prefix "*SDCV"
+  "The prefix of the sdcv buffer name."
+  :type 'string
+  :group 'quick-sdcv)
+
+(defcustom quick-sdcv-buffer-name-separator ":"
+  "The separator of the sdcv buffer name."
+  :type 'string
+  :group 'quick-sdcv)
+
+(defcustom quick-sdcv-buffer-name-suffix "*"
+  "The suffix of the sdcv buffer name."
   :type 'string
   :group 'quick-sdcv)
 
@@ -116,7 +142,7 @@ or nil will disable the bullet feature."
   :type '(choice (string :tag "Bullet character" :size 1)
                  (const :tag "No bullet" nil)))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Variable ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; Variables
 
 (defvar quick-sdcv--keywords
   `(("^-->.*\n-->"
@@ -164,10 +190,11 @@ Enabling this mode runs the normal hook `quick-sdcv-mode-hook`."
   (set (make-local-variable 'outline-regexp) "^-->.*\n-->")
   (set (make-local-variable 'outline-level) #'(lambda()
                                                 1))
+  (setq-local font-lock-multiline t)
   (outline-minor-mode)
   (quick-sdcv--toggle-bullet-fontification t))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Interactive Functions ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; Interactive Functions
 
 ;;;###autoload
 (defun quick-sdcv-search-pointer ()
@@ -181,7 +208,7 @@ It displays the result in another buffer."
   "Translate the specified input WORD and display the results in another buffer.
 
 If WORD is not provided, the function prompts the user to enter a word.
-The details will be shown in the `quick-sdcv-buffer-name' buffer."
+The details will be shown in the sdcv buffer."
   (interactive)
   (quick-sdcv--search-detail (or word (quick-sdcv--prompt-input))))
 
@@ -190,7 +217,7 @@ The details will be shown in the `quick-sdcv-buffer-name' buffer."
   "List all available dictionaries in a separate buffer."
   (interactive)
   (let ((dicts (quick-sdcv--get-list-dicts)))
-    (with-output-to-temp-buffer quick-sdcv-buffer-name
+    (with-output-to-temp-buffer (quick-sdcv--get-buffer-name "list-dict" t)
       (dolist (dict dicts)
         (princ (format "%s\n" dict))))))
 
@@ -198,14 +225,32 @@ The details will be shown in the `quick-sdcv-buffer-name' buffer."
   "Check for missing StarDict dictionaries."
   (interactive)
   (let* ((dicts (quick-sdcv--get-list-dicts))
-         (missing-complete-dicts (quick-sdcv--get-missing-dicts quick-sdcv-dictionary-complete-list dicts)))
+         (missing-complete-dicts
+          (quick-sdcv--get-missing-dicts
+           quick-sdcv-dictionary-complete-list
+           dicts)))
     (if (not missing-complete-dicts)
-        (message "The dictionary's settings look correct, sdcv should work as expected.")
+        (message (concat "The dictionary's settings look correct, sdcv "
+                         "should work as expected."))
       (dolist (dict missing-complete-dicts)
-        (message "quick-sdcv-dictionary-complete-list: dictionary '%s' does not exist, remove it or download the corresponding dictionary file to %s"
+        (message (concat "quick-sdcv-dictionary-complete-list: dictionary "
+                         "'%s' does not exist, remove it or download the "
+                         "corresponding dictionary file to %s")
                  dict quick-sdcv-dictionary-data-dir)))))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Utilities Functions ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; Utilitiy Functions
+
+(defun quick-sdcv--get-buffer-name (&optional word force-include-word)
+  "Return the buffer name for WORD.
+If FORCE-INCLUDE-WORD is non-nil, it will always include WORD in the buffer
+name."
+  (concat quick-sdcv-buffer-name-prefix
+          (when (and (or force-include-word
+                         quick-sdcv-unique-word-buffers)
+                     word)
+            (concat quick-sdcv-buffer-name-separator
+                    word))
+          quick-sdcv-buffer-name-suffix))
 
 (defun quick-sdcv--toggle-bullet-fontification (enabled)
   "Toggle fontification of bullets in the quick-sdcv buffer.
@@ -253,7 +298,8 @@ Result is parsed as json."
                                       (when quick-sdcv-only-data-dir
                                         (list "--only-data-dir"))
                                       (when quick-sdcv-dictionary-data-dir
-                                        (list "--data-dir" quick-sdcv-dictionary-data-dir))
+                                        (list "--data-dir"
+                                              quick-sdcv-dictionary-data-dir))
                                       arguments))))
         (if (not (zerop exit-code))
             (error "Failed to call %s: exit code %d" quick-sdcv-program
@@ -277,21 +323,34 @@ If DICTS is nil, compute present dictionaries with
 The result will be displayed in buffer named with
 `quick-sdcv-buffer-name' in `quick-sdcv-mode'."
   (when word
-    (message "Searching...")
-    (with-current-buffer (get-buffer-create quick-sdcv-buffer-name)
-      (setq buffer-read-only nil)
-      (erase-buffer)
-      (setq quick-sdcv-current-translate-object word)
-      (insert (quick-sdcv--search-with-dictionary word quick-sdcv-dictionary-complete-list))
-      (quick-sdcv--goto-sdcv)
-      ;; Re-initialize buffer. Hide all entry but the first one and goto the
-      ;; beginning of the buffer.
-      (ignore-errors
-        (setq buffer-read-only t)
-        (goto-char (point-min))
-        (outline-next-heading)
-        (outline-show-all)
-        (message "Finished searching `%s'." quick-sdcv-current-translate-object)))))
+    (let* ((buffer-name (quick-sdcv--get-buffer-name word))
+           (buffer (get-buffer buffer-name))
+           (refresh (or (not buffer)
+                        ;; When the words share the same buffer, always refresh
+                        (not quick-sdcv-unique-word-buffers))))
+      (unless buffer
+        (setq buffer (quick-sdcv--get-buffer word)))
+
+      (when buffer
+        (with-current-buffer buffer
+          (when refresh
+            ;; (message "Searching...")
+            (setq buffer-read-only nil)
+            (erase-buffer)
+            (setq quick-sdcv-current-translate-object word)
+            (insert (quick-sdcv--search-with-dictionary
+                     word
+                     quick-sdcv-dictionary-complete-list))
+
+            (setq buffer-read-only t)
+            (goto-char (point-min))
+            (ignore-errors
+              (outline-next-heading))
+
+            ;; (message "Finished searching `%s'."
+            ;;          quick-sdcv-current-translate-object)
+            )
+          (quick-sdcv--goto-sdcv word))))))
 
 (defun quick-sdcv--search-with-dictionary (word dictionary-list)
   "Search some WORD with DICTIONARY-LIST.
@@ -319,24 +378,33 @@ Return filtered string of results."
         quick-sdcv-fail-notify-string
       result)))
 
-(defun quick-sdcv--goto-sdcv ()
-  "Switch to sdcv buffer in other window."
-  (let* ((buffer (quick-sdcv--get-buffer))
-         (window (get-buffer-window buffer)))
-    (if (null window)
+(defun quick-sdcv--goto-sdcv (&optional word)
+  "Switch to sdcv buffer of WORD in other window."
+  (let* ((buffer (quick-sdcv--get-buffer word))
+         (window (when buffer
+                   (get-buffer-window buffer))))
+    (when buffer
+      (if window
+          (progn
+            (select-window window)
+            t)
         ;; Use display-buffer because it follows display-buffer-alist
         (let ((win (display-buffer buffer)))  ; Display the buffer
           (when win
-            (select-window win)))
-      (select-window window))))
+            (select-window win)
+            t))))))
 
-(defun quick-sdcv--get-buffer ()
-  "Get the sdcv buffer.  Create one if there's none."
-  (let ((buffer (get-buffer-create quick-sdcv-buffer-name)))
-    (with-current-buffer buffer
-      (unless (eq major-mode 'quick-sdcv-mode)
-        (quick-sdcv-mode)))
-    buffer))
+(defun quick-sdcv--get-buffer (&optional word)
+  "Get the sdcv buffer of WORD. Create one if there's none."
+  (let* ((buffer-name (quick-sdcv--get-buffer-name word))
+         (buffer (get-buffer buffer-name)))
+    (unless buffer
+      (setq buffer (get-buffer-create buffer-name)))
+    (when buffer
+      (with-current-buffer buffer
+        (unless (eq major-mode 'quick-sdcv-mode)
+          (quick-sdcv-mode)))
+      buffer)))
 
 (defun quick-sdcv--prompt-input ()
   "Prompt input for translation."
