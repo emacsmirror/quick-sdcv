@@ -144,22 +144,29 @@ or nil will disable the bullet feature."
 
 ;;; Variables
 
-(defvar quick-sdcv--keywords
-  `(("^-->.*\n-->"
-     (0 (let* ((heading-start (match-beginning 0))
-               (heading-end (+ heading-start 3)))
-          (compose-region (- heading-end 3) (- heading-end 1)
-                          quick-sdcv-dictionary-prefix-symbol)
-          (compose-region heading-end (- heading-end 1)
-                          " ")
-          nil)))))
-
 (defvar quick-sdcv-current-translate-object nil
   "The search object.")
 
 (defvar quick-sdcv-fail-notify-string
   "If there is no explanation available, consider searching with additional
   dictionaries. User notification message for a failed search.")
+
+(defvar quick-sdcv--bullets-keywords
+  `(("^-->.*\n-->"
+     (0 (let* ((heading-start (match-beginning 0))
+               (heading-end (+ heading-start 3))
+               (symbol-enabled
+                (and quick-sdcv-dictionary-prefix-symbol
+                     (> (length quick-sdcv-dictionary-prefix-symbol) 0)))
+               (symbol (if symbol-enabled
+                           (substring quick-sdcv-dictionary-prefix-symbol 0 1)
+                         nil)))
+          (when (and symbol (not (string= symbol "")))
+            (compose-region (- heading-end 3) (- heading-end 1) symbol)
+            (compose-region heading-end (- heading-end 1) " ")
+            (put-text-property (- heading-end 3) heading-end
+                               'face 'font-lock-type-face))
+          nil)))))
 
 (defvar quick-sdcv-mode-font-lock-keywords
   '(;; Dictionary name
@@ -192,7 +199,7 @@ Enabling this mode runs the normal hook `quick-sdcv-mode-hook`."
                                                 1))
   (setq-local font-lock-multiline t)
   (outline-minor-mode)
-  (quick-sdcv--toggle-bullet-fontification t))
+  (quick-sdcv--toggle-bullet-fontification))
 
 ;;; Interactive Functions
 
@@ -251,34 +258,29 @@ name."
                     word))
           quick-sdcv-buffer-name-suffix))
 
-(defun quick-sdcv--toggle-bullet-fontification (enabled)
+(defun quick-sdcv--toggle-bullet-fontification ()
   "Toggle fontification of bullets in the quick-sdcv buffer.
 
 When ENABLED is non-nil, adds font-lock keywords to highlight bullets
-using `quick-sdcv--keywords`. If ENABLED is nil, removes the keywords
+using `quick-sdcv--bullets-keywords`. If ENABLED is nil, removes the keywords
 and deconstructs any bullet regions marked by '-->' in the buffer.
 
 This function also calls `quick-sdcv--fontify-buffer` to apply
 fontification to the entire buffer after updating keywords."
-  (when quick-sdcv-dictionary-prefix-symbol
-    (if enabled
-        (font-lock-add-keywords nil quick-sdcv--keywords)
-      (save-excursion
-        (goto-char (point-min))
-        (font-lock-remove-keywords nil quick-sdcv--keywords)
-        (while (re-search-forward "^-->.*\n-->" nil t)
-          (decompose-region (match-beginning 0) (match-end 0)))))
+  (when (and quick-sdcv-dictionary-prefix-symbol
+             (> (length quick-sdcv-dictionary-prefix-symbol) 0))
+    (font-lock-add-keywords nil quick-sdcv--bullets-keywords))
 
-    ;; Fontify the buffer
-    (when font-lock-mode
-      (save-restriction
-        (widen)
-        (when (fboundp 'font-lock-flush)
-          (font-lock-flush))
-        (when (fboundp 'font-lock-ensure)
-          (font-lock-ensure)))
-      (with-no-warnings
-        (font-lock-fontify-buffer)))))
+  ;; Fontify the buffer
+  (when font-lock-mode
+    (save-restriction
+      (widen)
+      (when (fboundp 'font-lock-flush)
+        (font-lock-flush))
+      (when (fboundp 'font-lock-ensure)
+        (font-lock-ensure)))
+    (with-no-warnings
+      (font-lock-fontify-buffer))))
 
 (defun quick-sdcv--call-process (&rest arguments)
   "Call `quick-sdcv-program' with ARGUMENTS.
