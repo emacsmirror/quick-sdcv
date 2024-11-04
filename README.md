@@ -9,10 +9,7 @@ This integration allows users to access and utilize dictionary functionalities d
 
 - [quick-sdcv.el - Emacs interface for the 'sdcv' command-line dictionary](#quick-sdcvel---emacs-interface-for-the-sdcv-command-line-dictionary)
     - [Installation](#installation)
-        - [1. Install sdcv](#1-install-sdcv)
-            - [Linux (Debian/Ubuntu-based operating systems)](#linux-debianubuntu-based-operating-systems)
-            - [macOS](#macos)
-        - [2. Require quick-sdcv.el](#2-require-quick-sdcvel)
+        - [Install using straight](#install-using-straight)
     - [Configuration](#configuration)
     - [Usage](#usage)
     - [Frequently asked question](#frequently-asked-question)
@@ -23,28 +20,21 @@ This integration allows users to access and utilize dictionary functionalities d
 
 ## Installation
 
-### 1. Install sdcv
+Prerequisite: the `sdcv` command
 
-To use this extension, you must install Stardict and sdcv.
+### Install using straight
 
-#### Linux (Debian/Ubuntu-based operating systems)
-```bash
-sudo apt-get install sdcv
-```
+To install the `quick-sdcv` using `straight.el`:
 
-#### macOS
-```bash
-brew install sdcv
-```
-
-### 2. Require quick-sdcv.el
-
-Place `quick-sdcv.el` in your load-path.
-
-Then, add the following line to your `.emacs` startup file:
-
-```elisp
-(require 'quick-sdcv)
+1. It if hasn't already been done, [add the straight.el bootstrap code](https://github.com/radian-software/straight.el?tab=readme-ov-file#getting-started) to your init file.
+2. Add the following code to the Emacs init file:
+```emacs-lisp
+(use-package quick-sdcv
+  :ensure t
+  :straight (quick-sdcv
+             :type git
+             :host github
+             :repo "jamescherti/quick-sdcv.el"))
 ```
 
 ## Configuration
@@ -62,6 +52,8 @@ Then, add the following line to your `.emacs` startup file:
 ```
 
 After completing the above configuration, execute the `quick-sdcv-check` Emacs command to confirm that the dictionary settings are correct. Otherwise, `quick-sdcv` will not function correctly due to the absence of dictionary files in `quick-sdcv-dictionary-data-dir`.
+
+You can download sdcv dictionaries from: http://download.huzheng.org/dict.org/
 
 ## Usage
 
@@ -92,5 +84,5 @@ The `quick-sdcv` Emacs package is a fork of `sdcv.el` version 3.4, which is avai
 
 ## Links
 
-- You can download sdcv dictionnaries from http://download.huzheng.org/dict.org/
+- You can download sdcv dictionaries from http://download.huzheng.org/dict.org/
 - The quick-sdcv.el Emacs package @GitHub: https://github.com/jamescherti/quick-sdcv.el
