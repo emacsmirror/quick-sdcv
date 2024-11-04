@@ -23,11 +23,11 @@ This integration allows users to access and utilize dictionary functionalities d
 
 ## Installation
 
-Prerequisite: the `sdcv` command
+Prerequisite: The [sdcv](https://github.com/Dushistov/sdcv) command. It can usually be installed by installing the `sdcv` package.
 
 ### Install using straight
 
-To install the `quick-sdcv` using `straight.el`:
+To install `quick-sdcv` using `straight.el`:
 
 1. It if hasn't already been done, [add the straight.el bootstrap code](https://github.com/radian-software/straight.el?tab=readme-ov-file#getting-started) to your init file.
 2. Add the following code to the Emacs init file:
