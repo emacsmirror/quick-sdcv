@@ -65,7 +65,7 @@
   "Interface for sdcv (StartDict console version)."
   :group 'edit)
 
-(defcustom quick-sdcv-unique-word-buffers nil
+(defcustom sdcv-unique-buffers nil
   "If non-nil, create a unique buffer for each word lookup.
 This allows multiple definitions to be viewed simultaneously,
 with each word appearing in its own buffer.
@@ -257,7 +257,7 @@ If FORCE-INCLUDE-WORD is non-nil, it will always include WORD in the buffer
 name."
   (concat quick-sdcv-buffer-name-prefix
           (when (and (or force-include-word
-                         quick-sdcv-unique-word-buffers)
+                         sdcv-unique-buffers)
                      word)
             (concat quick-sdcv-buffer-name-separator
                     word))
@@ -333,7 +333,7 @@ The result will be displayed in buffer named with
            (buffer (get-buffer buffer-name))
            (refresh (or (not buffer)
                         ;; When the words share the same buffer, always refresh
-                        (not quick-sdcv-unique-word-buffers))))
+                        (not sdcv-unique-buffers))))
       (unless buffer
         (setq buffer (quick-sdcv--get-buffer word)))
 
