@@ -102,7 +102,31 @@ Do not search in user and system directories"
   :type 'boolean
   :group 'quick-sdcv)
 
+(defcustom quick-sdcv-dictionary-bullet "►"
+  "Bullet character used in sdcv dictionaries.
+
+This variable specifies the single character used as a bullet in the output of
+sdcv dictionaries. The bullet replaces the standard output arrow ('-->')
+visually. This can be set to nil to disable the bullet feature entirely,
+allowing the output to display without any visual replacements.
+
+The value should be a single character. Setting this variable to an empty string
+or nil will disable the bullet feature."
+  :group 'quick-sdcv
+  :type '(choice (string :tag "Bullet character" :size 1)
+                 (const :tag "No bullet" nil)))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Variable ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defvar quick-sdcv--keywords
+  `(("^-->.*\n-->"
+     (0 (let* ((heading-start (match-beginning 0))
+               (heading-end (+ heading-start 3)))
+          (compose-region (- heading-end 3) (- heading-end 1)
+                          quick-sdcv-dictionary-bullet)
+          (compose-region heading-end (- heading-end 1)
+                          " ")
+          nil)))))
 
 (defvar quick-sdcv-current-translate-object nil
   "The search object.")
@@ -140,7 +164,8 @@ Enabling this mode runs the normal hook `quick-sdcv-mode-hook`."
   (set (make-local-variable 'outline-regexp) "^-->.*\n-->")
   (set (make-local-variable 'outline-level) #'(lambda()
                                                 1))
-  (outline-minor-mode))
+  (outline-minor-mode)
+  (quick-sdcv--toggle-bullet-fontification t))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Interactive Functions ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -181,6 +206,35 @@ The details will be shown in the `quick-sdcv-buffer-name' buffer."
                  dict quick-sdcv-dictionary-data-dir)))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Utilities Functions ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defun quick-sdcv--toggle-bullet-fontification (enabled)
+  "Toggle fontification of bullets in the quick-sdcv buffer.
+
+When ENABLED is non-nil, adds font-lock keywords to highlight bullets
+using `quick-sdcv--keywords`. If ENABLED is nil, removes the keywords
+and deconstructs any bullet regions marked by '-->' in the buffer.
+
+This function also calls `quick-sdcv--fontify-buffer` to apply
+fontification to the entire buffer after updating keywords."
+  (when quick-sdcv-dictionary-bullet
+    (if enabled
+        (font-lock-add-keywords nil quick-sdcv--keywords)
+      (save-excursion
+        (goto-char (point-min))
+        (font-lock-remove-keywords nil quick-sdcv--keywords)
+        (while (re-search-forward "^-->.*\n-->" nil t)
+          (decompose-region (match-beginning 0) (match-end 0)))))
+
+    ;; Fontify the buffer
+    (when font-lock-mode
+      (save-restriction
+        (widen)
+        (when (fboundp 'font-lock-flush)
+          (font-lock-flush))
+        (when (fboundp 'font-lock-ensure)
+          (font-lock-ensure)))
+      (with-no-warnings
+        (font-lock-fontify-buffer)))))
 
 (defun quick-sdcv--call-process (&rest arguments)
   "Call `quick-sdcv-program' with ARGUMENTS.

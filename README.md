@@ -86,7 +86,7 @@ The `quick-sdcv` Emacs package is a fork of `sdcv.el` version 3.4, which is avai
 - **Removal of bugs and Warnings**: All Emacs warnings have been eliminated and bugs fixed. (e.g., when `quick-sdcv-search-pointer` cannot locate the word under the cursor)
 - **Code Simplification**: The code has been simplified by removing unused variables and omitting features like posframe, text-to-speech using the 'say' command, the quick-sdcv-env-lang variable, and functions such as (quick-sdcv-scroll-up-one-line, quick-sdcv-scroll-down-one-line, quick-sdcv-next-line and quick-sdcv-prev-line) which are similar Emacs features. This simplification makes `quick-sdcv` easier to understand, maintain, and use by focusing solely on dictionary lookup functionality. Features like `posframe` and text-to-speech, which are not essential to core usage, are better suited as separate packages.
 - **Keybindings removal**: The default keybindings have been removed from `quick-sdcv-mode` to enhances customizability, prevents conflicts with other modes, and keeps the mode lightweight and adaptable for users’ preferences.
-- **Various improvements**: Implement error handling for cases when the sdcv program is not found.
+- **Various improvements**: Enhance bullet representation with UTF-8 characters in quick-sdcv, Implement error handling for cases when the sdcv program is not found.
 - **New interactive functions**: quick-sdcv-list-dictionaries
 - **New defcustom**: quick-sdcv-exact-search
 
