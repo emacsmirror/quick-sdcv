@@ -46,12 +46,12 @@ To install `quick-sdcv` using `straight.el`:
 
 To create a unique buffer for each word lookup:
 ``` emacs-lisp
-(quick-sdcv-unique-word-buffers t)
+(setq quick-sdcv-unique-word-buffers t)
 ```
 
 To search for the exact words (not fuzzy-search):
 ``` emacs-lisp
-(quick-sdcv-exact-search t)
+(setq quick-sdcv-exact-search t)
 ```
 
 To change the character used as a prefix before dictionary names, replacing the default `-->`:
