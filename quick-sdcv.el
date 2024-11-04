@@ -287,7 +287,7 @@ Return filtered string of results."
 (defun quick-sdcv--prompt-input ()
   "Prompt input for translation."
   (let* ((word (quick-sdcv--get-region-or-word))
-         (default (if word (format " (default %s)" word) "")))
+         (default (if word (format " (default: %s)" word) "")))
     (read-string (format "Word%s: " default) nil nil word)))
 
 (defun quick-sdcv--get-region-or-word ()
