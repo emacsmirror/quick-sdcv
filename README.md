@@ -1,4 +1,5 @@
 # quick-sdcv.el - Emacs interface for the 'sdcv' command-line dictionary
+![Build Status](https://github.com/jamescherti/quick-sdcv.el/actions/workflows/ci.yml/badge.svg)
 ![License](https://img.shields.io/github/license/jamescherti/quick-sdcv.el)
 ![](https://raw.githubusercontent.com/jamescherti/quick-sdcv.el/main/.images/made-for-gnu-emacs.svg)
 
