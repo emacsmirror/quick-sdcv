@@ -54,6 +54,11 @@ To search for the exact words (not fuzzy-search):
 (quick-sdcv-exact-search t)
 ```
 
+To change the character used as a prefix before dictionary names, replacing the default `-->`:
+``` emacs-lisp
+(setq quick-sdcv-dictionary-prefix-symbol "►")
+```
+
 ## Usage
 
 Below are the commands you can use:
