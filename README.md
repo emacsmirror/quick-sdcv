@@ -1,4 +1,6 @@
 # quick-sdcv.el - Emacs interface for the 'sdcv' command-line dictionary
+![License](https://img.shields.io/github/license/jamescherti/quick-sdcv.el)
+![](https://raw.githubusercontent.com/jamescherti/quick-sdcv.el/main/.images/made-for-gnu-emacs.svg)
 
 The `quick-sdcv` package serves as an Emacs interface for the `sdcv` command-line interface, which is the console version of the StarDict dictionary application.
 
