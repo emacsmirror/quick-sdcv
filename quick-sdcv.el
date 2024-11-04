@@ -355,7 +355,7 @@ The result will be displayed in buffer named with
             (when quick-sdcv-verbose
               (message "[SDCV] Finished searching `%s'."
                        quick-sdcv-current-translate-object)))
-          (quick-sdcv--goto-sdcv word))))))
+          (pop-to-buffer buffer))))))
 
 (defun quick-sdcv--search-with-dictionary (word dictionary-list)
   "Search some WORD with DICTIONARY-LIST.
@@ -382,11 +382,6 @@ Return filtered string of results."
     (if (string-empty-p result)
         quick-sdcv-fail-notify-string
       result)))
-
-(defun quick-sdcv--goto-sdcv (&optional word)
-  "Switch to sdcv buffer of WORD in other window."
-  (let* ((buffer (quick-sdcv--get-buffer word)))
-    (pop-to-buffer buffer)))
 
 (defun quick-sdcv--get-buffer (&optional word)
   "Get the sdcv buffer of WORD. Create one if there's none."
