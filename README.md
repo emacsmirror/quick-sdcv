@@ -14,7 +14,6 @@ This integration allows users to access and utilize dictionary functionalities d
 - [quick-sdcv.el - Emacs interface for the 'sdcv' command-line dictionary](#quick-sdcvel---emacs-interface-for-the-sdcv-command-line-dictionary)
     - [Installation](#installation)
         - [Install using straight](#install-using-straight)
-    - [Configuration](#configuration)
     - [Usage](#usage)
     - [Frequently asked question](#frequently-asked-question)
         - [What is the difference between sdcv (MELPA) and quick-sdcv Emacs packages?](#what-is-the-difference-between-sdcv-melpa-and-quick-sdcv-emacs-packages)
@@ -40,24 +39,6 @@ To install the `quick-sdcv` using `straight.el`:
              :host github
              :repo "jamescherti/quick-sdcv.el"))
 ```
-
-## Configuration
-
-```elisp
-(setq quick-sdcv-dictionary-data-dir "startdict_dictionary_directory") ; Set up the directory for the Stardict dictionary
-
-;; Set up the dictionary list for complete search
-(setq quick-sdcv-dictionary-complete-list
-      '("ENG-FRA Dictionary"
-        "FRA-ENG Dictionary"
-        "stardict 1.3 ENG-FRA Dictionary"
-        "WordNet"
-        "Jargon"))
-```
-
-After completing the above configuration, execute the `quick-sdcv-check` Emacs command to confirm that the dictionary settings are correct. Otherwise, `quick-sdcv` will not function correctly due to the absence of dictionary files in `quick-sdcv-dictionary-data-dir`.
-
-You can download sdcv dictionaries from: http://download.huzheng.org/dict.org/
 
 ## Usage
 
