@@ -385,19 +385,8 @@ Return filtered string of results."
 
 (defun quick-sdcv--goto-sdcv (&optional word)
   "Switch to sdcv buffer of WORD in other window."
-  (let* ((buffer (quick-sdcv--get-buffer word))
-         (window (when buffer
-                   (get-buffer-window buffer))))
-    (when buffer
-      (if window
-          (progn
-            (select-window window)
-            t)
-        ;; Use display-buffer because it follows display-buffer-alist
-        (let ((win (display-buffer buffer)))  ; Display the buffer
-          (when win
-            (select-window win)
-            t))))))
+  (let* ((buffer (quick-sdcv--get-buffer word)))
+    (pop-to-buffer buffer)))
 
 (defun quick-sdcv--get-buffer (&optional word)
   "Get the sdcv buffer of WORD. Create one if there's none."
