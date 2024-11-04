@@ -142,6 +142,11 @@ or nil will disable the bullet feature."
   :type '(choice (string :tag "Bullet character" :size 1)
                  (const :tag "No bullet" nil)))
 
+(defcustom quick-sdcv-verbose nil
+  "If non-nil, `my-quick-sdcv' will show verbose messages."
+  :type 'boolean
+  :group 'my-quick-sdcv)
+
 ;;; Variables
 
 (defvar quick-sdcv-current-translate-object nil
@@ -335,7 +340,8 @@ The result will be displayed in buffer named with
       (when buffer
         (with-current-buffer buffer
           (when refresh
-            ;; (message "Searching...")
+            (when quick-sdcv-verbose
+              (message "[SDCV] Searching..."))
             (setq buffer-read-only nil)
             (erase-buffer)
             (setq quick-sdcv-current-translate-object word)
@@ -345,12 +351,10 @@ The result will be displayed in buffer named with
 
             (setq buffer-read-only t)
             (goto-char (point-min))
-            (ignore-errors
-              (outline-next-heading))
 
-            ;; (message "Finished searching `%s'."
-            ;;          quick-sdcv-current-translate-object)
-            )
+            (when quick-sdcv-verbose
+              (message "[SDCV] Finished searching `%s'."
+                       quick-sdcv-current-translate-object)))
           (quick-sdcv--goto-sdcv word))))))
 
 (defun quick-sdcv--search-with-dictionary (word dictionary-list)
