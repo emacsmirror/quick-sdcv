@@ -24,6 +24,8 @@ Here are the main interactive functions:
     - [Usage](#usage)
     - [Frequently asked question](#frequently-asked-question)
         - [What is the difference between sdcv (MELPA) and quick-sdcv Emacs packages?](#what-is-the-difference-between-sdcv-melpa-and-quick-sdcv-emacs-packages)
+        - [How to make the sdcv buffer replace the current buffer?](#how-to-make-the-sdcv-buffer-replace-the-current-buffer)
+        - [How to make links appear as links in an sdcv buffer?](#how-to-make-links-appear-as-links-in-an-sdcv-buffer)
     - [Links](#links)
 
 <!-- markdown-toc end -->
@@ -96,6 +98,23 @@ The `quick-sdcv` Emacs package is a fork of `sdcv.el` version 3.4, which is avai
 - **New interactive functions**: quick-sdcv-list-dictionaries
 - **New options**: quick-sdcv-exact-search, quick-sdcv-buffer-name-prefix, quick-sdcv-buffer-name-separator, quick-sdcv-buffer-name-suffix, quick-sdcv-verbose
 - **Various improvements**: Ensure the buffer and the SDCV output are in UTF-8, Enhance dictionary representation with UTF-8 characters, Implement error handling for cases when the sdcv program is not found.
+
+
+
+### How to make the sdcv buffer replace the current buffer?
+
+To make the SDCV buffer replace the current buffer, you can utilize the following `display-buffer-alist` rule:
+```elisp
+(add-to-list 'display-buffer-alist '("\\*SDCV"
+                                       (display-buffer-same-window)))
+```
+
+### How to make links appear as links in an sdcv buffer?
+
+To ensure that links appear as clickable links in the SDCV buffer while using quick-sdcv, add the following hook:
+```
+(add-hook 'quick-sdcv-mode-hook #'goto-address-mode)
+```
 
 ## Links
 
