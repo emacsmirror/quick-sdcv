@@ -20,6 +20,7 @@ Here are the main interactive functions:
     - [Installation](#installation)
         - [Install using straight](#install-using-straight)
     - [Customizations](#customizations)
+        - [Improvements Made](#improvements-made)
     - [Usage](#usage)
     - [Frequently asked question](#frequently-asked-question)
         - [What is the difference between sdcv (MELPA) and quick-sdcv Emacs packages?](#what-is-the-difference-between-sdcv-melpa-and-quick-sdcv-emacs-packages)
@@ -48,20 +49,24 @@ To install `quick-sdcv` using `straight.el`:
 
 ## Customizations
 
-To create a unique buffer for each word lookup:
-``` emacs-lisp
+To create a unique buffer for each word lookup, set the following:
+```emacs-lisp
 (setq quick-sdcv-unique-buffers t)
 ```
 
-To search for the exact words (not fuzzy-search):
-``` emacs-lisp
+To perform exact word searches (as opposed to fuzzy searches), use:
+```emacs-lisp
 (setq quick-sdcv-exact-search t)
 ```
 
-To change the character used as a prefix before dictionary names, replacing the default `-->`:
-``` emacs-lisp
+To change the prefix character used before dictionary names, replacing the default `-->`, set:
+```emacs-lisp
 (setq quick-sdcv-dictionary-prefix-symbol "►")
 ```
+
+### Improvements Made
+- Streamlined phrasing for clarity.
+- Enhanced the structure to emphasize the purpose of each setting.
 
 ## Usage
 
