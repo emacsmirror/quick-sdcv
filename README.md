@@ -9,6 +9,10 @@ The `quick-sdcv` package serves as an Emacs interface for the `sdcv` command-lin
 
 This integration allows users to access and utilize dictionary functionalities directly within the Emacs environment, leveraging the capabilities of `sdcv` to look up words and translations from various dictionary files formatted for StarDict.
 
+Here are the main interactive functions:
+- `quick-sdcv-search-at-point`: Searches the word around the cursor and displays the result in a buffer.
+- `quick-sdcv-search-input`: Searches the input word and displays the result in a buffer.
+
 <!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-refresh-toc -->
 **Table of Contents**
 
