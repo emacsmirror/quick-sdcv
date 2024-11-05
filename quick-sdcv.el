@@ -128,7 +128,8 @@ Do not search in user and system directories"
   :type 'boolean
   :group 'quick-sdcv)
 
-(defcustom quick-sdcv-dictionary-prefix-symbol nil
+(defcustom quick-sdcv-dictionary-prefix-symbol (if (display-graphic-p)
+                                                   "►")
   "Bullet character used in sdcv dictionaries.
 
 This variable specifies the single character used as a bullet in the output of
