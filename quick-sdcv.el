@@ -157,7 +157,7 @@ or nil will disable the bullet feature."
   "If there is no explanation available, consider searching with additional
   dictionaries. User notification message for a failed search.")
 
-(defvar quick-sdcv--bullets-keywords
+(defvar quick-sdcv--symbols-keywords
   `(("^-->.*\n-->"
      (0 (let* ((heading-start (match-beginning 0))
                (heading-end (+ heading-start 3))
@@ -203,9 +203,8 @@ Enabling this mode runs the normal hook `quick-sdcv-mode-hook`."
   (set (make-local-variable 'outline-regexp) "^-->.*\n-->")
   (set (make-local-variable 'outline-level) #'(lambda()
                                                 1))
-  (setq-local font-lock-multiline t)
   (outline-minor-mode)
-  (quick-sdcv--toggle-bullet-fontification))
+  (quick-sdcv--toggle-bullet-fontification t))
 
 ;;; Interactive Functions
 
@@ -264,18 +263,24 @@ name."
                     word))
           quick-sdcv-buffer-name-suffix))
 
-(defun quick-sdcv--toggle-bullet-fontification ()
+(defun quick-sdcv--toggle-bullet-fontification (enabled)
   "Toggle fontification of bullets in the quick-sdcv buffer.
 
 When ENABLED is non-nil, adds font-lock keywords to highlight bullets
-using `quick-sdcv--bullets-keywords`. If ENABLED is nil, removes the keywords
+using `quick-sdcv--symbols-keywords`. If ENABLED is nil, removes the keywords
 and deconstructs any bullet regions marked by '-->' in the buffer.
 
 This function also calls `quick-sdcv--fontify-buffer` to apply
 fontification to the entire buffer after updating keywords."
-  (when (and quick-sdcv-dictionary-prefix-symbol
-             (> (length quick-sdcv-dictionary-prefix-symbol) 0))
-    (font-lock-add-keywords nil quick-sdcv--bullets-keywords))
+  (if enabled
+      (when (and quick-sdcv-dictionary-prefix-symbol
+                 (> (length quick-sdcv-dictionary-prefix-symbol) 0))
+        (font-lock-add-keywords nil quick-sdcv--symbols-keywords))
+    (save-excursion
+      (goto-char (point-min))
+      (font-lock-remove-keywords nil quick-sdcv--symbols-keywords)
+      (while (re-search-forward "^-->.*\n-->" nil t)
+        (decompose-region (match-beginning 0) (match-end 0)))))
 
   ;; Fontify the buffer
   (when font-lock-mode
