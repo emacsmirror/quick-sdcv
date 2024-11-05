@@ -128,7 +128,7 @@ Do not search in user and system directories"
   :type 'boolean
   :group 'quick-sdcv)
 
-(defcustom quick-sdcv-dictionary-prefix-symbol "►"
+(defcustom quick-sdcv-dictionary-prefix-symbol nil
   "Bullet character used in sdcv dictionaries.
 
 This variable specifies the single character used as a bullet in the output of
@@ -298,7 +298,9 @@ Result is parsed as json."
   (with-temp-buffer
     (save-excursion
       (let ((exit-code (apply #'call-process quick-sdcv-program nil t nil
-                              (append (list "--non-interactive" "--json-output")
+                              (append (list "--non-interactive"
+                                            "--json-output"
+                                            "--utf8-output")
                                       (when quick-sdcv-exact-search
                                         (list "--exact-search"))
                                       (when quick-sdcv-only-data-dir
@@ -344,6 +346,7 @@ The result will be displayed in buffer named with
               (message "[SDCV] Searching..."))
             (setq buffer-read-only nil)
             (erase-buffer)
+            (set-buffer-file-coding-system 'utf-8)  ;; Force UTF-8
             (setq quick-sdcv-current-translate-object word)
             (insert (quick-sdcv--search-with-dictionary
                      word

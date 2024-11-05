@@ -86,7 +86,7 @@ The `quick-sdcv` Emacs package is a fork of `sdcv.el` version 3.4, which is avai
 - **Keybindings removal**: The default keybindings have been removed from `quick-sdcv-mode` to prevent conflicts with other modes and keeps the mode lightweight and adaptable for users’ preferences.
 - **New interactive functions**: quick-sdcv-list-dictionaries
 - **New options**: quick-sdcv-exact-search, quick-sdcv-buffer-name-prefix, quick-sdcv-buffer-name-separator, quick-sdcv-buffer-name-suffix, quick-sdcv-verbose
-- **Various improvements**: Enhance bullet representation with UTF-8 characters in quick-sdcv, Implement error handling for cases when the sdcv program is not found.
+- **Various improvements**: Ensure the buffer and the SDCV output are in UTF-8, Enhance dictionary representation with UTF-8 characters, Implement error handling for cases when the sdcv program is not found.
 
 ## Links
 
