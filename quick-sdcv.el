@@ -117,7 +117,7 @@ installation."
   :type '(choice (const :tag "Default" nil) directory)
   :group 'quick-sdcv)
 
-(defcustom quick-sdcv-only-data-dir t
+(defcustom quick-sdcv-only-data-dir nil
   "Only use the dictionaries in data-dir `quick-sdcv-dictionary-data-dir'.
 Do not search in user and system directories"
   :type 'boolean
