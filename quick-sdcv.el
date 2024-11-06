@@ -116,8 +116,8 @@ It prevents sdcv from searching in user and system directories."
 (defcustom quick-sdcv-dictionary-prefix-symbol "►"
   "Symbol character used in sdcv dictionaries that replaces ('-->') visually."
   :group 'quick-sdcv
-  :type '(choice (string :tag "Bullet character" :size 1)
-                 (const :tag "No bullet" nil)))
+  :type '(choice (string :tag "Symbol character" :size 1)
+                 (const :tag "No symbol" nil)))
 
 (defcustom quick-sdcv-verbose nil
   "If non-nil, `my-quick-sdcv' will show verbose messages."
@@ -202,7 +202,7 @@ If WORD is not provided, the function prompts the user to enter a word."
           quick-sdcv-buffer-name-suffix))
 
 (defun quick-sdcv--toggle-symbol-fontification (enabled)
-  "Toggle fontification of bullets in the quick-sdcv buffer.
+  "Toggle fontification of '-->' in the quick-sdcv buffer.
 When ENABLED is non-nil, adds font-lock keywords to replace '-->' with a symbol.
 When ENABLED is nil: Deconstructs any symbol regions marked by '-->'."
   (if enabled
