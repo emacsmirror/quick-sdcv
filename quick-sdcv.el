@@ -188,23 +188,6 @@ If WORD is not provided, the function prompts the user to enter a word."
   (interactive)
   (quick-sdcv--search-detail (or word (quick-sdcv--prompt-input))))
 
-;;;###autoload
-
-(defun quick-sdcv-check ()
-  "Check for missing StarDict dictionaries."
-  (let* ((dicts (quick-sdcv--get-list-dicts))
-         (missing-complete-dicts (quick-sdcv--get-missing-dicts
-                                  quick-sdcv-dictionary-complete-list
-                                  dicts)))
-    (if (not missing-complete-dicts)
-        (message (concat "The dictionary's settings look correct, sdcv "
-                         "should work as expected."))
-      (dolist (dict missing-complete-dicts)
-        (message (concat "quick-sdcv-dictionary-complete-list: dictionary "
-                         "'%s' does not exist, remove it or download the "
-                         "corresponding dictionary file to %s")
-                 dict quick-sdcv-dictionary-data-dir)))))
-
 ;;; Utilitiy Functions
 
 (defun quick-sdcv--get-buffer-name (&optional word force-include-word)
@@ -274,9 +257,11 @@ When ENABLED is nil: Deconstructs any symbol regions marked by '-->'."
   (mapcar (lambda (dict) (cdr (assq 'name dict)))
           (quick-sdcv--call-process "--list-dicts")))
 
-(defun quick-sdcv--get-missing-dicts (list &optional dicts)
+(defun quick-sdcv--get-missing-dicts (&optional list dicts)
   "List missing LIST dictionaries in DICTS.
 If DICTS is nil, it utilizes `quick-sdcv--get-list-dicts'."
+  (unless list
+    (setq list quick-sdcv-dictionary-complete-list))
   (let ((dicts (or dicts (quick-sdcv--get-list-dicts))))
     (cl-set-difference list dicts :test #'string=)))
 
