@@ -13,8 +13,6 @@
 ;; URL: https://github.com/jamescherti/quick-sdcv.el
 ;; Keywords: docs, startdict, sdcv
 
-;;; This file is NOT part of GNU Emacs
-
 ;;; License
 ;;
 ;; This program is free software; you can redistribute it and/or modify
@@ -67,13 +65,9 @@
 
 (defcustom quick-sdcv-unique-buffers nil
   "If non-nil, create a unique buffer for each word lookup.
-This allows multiple definitions to be viewed simultaneously,
-with each word appearing in its own buffer.
-
 For instance, if the user searches for the word computer:
 - When non-nil, the buffer name will be *SDCV:computer*
 - When nil, the buffer name will be *SDCV*
-
 This can be customized with:
 - `quick-sdcv-buffer-name-prefix'
 - `quick-sdcv-buffer-name-separator'
@@ -103,23 +97,19 @@ This can be customized with:
 
 (defcustom quick-sdcv-dictionary-complete-list nil
   "A list of dictionaries used for translation in quick-sdcv.
-Each entry should specify a dictionary source, allowing multiple dictionaries to
-be utilized in the translation process."
+Each entry should specify a dictionary source."
   :type '(repeat string)
   :group 'quick-sdcv)
 
 (defcustom quick-sdcv-dictionary-data-dir nil
   "The sdcv data directory.
-By default, sdcv searches for words in /usr/share/startdict/dict/.
-If you customize this value with a local directory, you won't need to copy
-dictionary data to the /usr/share directory every time you finish system
-installation."
+By default, sdcv searches for words in /usr/share/startdict/dict/."
   :type '(choice (const :tag "Default" nil) directory)
   :group 'quick-sdcv)
 
 (defcustom quick-sdcv-only-data-dir nil
-  "Only use the dictionaries in data-dir `quick-sdcv-dictionary-data-dir'.
-Do not search in user and system directories"
+  "Use only the dictionaries in `quick-sdcv-dictionary-data-dir`.
+It prevents sdcv from searching in user and system directories."
   :type 'boolean
   :group 'quick-sdcv)
 
@@ -128,17 +118,9 @@ Do not search in user and system directories"
   :type 'boolean
   :group 'quick-sdcv)
 
-(defcustom quick-sdcv-dictionary-prefix-symbol (if (display-graphic-p)
-                                                   "►")
-  "Bullet character used in sdcv dictionaries.
-
-This variable specifies the single character used as a bullet in the output of
-sdcv dictionaries. The bullet replaces the standard output arrow ('-->')
-visually. This can be set to nil to disable the bullet feature entirely,
-allowing the output to display without any visual replacements.
-
-The value should be a single character. Setting this variable to an empty string
-or nil will disable the bullet feature."
+(defcustom quick-sdcv-dictionary-prefix-symbol "►"
+  "Symbol character used in sdcv dictionaries.
+The symbol replaces the standard output arrow ('-->') visually."
   :group 'quick-sdcv
   :type '(choice (string :tag "Bullet character" :size 1)
                  (const :tag "No bullet" nil)))
@@ -153,9 +135,8 @@ or nil will disable the bullet feature."
 (defvar quick-sdcv-current-translate-object nil
   "The search object.")
 
-(defvar quick-sdcv-fail-notify-string
-  "If there is no explanation available, consider searching with additional
-  dictionaries. User notification message for a failed search.")
+(defvar quick-sdcv-fail-notify-string nil
+  "Search with additional dictionaries if no definition is available.")
 
 (defvar quick-sdcv--symbols-keywords
   `(("^-->.*\n-->"
@@ -195,32 +176,27 @@ or nil will disable the bullet feature."
 
 (define-derived-mode quick-sdcv-mode nil "sdcv"
   "Major mode to look up word through sdcv.
-\\{quick-sdcv-mode-map}
-
-Enabling this mode runs the normal hook `quick-sdcv-mode-hook`."
+\\{quick-sdcv-mode-map}"
   (setq font-lock-defaults '(quick-sdcv-mode-font-lock-keywords t))
   (setq buffer-read-only t)
   (set (make-local-variable 'outline-regexp) "^-->.*\n-->")
   (set (make-local-variable 'outline-level) #'(lambda()
                                                 1))
   (outline-minor-mode)
-  (quick-sdcv--toggle-bullet-fontification t))
+  (quick-sdcv--toggle-symbol-fontification t))
 
 ;;; Interactive Functions
 
 ;;;###autoload
 (defun quick-sdcv-search-at-point ()
-  "Retrieve the word under the cursor and display its definition.
-It displays the result in another buffer."
+  "Retrieve the word under the cursor and display its definition in a buffer."
   (interactive)
   (quick-sdcv--search-detail (quick-sdcv--get-region-or-word)))
 
 ;;;###autoload
 (defun quick-sdcv-search-input (&optional word)
   "Translate the specified input WORD and display the results in another buffer.
-
-If WORD is not provided, the function prompts the user to enter a word.
-The details will be shown in the sdcv buffer."
+If WORD is not provided, the function prompts the user to enter a word."
   (interactive)
   (quick-sdcv--search-detail (or word (quick-sdcv--prompt-input))))
 
@@ -253,8 +229,7 @@ The details will be shown in the sdcv buffer."
 
 (defun quick-sdcv--get-buffer-name (&optional word force-include-word)
   "Return the buffer name for WORD.
-If FORCE-INCLUDE-WORD is non-nil, it will always include WORD in the buffer
-name."
+If FORCE-INCLUDE-WORD is non-nil, always include WORD in the buffer name."
   (concat quick-sdcv-buffer-name-prefix
           (when (and (or force-include-word
                          quick-sdcv-unique-buffers)
@@ -263,15 +238,10 @@ name."
                     word))
           quick-sdcv-buffer-name-suffix))
 
-(defun quick-sdcv--toggle-bullet-fontification (enabled)
+(defun quick-sdcv--toggle-symbol-fontification (enabled)
   "Toggle fontification of bullets in the quick-sdcv buffer.
-
-When ENABLED is non-nil, adds font-lock keywords to highlight bullets
-using `quick-sdcv--symbols-keywords`. If ENABLED is nil, removes the keywords
-and deconstructs any bullet regions marked by '-->' in the buffer.
-
-This function also calls `quick-sdcv--fontify-buffer` to apply
-fontification to the entire buffer after updating keywords."
+When ENABLED is non-nil, adds font-lock keywords to replace '-->' with a symbol.
+When ENABLED is nil: Deconstructs any symbol regions marked by '-->'."
   (if enabled
       (when (and quick-sdcv-dictionary-prefix-symbol
                  (> (length quick-sdcv-dictionary-prefix-symbol) 0))
@@ -294,8 +264,7 @@ fontification to the entire buffer after updating keywords."
       (font-lock-fontify-buffer))))
 
 (defun quick-sdcv--call-process (&rest arguments)
-  "Call `quick-sdcv-program' with ARGUMENTS.
-Result is parsed as json."
+  "Call `quick-sdcv-program' with ARGUMENTS. Result is parsed as json."
   (unless (executable-find quick-sdcv-program)
     (error (concat "The program '%s' is not found. Please ensure it is "
                    "installed and the path is correctly set "
@@ -321,21 +290,19 @@ Result is parsed as json."
     (ignore-errors (json-read))))
 
 (defun quick-sdcv--get-list-dicts ()
-  "List dictionaries present in SDCV."
+  "List dictionaries present in sdcv."
   (mapcar (lambda (dict) (cdr (assq 'name dict)))
           (quick-sdcv--call-process "--list-dicts")))
 
 (defun quick-sdcv--get-missing-dicts (list &optional dicts)
   "List missing LIST dictionaries in DICTS.
-If DICTS is nil, compute present dictionaries with
-`quick-sdcv--get-list-dicts'."
+If DICTS is nil, it utilizes `quick-sdcv--get-list-dicts'."
   (let ((dicts (or dicts (quick-sdcv--get-list-dicts))))
     (cl-set-difference list dicts :test #'string=)))
 
 (defun quick-sdcv--search-detail (&optional word)
   "Search WORD in `quick-sdcv-dictionary-complete-list'.
-The result will be displayed in buffer named with
-`quick-sdcv-buffer-name' in `quick-sdcv-mode'."
+The result will be displayed in a buffer."
   (when word
     (let* ((buffer-name (quick-sdcv--get-buffer-name word))
            (buffer (get-buffer buffer-name))
@@ -371,16 +338,13 @@ The result will be displayed in buffer named with
 Argument DICTIONARY-LIST the word that needs to be transformed."
   (let* ((word (or word (quick-sdcv--get-region-or-word)))
          (translate-result (quick-sdcv--translate-result word dictionary-list)))
-
     (when (and (string= quick-sdcv-fail-notify-string translate-result)
                (setq word (thing-at-point 'word t)))
       (setq translate-result (quick-sdcv--translate-result word dictionary-list)))
-
     translate-result))
 
 (defun quick-sdcv--translate-result (word dictionary-list)
-  "Call sdcv to search WORD in DICTIONARY-LIST.
-Return filtered string of results."
+  "Search for WORD in DICTIONARY-LIST. Return filtered string of results."
   (let* ((arguments (cons word (mapcan (lambda (d) (list "-u" d)) dictionary-list)))
          (result (mapconcat
                   (lambda (result)
@@ -411,9 +375,7 @@ Return filtered string of results."
     (read-string (format "Word%s: " default) nil nil word)))
 
 (defun quick-sdcv--get-region-or-word ()
-  "Return region or word around point.
-If `mark-active' on, return region string.
-Otherwise return word around point."
+  "Return the region or the word under the cursor."
   (if (use-region-p)
       (buffer-substring-no-properties (region-beginning) (region-end))
     (thing-at-point 'word t)))
