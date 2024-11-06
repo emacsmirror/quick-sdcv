@@ -255,14 +255,6 @@ When ENABLED is nil: Deconstructs any symbol regions marked by '-->'."
   (mapcar (lambda (dict) (cdr (assq 'name dict)))
           (quick-sdcv--call-process "--list-dicts")))
 
-(defun quick-sdcv--get-missing-dicts (&optional list dicts)
-  "List missing LIST dictionaries in DICTS.
-If DICTS is nil, it utilizes `quick-sdcv--get-list-dicts'."
-  (unless list
-    (setq list quick-sdcv-dictionary-complete-list))
-  (let ((dicts (or dicts (quick-sdcv--get-list-dicts))))
-    (cl-set-difference list dicts :test #'string=)))
-
 (defun quick-sdcv--search-detail (&optional word)
   "Search WORD in `quick-sdcv-dictionary-complete-list'.
 The result will be displayed in a buffer."
@@ -344,5 +336,4 @@ Argument DICTIONARY-LIST the word that needs to be transformed."
     (thing-at-point 'word t)))
 
 (provide 'quick-sdcv)
-
 ;;; quick-sdcv.el ends here
