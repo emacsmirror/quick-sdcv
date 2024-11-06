@@ -168,8 +168,7 @@ It prevents sdcv from searching in user and system directories."
   (setq font-lock-defaults '(quick-sdcv-mode-font-lock-keywords t))
   (setq buffer-read-only t)
   (set (make-local-variable 'outline-regexp) "^-->.*\n-->")
-  (set (make-local-variable 'outline-level) #'(lambda()
-                                                1))
+  (set (make-local-variable 'outline-level) #'(lambda() 1))
   (outline-minor-mode)
   (quick-sdcv--toggle-symbol-fontification t))
 
@@ -310,12 +309,12 @@ Argument DICTIONARY-LIST the word that needs to be transformed."
 
 (defun quick-sdcv--translate-result (word dictionary-list)
   "Search for WORD in DICTIONARY-LIST. Return filtered string of results."
-  (let* ((arguments (cons word (mapcan (lambda (d) (list "-u" d)) dictionary-list)))
+  (let* ((args (cons word (mapcan (lambda (d) (list "-u" d)) dictionary-list)))
          (result (mapconcat
                   (lambda (result)
                     (let-alist result
                       (format "-->%s\n-->%s\n%s\n\n" .dict .word .definition)))
-                  (apply #'quick-sdcv--call-process arguments)
+                  (apply #'quick-sdcv--call-process args)
                   "")))
     (if (string-empty-p result)
         quick-sdcv-fail-notify-string
