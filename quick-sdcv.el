@@ -68,10 +68,8 @@
 For instance, if the user searches for the word computer:
 - When non-nil, the buffer name will be *sdcv:computer*
 - When nil, the buffer name will be *sdcv*
-This can be customized with:
-- `quick-sdcv-buffer-name-prefix'
-- `quick-sdcv-buffer-name-separator'
-- `quick-sdcv-buffer-name-suffix'"
+This can be customized with: `quick-sdcv-buffer-name-prefix',
+`quick-sdcv-buffer-name-separator', and `quick-sdcv-buffer-name-suffix'"
   :type 'boolean
   :group 'quick-sdcv)
 
@@ -96,19 +94,17 @@ This can be customized with:
   :group 'quick-sdcv)
 
 (defcustom quick-sdcv-dictionary-complete-list nil
-  "A list of dictionaries used for translation in quick-sdcv.
-Each entry should specify a dictionary source."
+  "A list of dictionaries used for translation in quick-sdcv."
   :type '(repeat string)
   :group 'quick-sdcv)
 
 (defcustom quick-sdcv-dictionary-data-dir nil
-  "The sdcv data directory.
-By default, sdcv searches for words in /usr/share/startdict/dict/."
+  "The sdcv data directory where dictionaries are."
   :type '(choice (const :tag "Default" nil) directory)
   :group 'quick-sdcv)
 
 (defcustom quick-sdcv-only-data-dir nil
-  "Use only the dictionaries in `quick-sdcv-dictionary-data-dir`.
+  "Use only the dictionaries in `quick-sdcv-dictionary-data-dir'.
 It prevents sdcv from searching in user and system directories."
   :type 'boolean
   :group 'quick-sdcv)
@@ -119,8 +115,7 @@ It prevents sdcv from searching in user and system directories."
   :group 'quick-sdcv)
 
 (defcustom quick-sdcv-dictionary-prefix-symbol "►"
-  "Symbol character used in sdcv dictionaries.
-The symbol replaces the standard output arrow ('-->') visually."
+  "Symbol character used in sdcv dictionaries that replaces ('-->') visually."
   :group 'quick-sdcv
   :type '(choice (string :tag "Bullet character" :size 1)
                  (const :tag "No bullet" nil)))
@@ -201,21 +196,13 @@ If WORD is not provided, the function prompts the user to enter a word."
   (quick-sdcv--search-detail (or word (quick-sdcv--prompt-input))))
 
 ;;;###autoload
-(defun quick-sdcv-list-dictionaries ()
-  "List all available dictionaries in a separate buffer."
-  (interactive)
-  (let ((dicts (quick-sdcv--get-list-dicts)))
-    (with-output-to-temp-buffer (quick-sdcv--get-buffer-name "list-dict" t)
-      (dolist (dict dicts)
-        (princ (format "%s\n" dict))))))
 
 (defun quick-sdcv-check ()
   "Check for missing StarDict dictionaries."
   (let* ((dicts (quick-sdcv--get-list-dicts))
-         (missing-complete-dicts
-          (quick-sdcv--get-missing-dicts
-           quick-sdcv-dictionary-complete-list
-           dicts)))
+         (missing-complete-dicts (quick-sdcv--get-missing-dicts
+                                  quick-sdcv-dictionary-complete-list
+                                  dicts)))
     (if (not missing-complete-dicts)
         (message (concat "The dictionary's settings look correct, sdcv "
                          "should work as expected."))
