@@ -8,7 +8,6 @@
 ;; Package-Requires: ((emacs "25.1"))
 ;; Maintainer: James Cherti
 ;; Original Author: Andy Stewart
-;; Created: 2009-02-05 22:04:02
 ;; Version: 3.6
 ;; URL: https://github.com/jamescherti/quick-sdcv.el
 ;; Keywords: docs, startdict, sdcv
