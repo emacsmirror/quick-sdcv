@@ -168,8 +168,8 @@ It prevents sdcv from searching in user and system directories."
   (setq buffer-read-only t)
   (set (make-local-variable 'outline-regexp) "^-->.*\n-->")
   (set (make-local-variable 'outline-level) #'(lambda() 1))
-  (outline-minor-mode)
-  (quick-sdcv--toggle-symbol-fontification t))
+  (quick-sdcv--toggle-symbol-fontification t)
+  (outline-minor-mode))
 
 ;;; Interactive Functions
 
@@ -184,7 +184,11 @@ It prevents sdcv from searching in user and system directories."
   "Translate the specified input WORD and display the results in another buffer.
 If WORD is not provided, the function prompts the user to enter a word."
   (interactive)
-  (quick-sdcv--search-detail (or word (quick-sdcv--prompt-input))))
+  (quick-sdcv--search-detail
+   (or word
+       (let* ((word (quick-sdcv--get-region-or-word))
+              (default (if word (format " (default: %s)" word) "")))
+         (read-string (format "Word%s: " default) nil nil word)))))
 
 ;;; Utilitiy Functions
 
@@ -227,8 +231,8 @@ When ENABLED is nil: Deconstructs any symbol regions marked by '-->'."
 (defun quick-sdcv--call-process (&rest arguments)
   "Call `quick-sdcv-program' with ARGUMENTS. Result is parsed as json."
   (unless (executable-find quick-sdcv-program)
-    (error (concat "The program '%s' is not found. Please ensure it is "
-                   "installed and the path is correctly set "
+    (error (concat "The program '%s' was not found. Please ensure it is "
+                   "installed and that the path is correctly set "
                    "in `quick-sdcv-program`.")
            quick-sdcv-program))
   (with-temp-buffer
@@ -249,11 +253,6 @@ When ENABLED is nil: Deconstructs any symbol regions marked by '-->'."
             (error "Failed to call %s: exit code %d" quick-sdcv-program
                    exit-code))))
     (ignore-errors (json-read))))
-
-(defun quick-sdcv--get-list-dicts ()
-  "List dictionaries present in sdcv."
-  (mapcar (lambda (dict) (cdr (assq 'name dict)))
-          (quick-sdcv--call-process "--list-dicts")))
 
 (defun quick-sdcv--search-detail (&optional word)
   "Search WORD in `quick-sdcv-dictionary-complete-list'.
@@ -322,12 +321,6 @@ Argument DICTIONARY-LIST the word that needs to be transformed."
         (unless (eq major-mode 'quick-sdcv-mode)
           (quick-sdcv-mode)))
       buffer)))
-
-(defun quick-sdcv--prompt-input ()
-  "Prompt input for translation."
-  (let* ((word (quick-sdcv--get-region-or-word))
-         (default (if word (format " (default: %s)" word) "")))
-    (read-string (format "Word%s: " default) nil nil word)))
 
 (defun quick-sdcv--get-region-or-word ()
   "Return the region or the word under the cursor."
