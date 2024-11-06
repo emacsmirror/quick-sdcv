@@ -66,8 +66,8 @@
 (defcustom quick-sdcv-unique-buffers nil
   "If non-nil, create a unique buffer for each word lookup.
 For instance, if the user searches for the word computer:
-- When non-nil, the buffer name will be *SDCV:computer*
-- When nil, the buffer name will be *SDCV*
+- When non-nil, the buffer name will be *sdcv:computer*
+- When nil, the buffer name will be *sdcv*
 This can be customized with:
 - `quick-sdcv-buffer-name-prefix'
 - `quick-sdcv-buffer-name-separator'
@@ -75,7 +75,7 @@ This can be customized with:
   :type 'boolean
   :group 'quick-sdcv)
 
-(defcustom quick-sdcv-buffer-name-prefix "*SDCV"
+(defcustom quick-sdcv-buffer-name-prefix "*sdcv"
   "The prefix of the sdcv buffer name."
   :type 'string
   :group 'quick-sdcv)
