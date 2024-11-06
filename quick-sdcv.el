@@ -1,7 +1,7 @@
 ;;; quick-sdcv.el --- Interface for the sdcv command (StartDict cli dictionary) -*- lexical-binding: t -*-
 
 ;; Copyright (C) 2024 James Cherti | https://www.jamescherti.com/contact/
-;; Copyright (C) 2009 Andy Stewart
+;; Copyright (C) 2008-2020 Andy Stewart
 
 ;; Filename: quick-sdcv.el
 ;; Description: Interface for sdcv (StartDict console version).
