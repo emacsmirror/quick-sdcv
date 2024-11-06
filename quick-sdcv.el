@@ -192,12 +192,10 @@ If WORD is not provided, the function prompts the user to enter a word."
 
 ;;; Utilitiy Functions
 
-(defun quick-sdcv--get-buffer-name (&optional word force-include-word)
-  "Return the buffer name for WORD.
-If FORCE-INCLUDE-WORD is non-nil, always include WORD in the buffer name."
+(defun quick-sdcv--get-buffer-name (&optional word)
+  "Return the buffer name for WORD."
   (concat quick-sdcv-buffer-name-prefix
-          (when (and (or force-include-word
-                         quick-sdcv-unique-buffers)
+          (when (and quick-sdcv-unique-buffers
                      word)
             (concat quick-sdcv-buffer-name-separator
                     word))
