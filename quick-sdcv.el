@@ -135,14 +135,12 @@ It prevents sdcv from searching in user and system directories."
 
 (defvar quick-sdcv--symbols-keywords
   `(("^-->.*\n-->"
-     (0 (let* ((heading-start (match-beginning 0))
-               (heading-end (+ heading-start 3))
-               (symbol-enabled
-                (and quick-sdcv-dictionary-prefix-symbol
-                     (> (length quick-sdcv-dictionary-prefix-symbol) 0)))
-               (symbol (if symbol-enabled
-                           (substring quick-sdcv-dictionary-prefix-symbol 0 1)
-                         nil)))
+     (0 (let* ((heading-end (+ (match-beginning 0) 3))
+               (symbol
+                (if (and quick-sdcv-dictionary-prefix-symbol
+                         (> (length quick-sdcv-dictionary-prefix-symbol) 0))
+                    (substring quick-sdcv-dictionary-prefix-symbol 0 1)
+                  nil)))
           (when (and symbol (not (string= symbol "")))
             (compose-region (- heading-end 3) (- heading-end 1) symbol)
             (compose-region heading-end (- heading-end 1) " ")
@@ -151,16 +149,11 @@ It prevents sdcv from searching in user and system directories."
           nil)))))
 
 (defvar quick-sdcv-mode-font-lock-keywords
-  '(;; Dictionary name
-    ("^-->\\(.*\\)\n-" . (1 font-lock-type-face))
-    ;; Search word
-    ("^-->\\(.*\\)[ \t\n]*" . (1 font-lock-function-name-face))
-    ;; Serial number
-    ("\\(^[0-9] \\|[0-9]+:\\|[0-9]+\\.\\)" . (1 font-lock-constant-face))
-    ;; Type name
-    ("^<<\\([^>]*\\)>>$" . (1 font-lock-comment-face))
-    ;; Phonetic symbol
-    ("^/\\([^>]*\\)/$" . (1 font-lock-string-face))
+  '(("^-->\\(.*\\)\n-" . (1 font-lock-type-face)) ; Dictionary name
+    ("^-->\\(.*\\)[ \t\n]*" . (1 font-lock-function-name-face)) ; word
+    ("\\(^[0-9] \\|[0-9]+:\\|[0-9]+\\.\\)" . (1 font-lock-constant-face)) ; Serial number
+    ("^<<\\([^>]*\\)>>$" . (1 font-lock-comment-face)) ; Type name
+    ("^/\\([^>]*\\)/$" . (1 font-lock-string-face)) ; Phonetic symbol
     ("^\\[\\([^]]*\\)\\]$" . (1 font-lock-string-face)))
   "Expressions to highlight in `quick-sdcv-mode'.")
 
