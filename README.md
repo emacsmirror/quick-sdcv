@@ -68,6 +68,30 @@ To change the prefix character used before dictionary names, replacing the defau
 (setq quick-sdcv-dictionary-prefix-symbol "►")
 ```
 
+To customize the sdcv history size:
+``` elisp
+(setq quick-sdcv-hist-size 100)
+```
+
+To specify the path to the sdcv executable:
+``` elisp
+(setq quick-sdcv-program "/path/to/sdcv")
+```
+
+To customize the naming convention of the SDCV buffer:
+``` elisp
+(setq quick-sdcv-buffer-name-prefix "*sdcv"
+      quick-sdcv-buffer-name-separator ":"
+      quick-sdcv-buffer-name-suffix "*")
+```
+
+To specify a list of dictionaries:
+``` elisp
+(setq quick-sdcv-dictionary-complete-list '("stardict-WordNet"
+                                            "stardict-Webster"
+                                            "stardict-eng_eng_main"))
+```
+
 ### Improvements Made
 - Streamlined phrasing for clarity.
 - Enhanced the structure to emphasize the purpose of each setting.
