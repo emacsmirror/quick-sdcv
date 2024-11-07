@@ -131,6 +131,13 @@ variable."
   :type 'integer
   :group 'quick-sdcv)
 
+(defcustom quick-sdcv-ellipsis nil
+  "String used as the ellipsis character in `quick-sdcv-mode'.
+When set to nil, the default behavior is not to modify the ellipsis.
+To apply the change, you need to execute `quick-sdcv-minor-mode' in the buffer."
+  :type '(choice string (const nil))
+  :group 'quick-sdcv)
+
 ;;; Variables
 
 (defvar quick-sdcv-current-translate-object nil
@@ -176,6 +183,7 @@ variable."
   (set (make-local-variable 'outline-regexp) "^-->.*\n-->")
   (set (make-local-variable 'outline-level) #'(lambda() 1))
   (quick-sdcv--toggle-symbol-fontification t)
+  (quick-sdcv--update-ellipsis)
   (outline-minor-mode))
 
 ;;; Interactive Functions
@@ -197,7 +205,17 @@ If WORD is not provided, the function prompts the user to enter a word."
               (default (if word (format " (default: %s)" word) "")))
          (read-string (format "Word%s: " default) nil nil word)))))
 
-;;; Utilitiy Functions
+;;; Utility Functions
+
+(defun quick-sdcv--update-ellipsis ()
+  "Update the buffer's outline ellipsis."
+  (when quick-sdcv-ellipsis
+    (let* ((display-table (or buffer-display-table (make-display-table)))
+           (face-offset (* (face-id 'shadow) (ash 1 22)))
+           (value (vconcat (mapcar (lambda (c) (+ face-offset c))
+                                   quick-sdcv-ellipsis))))
+      (set-display-table-slot display-table 'selective-display value)
+      (setq buffer-display-table display-table))))
 
 (defun quick-sdcv--get-buffer-name (&optional word)
   "Return the buffer name for WORD."
