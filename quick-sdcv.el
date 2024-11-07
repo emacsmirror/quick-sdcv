@@ -235,18 +235,22 @@ When ENABLED is nil: Deconstructs any symbol regions marked by '-->'."
            quick-sdcv-program))
   (with-temp-buffer
     (save-excursion
-      (let ((exit-code (apply #'call-process quick-sdcv-program nil t nil
-                              (append (list "--non-interactive"
-                                            "--json-output"
-                                            "--utf8-output")
-                                      (when quick-sdcv-exact-search
-                                        (list "--exact-search"))
-                                      (when quick-sdcv-only-data-dir
-                                        (list "--only-data-dir"))
-                                      (when quick-sdcv-dictionary-data-dir
-                                        (list "--data-dir"
-                                              quick-sdcv-dictionary-data-dir))
-                                      arguments))))
+      (let* ((process-environment (cl-remove-if
+                                   (lambda (var)
+                                     (string-match "^SDCV_PAGER=" var))
+                                   process-environment))
+             (exit-code (apply #'call-process quick-sdcv-program nil t nil
+                               (append (list "--non-interactive"
+                                             "--json-output"
+                                             "--utf8-output")
+                                       (when quick-sdcv-exact-search
+                                         (list "--exact-search"))
+                                       (when quick-sdcv-only-data-dir
+                                         (list "--only-data-dir"))
+                                       (when quick-sdcv-dictionary-data-dir
+                                         (list "--data-dir"
+                                               quick-sdcv-dictionary-data-dir))
+                                       arguments))))
         (if (not (zerop exit-code))
             (error "Failed to call %s: exit code %d" quick-sdcv-program
                    exit-code))))
