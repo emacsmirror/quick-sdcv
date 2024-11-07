@@ -120,9 +120,16 @@ It prevents sdcv from searching in user and system directories."
                  (const :tag "No symbol" nil)))
 
 (defcustom quick-sdcv-verbose nil
-  "If non-nil, `my-quick-sdcv' will show verbose messages."
+  "If non-nil, `quick-sdcv' will show verbose messages."
   :type 'boolean
-  :group 'my-quick-sdcv)
+  :group 'quick-sdcv)
+
+(defcustom quick-sdcv-hist-size nil
+  "Size of the history for SDCV.
+If non-nil, this value will be used to set the `SDCV_HISTSIZE` environment
+variable."
+  :type 'integer
+  :group 'quick-sdcv)
 
 ;;; Variables
 
@@ -237,23 +244,25 @@ When ENABLED is nil: Deconstructs any symbol regions marked by '-->'."
     (save-excursion
       (let* ((process-environment (cl-remove-if
                                    (lambda (var)
-                                     (string-match "^SDCV_PAGER=" var))
-                                   process-environment))
-             (exit-code (apply #'call-process quick-sdcv-program nil t nil
-                               (append (list "--non-interactive"
-                                             "--json-output"
-                                             "--utf8-output")
-                                       (when quick-sdcv-exact-search
-                                         (list "--exact-search"))
-                                       (when quick-sdcv-only-data-dir
-                                         (list "--only-data-dir"))
-                                       (when quick-sdcv-dictionary-data-dir
-                                         (list "--data-dir"
-                                               quick-sdcv-dictionary-data-dir))
-                                       arguments))))
-        (if (not (zerop exit-code))
-            (error "Failed to call %s: exit code %d" quick-sdcv-program
-                   exit-code))))
+                                     (or (string-match "^SDCV_PAGER=" var)))
+                                   process-environment)))
+        (when quick-sdcv-hist-size
+          (setenv "SDCV_HISTSIZE" (number-to-string quick-sdcv-hist-size)))
+        (let ((exit-code (apply #'call-process quick-sdcv-program nil t nil
+                                (append (list "--non-interactive"
+                                              "--json-output"
+                                              "--utf8-output")
+                                        (when quick-sdcv-exact-search
+                                          (list "--exact-search"))
+                                        (when quick-sdcv-only-data-dir
+                                          (list "--only-data-dir"))
+                                        (when quick-sdcv-dictionary-data-dir
+                                          (list "--data-dir"
+                                                quick-sdcv-dictionary-data-dir))
+                                        arguments))))
+          (if (not (zerop exit-code))
+              (error "Failed to call %s: exit code %d" quick-sdcv-program
+                     exit-code)))))
     (ignore-errors (json-read))))
 
 (defun quick-sdcv--search-detail (&optional word)
