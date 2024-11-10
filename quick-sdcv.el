@@ -247,9 +247,7 @@ When ENABLED is nil: Deconstructs any symbol regions marked by '-->'."
       (when (fboundp 'font-lock-flush)
         (font-lock-flush))
       (when (fboundp 'font-lock-ensure)
-        (font-lock-ensure)))
-    (with-no-warnings
-      (font-lock-fontify-buffer))))
+        (font-lock-ensure)))))
 
 (defun quick-sdcv--call-process (&rest arguments)
   "Call `quick-sdcv-program' with ARGUMENTS. Result is parsed as json."
@@ -347,7 +345,7 @@ Argument DICTIONARY-LIST the word that needs to be transformed."
       (setq buffer (get-buffer-create buffer-name)))
     (when buffer
       (with-current-buffer buffer
-        (unless (eq major-mode 'quick-sdcv-mode)
+        (unless (derived-mode-p 'quick-sdcv-mode)
           (quick-sdcv-mode)))
       buffer)))
 
