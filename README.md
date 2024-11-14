@@ -17,16 +17,16 @@ Here are the main interactive functions:
 **Table of Contents**
 
 - [quick-sdcv.el - Emacs interface for the 'sdcv' command-line dictionary](#quick-sdcvel---emacs-interface-for-the-sdcv-command-line-dictionary)
-    - [Installation](#installation)
-        - [Install using straight](#install-using-straight)
-    - [Customizations](#customizations)
-        - [Improvements Made](#improvements-made)
-    - [Usage](#usage)
-    - [Frequently asked question](#frequently-asked-question)
-        - [What is the difference between sdcv (MELPA) and quick-sdcv Emacs packages?](#what-is-the-difference-between-sdcv-melpa-and-quick-sdcv-emacs-packages)
-        - [How to make the sdcv buffer replace the current buffer?](#how-to-make-the-sdcv-buffer-replace-the-current-buffer)
-        - [How to make links appear as links in an sdcv buffer?](#how-to-make-links-appear-as-links-in-an-sdcv-buffer)
-    - [Links](#links)
+  - [Installation](#installation)
+    - [Install with straight](#install-with-straight)
+  - [Customizations](#customizations)
+    - [Improvements Made](#improvements-made)
+  - [Usage](#usage)
+  - [Frequently asked question](#frequently-asked-question)
+    - [What is the difference between sdcv (MELPA) and quick-sdcv Emacs packages?](#what-is-the-difference-between-sdcv-melpa-and-quick-sdcv-emacs-packages)
+    - [How to make the sdcv buffer replace the current buffer?](#how-to-make-the-sdcv-buffer-replace-the-current-buffer)
+    - [How to make links appear as links in an sdcv buffer?](#how-to-make-links-appear-as-links-in-an-sdcv-buffer)
+  - [Links](#links)
 
 <!-- markdown-toc end -->
 
@@ -34,9 +34,9 @@ Here are the main interactive functions:
 
 Prerequisite: The [sdcv](https://github.com/Dushistov/sdcv) command. It can usually be installed by installing the `sdcv` package.
 
-### Install using straight
+### Install with straight
 
-To install `quick-sdcv` using `straight.el`:
+To install `quick-sdcv` with `straight.el`:
 
 1. It if hasn't already been done, [add the straight.el bootstrap code](https://github.com/radian-software/straight.el?tab=readme-ov-file#getting-started) to your init file.
 2. Add the following code to the Emacs init file:
