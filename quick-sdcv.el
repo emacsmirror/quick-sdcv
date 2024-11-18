@@ -50,12 +50,12 @@
 ;; - `quick-sdcv-search-input': Searches the input word and displays the result
 ;;   in a buffer.
 
+;;; Code:
+
 (require 'json)
 (require 'cl-lib)
 (require 'outline)
 (require 'subword)
-
-;;; Code:
 
 ;;; Customize
 
