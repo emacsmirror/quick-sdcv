@@ -20,12 +20,12 @@ Here are the main interactive functions:
   - [Installation](#installation)
     - [Install with straight](#install-with-straight)
   - [Customizations](#customizations)
-    - [Improvements Made](#improvements-made)
   - [Usage](#usage)
   - [Frequently asked question](#frequently-asked-question)
-    - [What is the difference between sdcv (MELPA) and quick-sdcv Emacs packages?](#what-is-the-difference-between-sdcv-melpa-and-quick-sdcv-emacs-packages)
     - [How to make the sdcv buffer replace the current buffer?](#how-to-make-the-sdcv-buffer-replace-the-current-buffer)
     - [How to make links appear as links in an sdcv buffer?](#how-to-make-links-appear-as-links-in-an-sdcv-buffer)
+    - [Evil mode: How to configure the default K key to search for words using quick-sdcv?](#evil-mode-how-to-configure-the-default-k-key-to-search-for-words-using-quick-sdcv)
+    - [What is the difference between sdcv (MELPA) and quick-sdcv Emacs packages?](#what-is-the-difference-between-sdcv-melpa-and-quick-sdcv-emacs-packages)
   - [Links](#links)
 
 <!-- markdown-toc end -->
@@ -92,10 +92,6 @@ To specify a list of dictionaries:
                                             "stardict-eng_eng_main"))
 ```
 
-### Improvements Made
-- Streamlined phrasing for clarity.
-- Enhanced the structure to emphasize the purpose of each setting.
-
 ## Usage
 
 Below are the commands you can use:
@@ -108,6 +104,32 @@ Below are the commands you can use:
 If the current mark is active, the `quick-sdcv` will translate the region string; otherwise, they will translate the word around the cursor.
 
 ## Frequently asked question
+
+### How to make the sdcv buffer replace the current buffer?
+
+To make K search for the word using quick-sdcv when editing Markdown, you can customize the behavior as follows:
+```elisp
+(add-to-list 'display-buffer-alist '("\\*sdcv"
+                                       (display-buffer-same-window)))
+```
+
+### How to make links appear as links in an sdcv buffer?
+
+To ensure that links appear as clickable links in the SDCV buffer while using quick-sdcv, add the following hook:
+```
+(add-hook 'quick-sdcv-mode-hook #'goto-address-mode)
+```
+
+### Evil mode: How to configure the default K key to search for words using quick-sdcv?
+
+In Evil mode, the K key is typically bound to lookup the word under the cursor. By default, this usually triggers a help function.
+
+To make K search for the word using quick-sdcv (or another dictionary search tool) when editing Markdown, you can customize the behavior as follows:
+```elisp
+(add-hook 'markdown-mode-hook
+          #'(lambda()
+              (setq-local evil-lookup-func #'quick-sdcv-search-at-point)))
+```
 
 ### What is the difference between sdcv (MELPA) and quick-sdcv Emacs packages?
 
@@ -123,21 +145,6 @@ The `quick-sdcv` Emacs package is a fork of `sdcv.el` version 3.4, which is avai
 - **Keybindings removal**: The default keybindings have been removed from `quick-sdcv-mode` to prevent conflicts with other modes and keeps the mode lightweight and adaptable for users’ preferences.
 - **New options**: quick-sdcv-ellipsis, quick-sdcv-hist-size, quick-sdcv-exact-search, quick-sdcv-buffer-name-prefix, quick-sdcv-buffer-name-separator, quick-sdcv-buffer-name-suffix, quick-sdcv-verbose
 - **Various improvements**: Unset the SDCV_PAGER environment variable, Ensure the buffer and the SDCV output are in UTF-8, Enhance dictionary representation with UTF-8 characters, Implement error handling for cases when the sdcv program is not found.
-
-### How to make the sdcv buffer replace the current buffer?
-
-To make the SDCV buffer replace the current buffer, you can utilize the following `display-buffer-alist` rule:
-```elisp
-(add-to-list 'display-buffer-alist '("\\*sdcv"
-                                       (display-buffer-same-window)))
-```
-
-### How to make links appear as links in an sdcv buffer?
-
-To ensure that links appear as clickable links in the SDCV buffer while using quick-sdcv, add the following hook:
-```
-(add-hook 'quick-sdcv-mode-hook #'goto-address-mode)
-```
 
 ## Links
 
