@@ -122,14 +122,18 @@ To ensure that links appear as clickable links in the SDCV buffer while using qu
 
 ### Evil mode: How to configure the default K key to search for words using quick-sdcv?
 
-In Evil mode, the K key is typically bound to lookup the word under the cursor. By default, this usually triggers a help function.
+In Evil mode, the K key in normal mode is typically bound to lookup the word under the cursor. By default, this usually triggers a help function.
 
-To make K search for the word using quick-sdcv (or another dictionary search tool) when editing Markdown, you can customize the behavior as follows:
+To make K search for the word using *quick-sdcv* when editing, for instance, a markdown file (e.g. README.md), you can customize the behaviour as follows:
 ```elisp
 (add-hook 'markdown-mode-hook
           #'(lambda()
               (setq-local evil-lookup-func #'quick-sdcv-search-at-point)))
 ```
+
+The code snippet above:
+- Uses `add-hook` to ensure that the customization is applied only when editing Markdown files.
+- Sets `evil-lookup-func` to `quick-sdcv-search-at-point`, which configures K to search for the word at point using quick-sdcv.
 
 ### What is the difference between sdcv (MELPA) and quick-sdcv Emacs packages?
 
