@@ -48,6 +48,7 @@ To install `quick-sdcv` with `straight.el`:
              :host github
              :repo "jamescherti/quick-sdcv.el")
   :custom
+  (quick-sdcv-dictionary-prefix-symbol "►")
   (quick-sdcv-ellipsis " ▼ "))
 ```
 
