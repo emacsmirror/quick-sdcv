@@ -154,7 +154,8 @@ The `quick-sdcv` Emacs package is a fork of `sdcv.el` version 3.4, which is avai
 ## Links
 
 - You can download sdcv dictionaries from http://download.huzheng.org/dict.org/
-- The quick-sdcv.el Emacs package @GitHub: https://github.com/jamescherti/quick-sdcv.el
+- [quick-sdcv.el @GitHub](https://github.com/jamescherti/quick-sdcv.el)
+- [quick-sdcv.el @MELPA](https://melpa.org/#/sdcv)
 - The [sdcv](https://github.com/Dushistov/sdcv) command-line interface (prerequisite).
 
 Other Emacs packages by the same author:
