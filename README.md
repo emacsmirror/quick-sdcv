@@ -1,4 +1,4 @@
-# quick-sdcv.el - Emacs interface for the 'sdcv' command-line dictionary
+# quick-sdcv.el - Emacs offline dictionary using 'sdcv'
 ![Build Status](https://github.com/jamescherti/quick-sdcv.el/actions/workflows/ci.yml/badge.svg)
 ![License](https://img.shields.io/github/license/jamescherti/quick-sdcv.el)
 ![](https://raw.githubusercontent.com/jamescherti/quick-sdcv.el/main/.images/made-for-gnu-emacs.svg)
@@ -16,7 +16,7 @@ Here are the main interactive functions:
 <!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-refresh-toc -->
 **Table of Contents**
 
-- [quick-sdcv.el - Emacs interface for the 'sdcv' command-line dictionary](#quick-sdcvel---emacs-interface-for-the-sdcv-command-line-dictionary)
+- [quick-sdcv.el - Emacs offline dictionary using 'sdcv'](#quick-sdcvel---emacs-offline-dictionary-using-sdcv)
   - [Installation](#installation)
     - [Install with straight](#install-with-straight)
   - [Customizations](#customizations)

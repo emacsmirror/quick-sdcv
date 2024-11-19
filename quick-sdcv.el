@@ -1,4 +1,4 @@
-;;; quick-sdcv.el --- Interface for the sdcv command (StartDict cli dictionary) -*- lexical-binding: t -*-
+;;; quick-sdcv.el --- Offline dictionary using 'sdcv' (StartDict cli dictionary) -*- lexical-binding: t -*-
 
 ;; Copyright (C) 2024 James Cherti | https://www.jamescherti.com/contact/
 ;; Copyright (C) 2008-2020 Andy Stewart
