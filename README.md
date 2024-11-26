@@ -132,9 +132,12 @@ To make K search for the word using *quick-sdcv* when editing, for instance, a m
               (setq-local evil-lookup-func #'quick-sdcv-search-at-point)))
 ```
 
-The code snippet above:
-- Uses `add-hook` to ensure that the customization is applied only when editing Markdown files.
-- Sets `evil-lookup-func` to `quick-sdcv-search-at-point`, which configures K to search for the word at point using quick-sdcv.
+To make K look up a word in quick-sdcv buffers, you can also customize the `evil-lookup-func` variable using:
+```elisp
+(add-hook 'quick-sdcv-mode-hook
+          #'(lambda()
+              (setq-local evil-lookup-func #'quick-sdcv-search-at-point)))
+```
 
 ### What is the difference between sdcv (MELPA) and quick-sdcv Emacs packages?
 
