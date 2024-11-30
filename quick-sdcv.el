@@ -290,7 +290,8 @@ The result will be displayed in a buffer."
            (buffer (get-buffer buffer-name))
            (refresh (or (not buffer)
                         ;; When the words share the same buffer, always refresh
-                        (not quick-sdcv-unique-buffers))))
+                        (not quick-sdcv-unique-buffers)))
+           (inhibit-read-only t))
       (unless buffer
         (setq buffer (quick-sdcv--get-buffer word)))
 
@@ -299,7 +300,6 @@ The result will be displayed in a buffer."
           (when refresh
             (when quick-sdcv-verbose
               (message "[SDCV] Searching..."))
-            (setq buffer-read-only nil)
             (erase-buffer)
             (set-buffer-file-coding-system 'utf-8)  ;; Force UTF-8
             (setq quick-sdcv-current-translate-object word)
@@ -307,7 +307,6 @@ The result will be displayed in a buffer."
                      word
                      quick-sdcv-dictionary-complete-list))
 
-            (setq buffer-read-only t)
             (goto-char (point-min))
 
             (when quick-sdcv-verbose
