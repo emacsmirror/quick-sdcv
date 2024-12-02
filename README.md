@@ -19,8 +19,9 @@ Here are the main interactive functions:
 - [quick-sdcv.el - Emacs offline dictionary using 'sdcv'](#quick-sdcvel---emacs-offline-dictionary-using-sdcv)
   - [Installation](#installation)
     - [Install with straight](#install-with-straight)
-  - [Customizations](#customizations)
   - [Usage](#usage)
+  - [Customizations](#customizations)
+  - [Usage](#usage-1)
   - [Frequently asked question](#frequently-asked-question)
     - [How to make the sdcv buffer replace the current buffer?](#how-to-make-the-sdcv-buffer-replace-the-current-buffer)
     - [How to make links appear as links in an sdcv buffer?](#how-to-make-links-appear-as-links-in-an-sdcv-buffer)
@@ -50,6 +51,18 @@ To install `quick-sdcv` with `straight.el`:
   :custom
   (quick-sdcv-dictionary-prefix-symbol "►")
   (quick-sdcv-ellipsis " ▼ "))
+```
+
+## Usage
+
+To retrieve the word under the cursor and display its definition in a buffer:
+``` elisp
+(quick-sdcv-search-at-point)
+```
+
+To prompt the user for a word and display its definition in a buffer:
+``` elisp
+(quick-sdcv-search-input)
 ```
 
 ## Customizations

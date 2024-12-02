@@ -30,7 +30,6 @@
 ;; Floor, Boston, MA 02110-1301, USA.
 
 ;;; Commentary:
-;;
 ;; The quick-sdcv package serves as a lightweight Emacs interface for the
 ;; sdcv command-line interface, which is the console version of the StarDict
 ;; dictionary application.
@@ -49,6 +48,31 @@
 ;;   displays the result in a buffer.
 ;; - `quick-sdcv-search-input': Searches the input word and displays the result
 ;;   in a buffer.
+;;
+;; Installation from MELPA:
+;; ------------------------
+;; (use-package quick-sdcv
+;;   :ensure t
+;;   :straight (quick-sdcv
+;;              :type git
+;;              :host github
+;;              :repo "jamescherti/quick-sdcv.el")
+;;   :custom
+;;   (quick-sdcv-dictionary-prefix-symbol "►")
+;;   (quick-sdcv-ellipsis " ▼ "))
+;;
+;; Usage:
+;; ------
+;; To retrieve the word under the cursor and display its definition in a buffer:
+;;   (quick-sdcv-search-at-point)
+;;
+;; To prompt the user for a word and display its definition in a buffer:
+;;   (quick-sdcv-search-input)
+;;
+;; Links:
+;; ------
+;; More information about quick-sdcv (Usage, Frequently Asked Questions, etc.):
+;; https://github.com/jamescherti/quick-sdcv.el
 
 ;;; Code:
 
@@ -197,7 +221,7 @@ To apply the change, you need to execute `quick-sdcv-minor-mode' in the buffer."
 
 ;;;###autoload
 (defun quick-sdcv-search-input (&optional word)
-  "Translate the specified input WORD and display the results in another buffer.
+  "Prompt the user for a word and display its definition in a buffer.
 If WORD is not provided, the function prompts the user to enter a word."
   (interactive)
   (quick-sdcv--search-detail
