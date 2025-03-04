@@ -319,24 +319,31 @@ The result will be displayed in a buffer."
       (unless buffer
         (setq buffer (quick-sdcv--get-buffer word)))
 
-      (when buffer
-        (with-current-buffer buffer
-          (when refresh
-            (when quick-sdcv-verbose
-              (message "[SDCV] Searching..."))
-            (erase-buffer)
-            (set-buffer-file-coding-system 'utf-8)  ;; Force UTF-8
-            (setq quick-sdcv-current-translate-object word)
-            (insert (quick-sdcv--search-with-dictionary
-                     word
-                     quick-sdcv-dictionary-complete-list))
+      (let ((text (quick-sdcv--search-with-dictionary
+                   word
+                   quick-sdcv-dictionary-complete-list)))
+        (unless text
+          (error "The command %s produced no output" quick-sdcv-program))
 
-            (goto-char (point-min))
+        (when (buffer-live-p buffer)
+          (with-current-buffer buffer
+            (when refresh
+              (when quick-sdcv-verbose
+                (message "[SDCV] Searching..."))
+              (erase-buffer)
+              (set-buffer-file-coding-system 'utf-8)  ;; Force UTF-8
+              (setq quick-sdcv-current-translate-object word)
+              (let ((text (quick-sdcv--search-with-dictionary
+                           word
+                           quick-sdcv-dictionary-complete-list)))
+                (insert text))
 
-            (when quick-sdcv-verbose
-              (message "[SDCV] Finished searching `%s'."
-                       quick-sdcv-current-translate-object)))
-          (pop-to-buffer buffer))))))
+              (goto-char (point-min))
+
+              (when quick-sdcv-verbose
+                (message "[SDCV] Finished searching `%s'."
+                         quick-sdcv-current-translate-object)))
+            (pop-to-buffer buffer)))))))
 
 (defun quick-sdcv--search-with-dictionary (word dictionary-list)
   "Search some WORD with DICTIONARY-LIST.
