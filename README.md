@@ -1,5 +1,7 @@
 # quick-sdcv.el - Emacs offline dictionary using 'sdcv'
 ![Build Status](https://github.com/jamescherti/quick-sdcv.el/actions/workflows/ci.yml/badge.svg)
+[![MELPA](https://melpa.org/packages/quick-sdcv-badge.svg)](https://melpa.org/#/quick-sdcv)
+[![MELPA Stable](https://stable.melpa.org/packages/quick-sdcv-badge.svg)](https://stable.melpa.org/#/quick-sdcv)
 ![License](https://img.shields.io/github/license/jamescherti/quick-sdcv.el)
 ![](https://raw.githubusercontent.com/jamescherti/quick-sdcv.el/main/.images/made-for-gnu-emacs.svg)
 
@@ -37,17 +39,14 @@ Prerequisite: The [sdcv](https://github.com/Dushistov/sdcv) command. It can usua
 
 ### Install with straight
 
-To install `quick-sdcv` with `straight.el`:
+To install *quick-sdcv* on Emacs from MELPA:
 
-1. It if hasn't already been done, [add the straight.el bootstrap code](https://github.com/radian-software/straight.el?tab=readme-ov-file#getting-started) to your init file.
-2. Add the following code to the Emacs init file:
+1. If you haven't already done so, [add MELPA repository to your Emacs configuration](https://melpa.org/#/getting-started).
+
+2. Add the following code **at the very beginning of your init.el file, before all other packages**:
 ```emacs-lisp
 (use-package quick-sdcv
   :ensure t
-  :straight (quick-sdcv
-             :type git
-             :host github
-             :repo "jamescherti/quick-sdcv.el")
   :custom
   (quick-sdcv-dictionary-prefix-symbol "►")
   (quick-sdcv-ellipsis " ▼ "))
