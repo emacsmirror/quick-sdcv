@@ -28,7 +28,7 @@ Here are the main interactive functions:
     - [How to make the sdcv buffer replace the current buffer?](#how-to-make-the-sdcv-buffer-replace-the-current-buffer)
     - [How to make links appear as links in an sdcv buffer?](#how-to-make-links-appear-as-links-in-an-sdcv-buffer)
     - [Evil mode: How to configure the default K key to search for words using quick-sdcv?](#evil-mode-how-to-configure-the-default-k-key-to-search-for-words-using-quick-sdcv)
-    - [What is the difference between sdcv (MELPA) and quick-sdcv Emacs packages?](#what-is-the-difference-between-sdcv-melpa-and-quick-sdcv-emacs-packages)
+    - [What is the difference between sdcv and quick-sdcv Emacs packages?](#what-is-the-difference-between-sdcv-and-quick-sdcv-emacs-packages)
   - [Links](#links)
 
 <!-- markdown-toc end -->
@@ -151,7 +151,7 @@ To make K look up a word in quick-sdcv buffers, you can also customize the `evil
               (setq-local evil-lookup-func #'quick-sdcv-search-at-point)))
 ```
 
-### What is the difference between sdcv (MELPA) and quick-sdcv Emacs packages?
+### What is the difference between sdcv and quick-sdcv Emacs packages?
 
 The `quick-sdcv` Emacs package is a fork of `sdcv.el` version 3.4, which is available on MELPA. The primary differences between the two packages are as follows:
 
