@@ -20,7 +20,7 @@ Here are the main interactive functions:
 
 - [quick-sdcv.el - Emacs offline dictionary using 'sdcv'](#quick-sdcvel---emacs-offline-dictionary-using-sdcv)
   - [Installation](#installation)
-    - [Install with straight](#install-with-straight)
+    - [Install from MELPA](#install-from-melpa)
   - [Usage](#usage)
   - [Customizations](#customizations)
   - [Usage](#usage-1)
@@ -37,7 +37,7 @@ Here are the main interactive functions:
 
 Prerequisite: The [sdcv](https://github.com/Dushistov/sdcv) command. It can usually be installed by installing the `sdcv` package.
 
-### Install with straight
+### Install from MELPA
 
 To install *quick-sdcv* on Emacs from MELPA:
 
