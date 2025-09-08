@@ -211,25 +211,6 @@ To apply the change, you need to execute `quick-sdcv-minor-mode' in the buffer."
   (quick-sdcv--update-ellipsis)
   (outline-minor-mode))
 
-;;; Interactive Functions
-
-;;;###autoload
-(defun quick-sdcv-search-at-point ()
-  "Retrieve the word under the cursor and display its definition in a buffer."
-  (interactive)
-  (quick-sdcv--search-detail (quick-sdcv--get-region-or-word)))
-
-;;;###autoload
-(defun quick-sdcv-search-input (&optional word)
-  "Prompt the user for a word and display its definition in a buffer.
-If WORD is not provided, the function prompts the user to enter a word."
-  (interactive)
-  (quick-sdcv--search-detail
-   (or word
-       (let* ((word (quick-sdcv--get-region-or-word))
-              (default (if word (format " (default: %s)" word) "")))
-         (read-string (format "Word%s: " default) nil nil word)))))
-
 ;;; Utility Functions
 
 (defun quick-sdcv--update-ellipsis ()
@@ -385,6 +366,30 @@ Argument DICTIONARY-LIST the word that needs to be transformed."
   (if (use-region-p)
       (buffer-substring-no-properties (region-beginning) (region-end))
     (thing-at-point 'word t)))
+
+;;; Interactive Functions
+
+;;;###autoload
+(defun quick-sdcv-search-at-point ()
+  "Retrieve the word under the cursor and display its definition in a buffer."
+  (interactive)
+  (quick-sdcv--search-detail (quick-sdcv--get-region-or-word)))
+
+;;;###autoload
+(defun quick-sdcv-search-input (&optional word)
+  "Prompt the user for a word and display its definition in a buffer.
+If WORD is not provided, the function prompts the user to enter a word."
+  (interactive)
+  (let ((word (or word
+                  (let* ((word (quick-sdcv--get-region-or-word))
+                         (default (if word (format " (default: %s)" word) "")))
+                    (read-string (format "Word%s: " default) nil nil word)))))
+    (if (and word
+             (not (string= word "")))
+        (quick-sdcv--search-detail word)
+      (user-error "No word specified. Please provide a word to search for"))))
+
+;;; Provide
 
 (provide 'quick-sdcv)
 ;;; quick-sdcv.el ends here

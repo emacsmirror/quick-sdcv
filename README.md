@@ -3,7 +3,7 @@
 [![MELPA](https://melpa.org/packages/quick-sdcv-badge.svg)](https://melpa.org/#/quick-sdcv)
 [![MELPA Stable](https://stable.melpa.org/packages/quick-sdcv-badge.svg)](https://stable.melpa.org/#/quick-sdcv)
 ![License](https://img.shields.io/github/license/jamescherti/quick-sdcv.el)
-![](https://raw.githubusercontent.com/jamescherti/quick-sdcv.el/main/.images/made-for-gnu-emacs.svg)
+![](https://jamescherti.com/misc/made-for-gnu-emacs.svg)
 
 The `quick-sdcv` package serves as a lightweight Emacs interface for the `sdcv` command-line interface, which is the console version of the StarDict dictionary application.
 
@@ -19,16 +19,16 @@ Here are the main interactive functions:
 ## Table of Contents
 
 - [quick-sdcv.el - Emacs offline dictionary using 'sdcv'](#quick-sdcvel---emacs-offline-dictionary-using-sdcv)
-  - [Installation](#installation)
-  - [Usage](#usage)
-  - [Customizations](#customizations)
-  - [Usage](#usage-1)
-  - [Frequently asked question](#frequently-asked-question)
-    - [How to make the sdcv buffer replace the current buffer?](#how-to-make-the-sdcv-buffer-replace-the-current-buffer)
-    - [How to make links appear as links in an sdcv buffer?](#how-to-make-links-appear-as-links-in-an-sdcv-buffer)
-    - [Evil mode: How to configure the default K key to search for words using quick-sdcv?](#evil-mode-how-to-configure-the-default-k-key-to-search-for-words-using-quick-sdcv)
-    - [What is the difference between sdcv and quick-sdcv Emacs packages?](#what-is-the-difference-between-sdcv-and-quick-sdcv-emacs-packages)
-  - [Links](#links)
+    - [Installation](#installation)
+    - [Usage](#usage)
+    - [Customizations](#customizations)
+    - [Usage](#usage-1)
+    - [Frequently asked question](#frequently-asked-question)
+        - [How to make the sdcv buffer replace the current buffer?](#how-to-make-the-sdcv-buffer-replace-the-current-buffer)
+        - [How to make links appear as links in an sdcv buffer?](#how-to-make-links-appear-as-links-in-an-sdcv-buffer)
+        - [Evil mode: How to configure the default K key to search for words using quick-sdcv?](#evil-mode-how-to-configure-the-default-k-key-to-search-for-words-using-quick-sdcv)
+        - [What is the difference between sdcv and quick-sdcv Emacs packages?](#what-is-the-difference-between-sdcv-and-quick-sdcv-emacs-packages)
+    - [Links](#links)
 
 <!-- markdown-toc end -->
 
