@@ -207,6 +207,7 @@ To apply the change, you need to execute `quick-sdcv-minor-mode' in the buffer."
   (setq buffer-read-only t)
   (set (make-local-variable 'outline-regexp) "^-->.*\n-->")
   (set (make-local-variable 'outline-level) #'(lambda() 1))
+  (setq-local evil-lookup-func 'quick-sdcv-search-at-point)
   (quick-sdcv--toggle-symbol-fontification t)
   (quick-sdcv--update-ellipsis)
   (outline-minor-mode))
