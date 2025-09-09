@@ -46,7 +46,7 @@ To install *quick-sdcv* on Emacs from MELPA:
   :ensure t
   :custom
   (quick-sdcv-dictionary-prefix-symbol "►")
-  (quick-sdcv-ellipsis " ▼ "))
+  (quick-sdcv-ellipsis " ▼"))
 ```
 
 ## Usage

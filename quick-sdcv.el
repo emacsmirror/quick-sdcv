@@ -209,8 +209,8 @@ To apply the change, you need to execute `quick-sdcv-minor-mode' in the buffer."
   (set (make-local-variable 'outline-level) #'(lambda() 1))
   (setq-local evil-lookup-func 'quick-sdcv-search-at-point)
   (quick-sdcv--toggle-symbol-fontification t)
-  (quick-sdcv--update-ellipsis)
-  (outline-minor-mode))
+  (outline-minor-mode)
+  (quick-sdcv--update-ellipsis))
 
 ;;; Utility Functions
 
@@ -220,7 +220,15 @@ To apply the change, you need to execute `quick-sdcv-minor-mode' in the buffer."
     (let* ((display-table (or buffer-display-table (make-display-table)))
            (face-offset (* (face-id 'shadow) (ash 1 22)))
            (value (vconcat (mapcar (lambda (c) (+ face-offset c))
-                                   quick-sdcv-ellipsis))))
+                                   ;; Trim trailing whitespace after the
+                                   ;; ellipsis, as it can be misleading when the
+                                   ;; line is not truncated. Wrapping may
+                                   ;; display only the space after the ellipsis
+                                   ;; on the next line, creating the illusion of
+                                   ;; a new line. Deleting that apparent "new
+                                   ;; line" may delete the entire logical line
+                                   ;; containing the ellipsis.
+                                   (string-trim-right quick-sdcv-ellipsis)))))
       (set-display-table-slot display-table 'selective-display value)
       (setq buffer-display-table display-table))))
 
