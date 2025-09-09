@@ -99,7 +99,7 @@ Customize the *quick-sdcv* dictionaries ellipsis display:
 ;; buffers, `outline-minor-mode' is enabled by default, which allows sections
 ;; corresponding to individual dictionaries to be folded. The ellipsis (…)
 ;; indicates a folded section, making it easy to collapse all dictionaries and
-;; expand only those of interest.
+;; expand only those of interest
 (setq quick-sdcv-ellipsis " ")
 ```
 
