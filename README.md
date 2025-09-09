@@ -65,38 +65,68 @@ To prompt the user for a word and display its definition in a buffer:
 
 To create a unique buffer for each word lookup, set the following:
 ```emacs-lisp
+;; Controls whether each word lookup creates a separate buffer.
+;; Its default value is nil, but it can be set to t to enable unique buffers.
+;;
+;; When non-nil, a distinct buffer is created for each word searched. For
+;; example, searching for the word "computer" produces a buffer named
+;; "*sdcv:computer*". When nil, all lookups share the same buffer, typically
+;; named "*sdcv*".
+;;
+;; The naming of unique buffers can be further customized using the variables:
+;; - 'quick-sdcv-buffer-name-prefix'
+;; - 'quick-sdcv-buffer-name-separator'
+;; - 'quick-sdcv-buffer-name-suffix'
 (setq quick-sdcv-unique-buffers t)
 ```
 
 To perform exact word searches (as opposed to fuzzy searches), use:
 ```emacs-lisp
+;; To perform exact word searches (as opposed to fuzzy searches), use:
 (setq quick-sdcv-exact-search t)
 ```
 
 To change the prefix character used before dictionary names, replacing the default `-->`, set:
 ```emacs-lisp
+;; To change the prefix character used before dictionary names, replacing the
+;; default `-->`, set:
 (setq quick-sdcv-dictionary-prefix-symbol "►")
+```
+
+Customize the *quick-sdcv* dictionaries ellipsis display:
+```elisp
+;; Customize the *quick-sdcv* dictionaries ellipsis display. In quick-sdcv
+;; buffers, `outline-minor-mode' is enabled by default, which allows sections
+;; corresponding to individual dictionaries to be folded. The ellipsis (…)
+;; indicates a folded section, making it easy to collapse all dictionaries and
+;; expand only those of interest.
+(setq quick-sdcv-ellipsis " ")
 ```
 
 To customize the sdcv history size:
 ``` elisp
+;; Customize the sdcv history size
 (setq quick-sdcv-hist-size 100)
 ```
 
 To specify the path to the sdcv executable:
 ``` elisp
+;; Specify the path to the sdcv executable:
 (setq quick-sdcv-program "/path/to/sdcv")
 ```
 
 To customize the naming convention of the SDCV buffer:
 ``` elisp
+;; Customize the naming convention of the SDCV buffer:
 (setq quick-sdcv-buffer-name-prefix "*sdcv"
       quick-sdcv-buffer-name-separator ":"
       quick-sdcv-buffer-name-suffix "*")
 ```
 
-To specify a list of dictionaries:
+To specify a list of dictionaries (NOT RECOMMENDED. It is better to let sdcv show all dictionaries):
 ``` elisp
+;; To specify a list of dictionaries (NOT RECOMMENDED. It is better to let sdcv
+;; show all dictionaries):
 (setq quick-sdcv-dictionary-complete-list '("stardict-WordNet"
                                             "stardict-Webster"
                                             "stardict-eng_eng_main"))
@@ -149,7 +179,7 @@ For example, to configure `K` to search for a word using *quick-sdcv* when editi
 The `quick-sdcv` Emacs package is a fork of `sdcv.el` version 3.4, which is available on MELPA. The primary differences between the two packages are as follows:
 
 - **Less dependencies:** Quick-sdcv does not require any external dependencies; sdcv, on the other hand, installs popup, pos-tip, and showtip.
-- **Customize the buffer name:**: New variables to customize whether the word is included in the buffer name, as well as the prefix, separator, and suffix of the buffer name (quick-sdcv-unique-buffers, quick-sdcv-buffer-name-prefix, quick-sdcv-buffer-name-separator, and quick-sdcv-buffer-name-suffix). When the buffer is dedicated to a specific word, refresh it only when the buffer is created.
+- **Customize the buffer name:**: New variables to customize whether the word is included in the buffer name, as well as the prefix, separator, and suffix of the buffer name (`quick-sdcv-unique-buffers`, quick-sdcv-buffer-name-prefix, quick-sdcv-buffer-name-separator, and quick-sdcv-buffer-name-suffix). When the buffer is dedicated to a specific word, refresh it only when the buffer is created.
 - **Improved Outline Minor Mode**: The `quick-sdcv` package fixes the outline minor mode for dictionary folding, enabling users to collapse all definitions for quicker navigation through dictionaries.
 - **Default Language Settings**: Various issues have been addressed, including changing the default language setting from Chinese (zh) to nil, providing a more neutral starting point.
 - **Buffer Customization**: The `quick-sdcv` package employs `display-buffer`, allowing users to customize the display of the *sdcv* buffer and control its placement through `display-buffer-alist`.
