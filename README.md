@@ -15,6 +15,8 @@ Here are the main interactive functions:
 - `quick-sdcv-search-at-point`: Searches the word around the cursor and displays the result in a buffer.
 - `quick-sdcv-search-input`: Searches the input word and displays the result in a buffer.
 
+If this enhances your workflow, please show your support by **⭐ starring quick-sdcv on GitHub** to help more Emacs users discover its benefits.
+
 <!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-refresh-toc -->
 ## Table of Contents
 
