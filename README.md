@@ -21,6 +21,7 @@ If this enhances your workflow, please show your support by **⭐ starring quick
 ## Table of Contents
 
 - [quick-sdcv.el - Emacs offline dictionary using 'sdcv'](#quick-sdcvel---emacs-offline-dictionary-using-sdcv)
+    - [Prerequisite](#prerequisite)
     - [Installation](#installation)
     - [Usage](#usage)
     - [Customizations](#customizations)
@@ -34,9 +35,13 @@ If this enhances your workflow, please show your support by **⭐ starring quick
 
 <!-- markdown-toc end -->
 
+## Prerequisite
+
+- The [sdcv](https://github.com/Dushistov/sdcv) command. (It can usually be installed by installing the `sdcv` package.)
+- Download dictionaries from: http://download.huzheng.org/ . Once the dictionaries are downloaded, extract them into `/usr/share/stardict/dic/`, or configure the variable `quick-sdcv-dictionary-data-dir` in the Emacs configuration to specify an alternative dictionary path.
+
 ## Installation
 
-*Prerequisite: The [sdcv](https://github.com/Dushistov/sdcv) command. It can usually be installed by installing the `sdcv` package.*
 
 To install *quick-sdcv* on Emacs from MELPA:
 
