@@ -290,7 +290,8 @@ When ENABLED is nil: Deconstructs any symbol regions marked by '-->'."
                                           (list "--only-data-dir"))
                                         (when quick-sdcv-dictionary-data-dir
                                           (list "--data-dir"
-                                                quick-sdcv-dictionary-data-dir))
+                                                (expand-file-name
+                                                 quick-sdcv-dictionary-data-dir)))
                                         arguments))))
           (if (not (zerop exit-code))
               (error "Failed to call %s: exit code %d" quick-sdcv-program
