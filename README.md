@@ -9,7 +9,7 @@ The `quick-sdcv` package serves as a lightweight Emacs interface for the `sdcv` 
 
 **This package enables Emacs to function as an offline dictionary.**
 
-This integration allows users to access and utilize sdcv dictionary functionalities directly within the Emacs environment, leveraging the capabilities of `sdcv` to look up words and translations from various dictionary files.
+This integration allows users to access sdcv dictionary functionalities directly within the Emacs environment, leveraging the capabilities of `sdcv` to look up words and translations from various dictionary files.
 
 Here are the main interactive functions:
 - `quick-sdcv-search-at-point`: Searches the word around the cursor and displays the result in a buffer.
