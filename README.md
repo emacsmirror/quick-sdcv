@@ -5,7 +5,7 @@
 ![License](https://img.shields.io/github/license/jamescherti/quick-sdcv.el)
 ![](https://jamescherti.com/misc/made-for-gnu-emacs.svg)
 
-The `quick-sdcv` package serves as a lightweight Emacs interface for the `sdcv` command-line interface, which is the console version of the StarDict dictionary application.
+The [quick-sdcv.el](https://github.com/jamescherti/quick-sdcv.el) package serves as a lightweight Emacs interface for the `sdcv` command-line interface, which is the console version of the StarDict dictionary application.
 
 **This package enables Emacs to function as an offline dictionary.**
 
