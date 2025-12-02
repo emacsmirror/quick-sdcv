@@ -163,7 +163,7 @@ To apply the change, you need to execute `quick-sdcv-minor-mode' in the buffer."
   :type '(choice string (const nil))
   :group 'quick-sdcv)
 
-(defcustom quick-sdcv-preserve-pager nil
+(defcustom quick-sdcv-ignore-pager nil
   "Indicates whether the environment variable SDCV_PAGER is preserved.
 If set to non-nil, the existing SDCV_PAGER value is retained."
   :type 'boolean
@@ -281,12 +281,12 @@ When ENABLED is nil: Deconstructs any symbol regions marked by '-->'."
   (with-temp-buffer
     (save-excursion
       (let* ((process-environment
-              (if quick-sdcv-preserve-pager
-                  process-environment
-                (cl-remove-if
-                 (lambda (var)
-                   (or (string-match "^SDCV_PAGER=" var)))
-                 process-environment))))
+              (if quick-sdcv-ignore-pager
+                  (cl-remove-if
+                   (lambda (var)
+                     (or (string-match "^SDCV_PAGER=" var)))
+                   process-environment)
+                process-environment)))
         (when quick-sdcv-hist-size
           (setenv "SDCV_HISTSIZE" (number-to-string quick-sdcv-hist-size)))
         (let ((exit-code (apply #'call-process quick-sdcv-program nil t nil
