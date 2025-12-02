@@ -164,8 +164,8 @@ To apply the change, you need to execute `quick-sdcv-minor-mode' in the buffer."
   :group 'quick-sdcv)
 
 (defcustom quick-sdcv-ignore-pager nil
-  "Indicates whether the environment variable SDCV_PAGER is preserved.
-If set to non-nil, the existing SDCV_PAGER value is retained."
+  "Ignore the SDCV_PAGER environment variable when running sdcv.
+If set to non-nil, the value of SDCV_PAGER is disregarded and not applied."
   :type 'boolean
   :group 'quick-sdcv)
 
