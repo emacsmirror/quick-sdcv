@@ -282,11 +282,11 @@ When ENABLED is nil: Deconstructs any symbol regions marked by '-->'."
     (save-excursion
       (let* ((process-environment
               (if quick-sdcv-preserve-pager
-                  (cl-remove-if
-                   (lambda (var)
-                     (or (string-match "^SDCV_PAGER=" var)))
-                   process-environment)
-                process-environment)))
+                  process-environment
+                (cl-remove-if
+                 (lambda (var)
+                   (or (string-match "^SDCV_PAGER=" var)))
+                 process-environment))))
         (when quick-sdcv-hist-size
           (setenv "SDCV_HISTSIZE" (number-to-string quick-sdcv-hist-size)))
         (let ((exit-code (apply #'call-process quick-sdcv-program nil t nil
