@@ -1,6 +1,6 @@
 ;;; quick-sdcv.el --- Offline dictionary using 'sdcv' (StartDict cli dictionary) -*- lexical-binding: t -*-
 
-;; Copyright (C) 2024-2025 James Cherti | https://www.jamescherti.com/contact/
+;; Copyright (C) 2024-2026 James Cherti | https://www.jamescherti.com/contact/
 ;; Copyright (C) 2008-2020 Andy Stewart
 
 ;; Filename: quick-sdcv.el
