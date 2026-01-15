@@ -21,17 +21,18 @@ If this enhances your workflow, please show your support by **⭐ starring quick
 ## Table of Contents
 
 - [quick-sdcv.el - Emacs offline dictionary using 'sdcv'](#quick-sdcvel---emacs-offline-dictionary-using-sdcv)
-    - [Prerequisite](#prerequisite)
-    - [Installation](#installation)
-    - [Usage](#usage)
-    - [Customizations](#customizations)
-    - [Usage](#usage-1)
-    - [Frequently asked question](#frequently-asked-question)
-        - [How to make the sdcv buffer replace the current buffer?](#how-to-make-the-sdcv-buffer-replace-the-current-buffer)
-        - [How to make links appear as links in an sdcv buffer?](#how-to-make-links-appear-as-links-in-an-sdcv-buffer)
-        - [Evil mode: How to configure the default K key to search for words using quick-sdcv?](#evil-mode-how-to-configure-the-default-k-key-to-search-for-words-using-quick-sdcv)
-        - [What is the difference between sdcv and quick-sdcv Emacs packages?](#what-is-the-difference-between-sdcv-and-quick-sdcv-emacs-packages)
-    - [Links](#links)
+  - [Prerequisite](#prerequisite)
+  - [Installation](#installation)
+  - [Usage](#usage)
+  - [Customizations](#customizations)
+  - [Usage](#usage-1)
+  - [Frequently asked question](#frequently-asked-question)
+    - [How to make the sdcv buffer replace the current buffer?](#how-to-make-the-sdcv-buffer-replace-the-current-buffer)
+    - [How to make links appear as links in an sdcv buffer?](#how-to-make-links-appear-as-links-in-an-sdcv-buffer)
+    - [Evil mode: How to configure the default K key to search for words using quick-sdcv?](#evil-mode-how-to-configure-the-default-k-key-to-search-for-words-using-quick-sdcv)
+    - [What is the difference between sdcv and quick-sdcv Emacs packages?](#what-is-the-difference-between-sdcv-and-quick-sdcv-emacs-packages)
+  - [Comments from users](#comments-from-users)
+  - [Links](#links)
 
 <!-- markdown-toc end -->
 
@@ -195,6 +196,10 @@ The `quick-sdcv` Emacs package is a fork of `sdcv.el` version 3.4, which is avai
 - **Keybindings removal**: The default keybindings have been removed from `quick-sdcv-mode` to prevent conflicts with other modes and keeps the mode lightweight and adaptable for users’ preferences.
 - **New options**: `quick-sdcv-ellipsis`, quick-sdcv-hist-size, quick-sdcv-exact-search, quick-sdcv-buffer-name-prefix, quick-sdcv-buffer-name-separator, quick-sdcv-buffer-name-suffix, quick-sdcv-verbose
 - **Various improvements**: Unset the SDCV_PAGER environment variable, Ensure the buffer and the SDCV output are in UTF-8, Enhance dictionary representation with UTF-8 characters, Implement error handling for cases when the sdcv program is not found.
+
+## Comments from users
+
+- [ecraven](https://github.com/jamescherti/quick-sdcv.el/issues/4#issue-3816307365): Thank you very much for this mode, it is proving very helpful!
 
 ## Links
 
