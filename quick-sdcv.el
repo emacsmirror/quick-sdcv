@@ -259,13 +259,22 @@ When ENABLED is nil: Deconstructs any symbol regions marked by '-->'."
         (decompose-region (match-beginning 0) (match-end 0)))))
 
   ;; Fontify the buffer
-  (when font-lock-mode
+  (when (and (bound-and-true-p font-lock-mode)
+             ;; For maximum safety during a session load, check
+             ;; `font-lock-set-defaults'. This variable guarantees that the
+             ;; font-lock machinery has actually finished configuring its
+             ;; keywords and syntax tables for the current buffer.
+             (bound-and-true-p font-lock-set-defaults))
     (save-restriction
       (widen)
-      (when (fboundp 'font-lock-flush)
-        (font-lock-flush))
-      (when (fboundp 'font-lock-ensure)
-        (font-lock-ensure)))))
+      (cond
+       ((and (fboundp 'font-lock-flush)
+             (fboundp 'font-lock-ensure))
+        (font-lock-flush)
+        (font-lock-ensure))
+
+       ((fboundp 'jit-lock-fontify-now)
+        (jit-lock-fontify-now))))))
 
 (defun quick-sdcv--call-process (&rest arguments)
   "Call `quick-sdcv-program' with ARGUMENTS. Result is parsed as json."
