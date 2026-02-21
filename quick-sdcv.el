@@ -271,7 +271,8 @@ When ENABLED is nil: Deconstructs any symbol regions marked by '-->'."
        ((and (fboundp 'font-lock-flush)
              (fboundp 'font-lock-ensure))
         (font-lock-flush)
-        (font-lock-ensure))
+        (ignore-errors
+          (font-lock-ensure)))
 
        ((fboundp 'jit-lock-fontify-now)
         (jit-lock-fontify-now))))))
