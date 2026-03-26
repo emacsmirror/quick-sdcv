@@ -52,7 +52,6 @@
 ;; Installation from MELPA:
 ;; ------------------------
 ;; (use-package quick-sdcv
-;;   :ensure t
 ;;   :custom
 ;;   (quick-sdcv-dictionary-prefix-symbol "►")
 ;;   (quick-sdcv-ellipsis " ▼ "))

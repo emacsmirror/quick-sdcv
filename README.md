@@ -51,7 +51,6 @@ To install *quick-sdcv* on Emacs from MELPA:
 2. Add the following code **at the very beginning of your init.el file, before all other packages**:
 ```emacs-lisp
 (use-package quick-sdcv
-  :ensure t
   :custom
   (quick-sdcv-dictionary-prefix-symbol "►")
   (quick-sdcv-ellipsis " ▼"))
