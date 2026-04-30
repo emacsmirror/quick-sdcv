@@ -198,7 +198,9 @@ The `quick-sdcv` Emacs package is a fork of `sdcv.el` version 3.4, which is avai
 
 ## Comments from users
 
-- [ecraven](https://github.com/jamescherti/quick-sdcv.el/issues/4#issue-3816307365): Thank you very much for this mode, it is proving very helpful!
+- [ecraven on GitHub](https://github.com/jamescherti/quick-sdcv.el/issues/4#issue-3816307365): Thank you very much for this mode, it is proving very helpful!
+
+- [mingey on GitHub](https://github.com/jamescherti/quick-sdcv.el/discussions/5): "I don't know if this is the appropriate place, but I wanted to thank you for writing this mode -- I've been using Emacs about a year now, and it's still constantly surprising me with its depth, and the richness of the added value the community brings. This package is a perfect example; I do a lot of reading in Emacs now, and with minimal configuration, I can be reading an epub and, with a keystroke, instantly get the OED article for a word I'm curious about...it's one of those Emacs things that feels miraculous. I'm so grateful to you for taking the time to write the mode and for sharing it so generously; I hope (and expect) I'll be using it with pleasure for years to come."
 
 ## Links
 
