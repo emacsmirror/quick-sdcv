@@ -27,7 +27,7 @@ If this enhances your workflow, please show your support by **⭐ starring quick
   - [Customizations](#customizations)
   - [Usage](#usage-1)
   - [Frequently asked question](#frequently-asked-question)
-    - [How to open and close dictionary folds?](#how-to-open-and-close-dictionary-folds)
+    - [How can dictionary entries be folded and unfolded?](#how-can-dictionary-entries-be-folded-and-unfolded)
     - [How to customize the buffer display?](#how-to-customize-the-buffer-display)
       - [Option 1: Display at the bottom with a fixed height](#option-1-display-at-the-bottom-with-a-fixed-height)
       - [Option 2: Replace the current window entirely](#option-2-replace-the-current-window-entirely)
@@ -167,7 +167,7 @@ If the current mark is active, the `quick-sdcv` will translate the region string
 
 ## Frequently asked question
 
-### How to open and close dictionary folds?
+### How can dictionary entries be folded and unfolded?
 
 The quick-sdcv mode enables `outline-minor-mode` by default, allowing sections corresponding to individual dictionaries to be folded.
 
