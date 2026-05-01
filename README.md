@@ -27,7 +27,9 @@ If this enhances your workflow, please show your support by **⭐ starring quick
   - [Customizations](#customizations)
   - [Usage](#usage-1)
   - [Frequently asked question](#frequently-asked-question)
-    - [How to make the sdcv buffer replace the current buffer?](#how-to-make-the-sdcv-buffer-replace-the-current-buffer)
+    - [Customizing the Buffer Display](#customizing-the-buffer-display)
+      - [Option 1: Display at the bottom with a fixed height](#option-1-display-at-the-bottom-with-a-fixed-height)
+      - [Option 2: Replace the current window entirely](#option-2-replace-the-current-window-entirely)
     - [How to make links appear as links in an sdcv buffer?](#how-to-make-links-appear-as-links-in-an-sdcv-buffer)
     - [Evil mode: How to configure the default K key to search for words using quick-sdcv?](#evil-mode-how-to-configure-the-default-k-key-to-search-for-words-using-quick-sdcv)
     - [What is the difference between sdcv and quick-sdcv Emacs packages?](#what-is-the-difference-between-sdcv-and-quick-sdcv-emacs-packages)
@@ -153,12 +155,30 @@ If the current mark is active, the `quick-sdcv` will translate the region string
 
 ## Frequently asked question
 
-### How to make the sdcv buffer replace the current buffer?
+### Customizing the Buffer Display
 
-To make K search for the word using quick-sdcv when editing Markdown, you can customize the behavior as follows:
+By default, Emacs typically opens the `*sdcv*` results in a standard split window, occupying half of the frame. The placement and behavior of this buffer can be precisely controlled by customizing the `display-buffer-alist` variable.
+
+Below are two common configurations to add to the Emacs initialization file:
+
+#### Option 1: Display at the bottom with a fixed height
+
+To create a less intrusive interface, Emacs can be configured to display the dictionary buffer at the bottom of the frame while maintaining the current window arrangement:
+
+```elisp
+(add-to-list 'display-buffer-alist
+             '("\\*sdcv"
+               (display-buffer-reuse-window display-buffer-at-bottom)
+               (window-height . 0.33)))
+```
+
+#### Option 2: Replace the current window entirely
+
+Alternatively, to have the dictionary results fully replace the active window rather than creating a split, the following configuration applies:
+
 ```elisp
 (add-to-list 'display-buffer-alist '("\\*sdcv"
-                                       (display-buffer-same-window)))
+                                     (display-buffer-same-window)))
 ```
 
 ### How to make links appear as links in an sdcv buffer?
