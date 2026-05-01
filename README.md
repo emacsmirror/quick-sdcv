@@ -169,7 +169,7 @@ If the current mark is active, the `quick-sdcv` will translate the region string
 
 ### How can dictionary entries be folded and unfolded?
 
-The quick-sdcv mode enables `outline-minor-mode` by default, allowing sections corresponding to individual dictionaries to be folded.
+The *quick-sdcv* mode enables `outline-minor-mode` by default, allowing sections corresponding to individual dictionaries to be folded.
 
 While the built-in `outline-minor-mode` functions can be used to open and close these folds, installing **[kirigami.el](https://github.com/jamescherti/kirigami.el)** is highly recommended. It enhances the folding experience by providing a more robust and unified interface for folding text.
 
@@ -202,7 +202,7 @@ Alternatively, to have the dictionary results fully replace the active window ra
 ### How to make links appear as links in an sdcv buffer?
 
 To ensure that links appear as clickable links in the SDCV buffer while using quick-sdcv, add the following hook:
-```
+```elisp
 (add-hook 'quick-sdcv-mode-hook #'goto-address-mode)
 ```
 
