@@ -27,7 +27,8 @@ If this enhances your workflow, please show your support by **⭐ starring quick
   - [Customizations](#customizations)
   - [Usage](#usage-1)
   - [Frequently asked question](#frequently-asked-question)
-    - [Customizing the Buffer Display](#customizing-the-buffer-display)
+    - [How to open and close dictionary folds?](#how-to-open-and-close-dictionary-folds)
+    - [How to customize the buffer display?](#how-to-customize-the-buffer-display)
       - [Option 1: Display at the bottom with a fixed height](#option-1-display-at-the-bottom-with-a-fixed-height)
       - [Option 2: Replace the current window entirely](#option-2-replace-the-current-window-entirely)
     - [How to make links appear as links in an sdcv buffer?](#how-to-make-links-appear-as-links-in-an-sdcv-buffer)
@@ -166,7 +167,13 @@ If the current mark is active, the `quick-sdcv` will translate the region string
 
 ## Frequently asked question
 
-### Customizing the Buffer Display
+### How to open and close dictionary folds?
+
+The quick-sdcv mode enables `outline-minor-mode` by default, allowing sections corresponding to individual dictionaries to be folded.
+
+While the built-in `outline-minor-mode` functions can be used to open and close these folds, installing **[kirigami.el](https://github.com/jamescherti/kirigami.el)** is highly recommended. It enhances the folding experience by providing a more robust and unified interface for folding text.
+
+### How to customize the buffer display?
 
 By default, Emacs typically opens the `*sdcv*` results in a standard split window, occupying half of the frame. The placement and behavior of this buffer can be precisely controlled by customizing the `display-buffer-alist` variable.
 
