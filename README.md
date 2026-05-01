@@ -31,6 +31,7 @@ If this enhances your workflow, please show your support by **⭐ starring quick
     - [How to make links appear as links in an sdcv buffer?](#how-to-make-links-appear-as-links-in-an-sdcv-buffer)
     - [Evil mode: How to configure the default K key to search for words using quick-sdcv?](#evil-mode-how-to-configure-the-default-k-key-to-search-for-words-using-quick-sdcv)
     - [What is the difference between sdcv and quick-sdcv Emacs packages?](#what-is-the-difference-between-sdcv-and-quick-sdcv-emacs-packages)
+    - [Community contribution: How I use quick-sdcv to get the Oxford English Dictionary entirely offline](#community-contribution-how-i-use-quick-sdcv-to-get-the-oxford-english-dictionary-entirely-offline)
   - [Comments from users](#comments-from-users)
   - [Links](#links)
 
@@ -195,6 +196,18 @@ The `quick-sdcv` Emacs package is a fork of `sdcv.el` version 3.4, which is avai
 - **Keybindings removal**: The default keybindings have been removed from `quick-sdcv-mode` to prevent conflicts with other modes and keeps the mode lightweight and adaptable for users’ preferences.
 - **New options**: `quick-sdcv-ellipsis`, quick-sdcv-hist-size, quick-sdcv-exact-search, quick-sdcv-buffer-name-prefix, quick-sdcv-buffer-name-separator, quick-sdcv-buffer-name-suffix, quick-sdcv-verbose
 - **Various improvements**: Unset the SDCV_PAGER environment variable, Ensure the buffer and the SDCV output are in UTF-8, Enhance dictionary representation with UTF-8 characters, Implement error handling for cases when the sdcv program is not found.
+
+### Community contribution: How I use quick-sdcv to get the Oxford English Dictionary entirely offline
+
+Mingey, a *quick-sdcv* user, shared a workflow demonstrating how to integrate the massive Oxford English Dictionary (OED) directly into Emacs:
+
+[How I use quick-sdcv to get the Oxford English Dictionary (OED) in my Emacs](https://github.com/jamescherti/quick-sdcv.el/discussions/6)
+
+His workflow stack:
+
+* *quick-sdcv*: For instantaneous, offline dictionary queries. Mingey configured it to act like a native Emacs help buffer, allowing for 'Do What I Mean' (DWIM) searches that automatically look up the word under the cursor, display results in a collapsible outline, and cleanly restore the previous window layout when dismissed.
+* *nov.el*: For a in-editor EPUB reading experience. Binding a custom shortcut (K) directly to the dictionary tool within the reader creates an ergonomic workflow where the user can look up obscure words without ever breaking focus or leaving the book.
+* *olivetti-mode*: For distraction-free visual centering of the dense dictionary output.
 
 ## Comments from users
 
