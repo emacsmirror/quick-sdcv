@@ -54,9 +54,20 @@ To install *quick-sdcv* on Emacs from MELPA:
 2. Add the following code **at the very beginning of your init.el file, before all other packages**:
 ```emacs-lisp
 (use-package quick-sdcv
-  :custom
-  (quick-sdcv-dictionary-prefix-symbol "►")
-  (quick-sdcv-ellipsis " ▼"))
+  :init
+  ;; When non-nil, a distinct buffer is created for each word searched.
+  (setq quick-sdcv-unique-buffers t)
+
+  ;; Change the prefix character used before dictionary names, replacing the
+  ;; default `-->`:
+  (setq quick-sdcv-dictionary-prefix-symbol "►")
+
+  ;; Change the quick-sdcv dictionaries ellipsis from … to " ▼"
+  ;; (In quick-sdcv buffers, `outline-minor-mode' is enabled by default, which
+  ;; allows sections corresponding to individual dictionaries to be folded. The
+  ;; ellipsis … indicates a folded section, making it easy to collapse all
+  ;; dictionaries and expand only those of interest.)
+  (setq quick-sdcv-ellipsis " ▼"))
 ```
 
 ## Usage
