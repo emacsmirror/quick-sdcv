@@ -10,7 +10,7 @@
 ;; Original Author: Andy Stewart
 ;; Version: 1.0.5
 ;; URL: https://github.com/jamescherti/quick-sdcv.el
-;; Keywords: docs, startdict, sdcv
+;; Keywords: tools, convenience, text
 
 ;;; License
 ;;
@@ -80,7 +80,7 @@
 
 (defgroup quick-sdcv nil
   "Interface for sdcv (StartDict console version)."
-  :group 'edit)
+  :group 'applications)
 
 (defcustom quick-sdcv-unique-buffers nil
   "If non-nil, create a unique buffer for each word lookup.
